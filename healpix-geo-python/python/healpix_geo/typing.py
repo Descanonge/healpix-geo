@@ -1,4 +1,4 @@
-from typing import Protocol, TypedDict
+from typing import Protocol, TypedDict, Generic, TypeVar
 
 import numpy as np
 import numpy.typing as npt
@@ -28,3 +28,7 @@ _EllipsoidLike = EllipsoidDict | EllipsoidType
 EllipsoidLike = str | _SphereLike | _EllipsoidLike
 
 DepthType = int | npt.NDArray[np.uint8]
+
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+Array1D = np.ndarray[tuple[int], np.dtype[_ScalarT]]
+Array2D = np.ndarray[tuple[int, int], np.dtype[_ScalarT]]
