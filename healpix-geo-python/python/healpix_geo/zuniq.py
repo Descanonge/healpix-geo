@@ -58,8 +58,6 @@ def to_nested(
     """
     ipix = np.atleast_1d(ipix).astype(np.uint64)
 
-    num_threads = np.uint16(num_threads)
-
     return _healpix_geo_python.zuniq.to_nested(ipix, num_threads)
 
 
@@ -105,8 +103,6 @@ def to_ring(
     """
     ipix = np.atleast_1d(ipix).astype(np.uint64)
 
-    num_threads = np.uint16(num_threads)
-
     return _healpix_geo_python.zuniq.to_ring(ipix, num_threads)
 
 
@@ -150,8 +146,6 @@ def healpix_to_lonlat(ipix, ellipsoid, num_threads=0):
     array([2.85869025e-07, 1.42934512e-07, 1.42934512e-07])
     """
     ipix = np.atleast_1d(ipix).astype(np.uint64)
-
-    num_threads = np.uint16(num_threads)
 
     return _healpix_geo_python.zuniq.healpix_to_lonlat(ipix, ellipsoid, num_threads)
 
@@ -204,8 +198,6 @@ def lonlat_to_healpix(longitude, latitude, depth, ellipsoid="sphere", num_thread
     longitude = np.atleast_1d(longitude).astype("float64")
     latitude = np.atleast_1d(latitude).astype("float64")
 
-    num_threads = np.uint16(num_threads)
-
     return _healpix_geo_python.zuniq.lonlat_to_healpix(
         depth, longitude, latitude, ellipsoid, num_threads
     )
@@ -254,8 +246,6 @@ def healpix_to_cartesian(ipix, ellipsoid="sphere", num_threads=0):
     """
     ipix = np.atleast_1d(ipix)
     ipix = ipix.astype(np.uint64)
-
-    num_threads = np.uint16(num_threads)
 
     return _healpix_geo_python.zuniq.healpix_to_cartesian(ipix, ellipsoid, num_threads)
 
@@ -315,8 +305,6 @@ def cartesian_to_healpix(x, y, z, depth, ellipsoid="sphere", num_threads=0):
     x = np.atleast_1d(x).astype("float64")
     y = np.atleast_1d(y).astype("float64")
     z = np.atleast_1d(z).astype("float64")
-
-    num_threads = np.uint16(num_threads)
 
     return _healpix_geo_python.zuniq.cartesian_to_healpix(
         depth, x, y, z, ellipsoid, num_threads
@@ -381,8 +369,6 @@ def vertices(ipix, ellipsoid, step=1, num_threads=0):
             [4.49999998e+01, 1.42295608e-07]]])
     """
     ipix = np.atleast_1d(ipix).astype(np.uint64)
-
-    num_threads = np.uint16(num_threads)
 
     return _healpix_geo_python.zuniq.vertices(ipix, ellipsoid, step, num_threads)
 
@@ -521,8 +507,6 @@ def bilinear_interpolation(
     longitude = np.atleast_1d(longitude).astype("float64")
     latitude = np.atleast_1d(latitude).astype("float64")
 
-    num_threads = np.uint16(num_threads)
-
     ipix, weights = _healpix_geo_python.zuniq.bilinear_interpolation(
         depth, longitude, latitude, ellipsoid, num_threads
     )
@@ -566,7 +550,6 @@ def neighbours(
     """
     ipix = np.astype(np.atleast_1d(ipix), np.uint64)
 
-    num_threads = np.uint16(num_threads)
     return _healpix_geo_python.zuniq.neighbours(ipix, connectivity, num_threads)
 
 
@@ -634,7 +617,6 @@ def kth_neighbours(ipix, ring, num_threads=0):
     """
     ipix = np.astype(np.atleast_1d(ipix), np.uint64)
 
-    num_threads = np.uint16(num_threads)
     return _healpix_geo_python.zuniq.kth_neighbours(ipix, ring, num_threads)
 
 
@@ -731,7 +713,6 @@ def kth_neighbourhood(ipix, ring, num_threads=0):
     """
     ipix = np.astype(np.atleast_1d(ipix), np.uint64)
 
-    num_threads = np.uint16(num_threads)
     return _healpix_geo_python.zuniq.kth_neighbourhood(ipix, ring, num_threads)
 
 

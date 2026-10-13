@@ -47,8 +47,6 @@ def cartesian_to_lonlat(x, y, z, ellipsoid="sphere", num_threads=0):
     y = np.atleast_1d(y).astype("float64")
     z = np.atleast_1d(z).astype("float64")
 
-    num_threads = np.uint16(num_threads)
-
     return _healpix_geo_python.cartesian_to_lonlat(x, y, z, ellipsoid, num_threads)
 
 
@@ -88,8 +86,6 @@ def lonlat_to_cartesian(longitude, latitude, ellipsoid="sphere", num_threads=0):
     """
     longitude = np.atleast_1d(longitude).astype("float64")
     latitude = np.atleast_1d(latitude).astype("float64")
-
-    num_threads = np.uint16(num_threads)
 
     return _healpix_geo_python.lonlat_to_cartesian(
         longitude, latitude, ellipsoid, num_threads

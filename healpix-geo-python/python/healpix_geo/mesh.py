@@ -71,8 +71,6 @@ def vertex_to_lonlat(
         vertex_ids < 12 * 4**depth + 2
     ), f"Some vertex ids exceed the valid range for depth {depth}"
 
-    num_threads = np.uint16(num_threads)
-
     return _healpix_geo_python.vertex_to_lonlat(
         depth, vertex_ids, ellipsoid, num_threads
     )
