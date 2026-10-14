@@ -79,14 +79,14 @@ def healpix_to_lonlat(
 ]: ...
 def kth_neighbourhood(
     depth: int, ipix: NDArray[np.uint64], ring: int, nthreads: int
-) -> NDArray[np.uint64]:
+) -> NDArray[np.int64]:
     """
     Wrapper of `kth_neighbourhood`
     """
 
 def kth_neighbours(
     depth: int, ipix: NDArray[np.uint64], ring: int, nthreads: int
-) -> NDArray[np.uint64]:
+) -> NDArray[np.int64]:
     """
     Wrapper of `kth_neighbours`
     """
@@ -103,7 +103,7 @@ def neighbours(
     ipix: NDArray[np.uint64],
     connectivity: Literal["vertex", "edge", "all"],
     nthreads: int,
-) -> NDArray[np.uint64]:
+) -> NDArray[np.int64]:
     """
     Return immediate neighbours in fixed directional positions.
     """

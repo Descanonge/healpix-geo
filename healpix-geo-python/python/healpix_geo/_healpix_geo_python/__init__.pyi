@@ -1,12 +1,13 @@
 from collections.abc import Callable
-from typing import Literal, TypeVar, final
+from typing import Any, Literal, TypeVar, final
 
 import awkward
 import numpy as np
 import ragged
 from numpy.typing import NDArray
 
-from healpix_geo.typing import Array1D, Array2D, EllipsoidLike
+from healpix_geo._healpix_geo_python import geometry, nested, ring, zuniq
+from healpix_geo.typing import Array1D, EllipsoidDict, EllipsoidLike, SphereDict
 
 _S = TypeVar("_S", bound=tuple[int, ...])
 
@@ -47,7 +48,7 @@ class RaggedArray:
         Requires `awkward` to be installed.
         """
         ...
-    def as_masked_array(self, /) -> np.ndarray[tuple[int, int]]:
+    def as_masked_array(self, /) -> Any:
         """
         convert to a rectangular masked array
         """
@@ -108,10 +109,23 @@ def lonlat_to_cartesian(
     np.ndarray[_S, np.dtype[np.float64]],
     np.ndarray[_S, np.dtype[np.float64]],
 ]: ...
-def resolve_ellipsoid(name: str) -> dict: ...
+def resolve_ellipsoid(name: str) -> EllipsoidDict | SphereDict: ...
 def vertex_to_lonlat(
     depth: int,
     ipix: NDArray[np.uint64],
     ellipsoid_like: EllipsoidLike,
     nthreads: int,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
+
+__all__ = [
+    "geometry",
+    "nested",
+    "ring",
+    "zuniq",
+    "RaggedArray",
+    "base_cell_relationship",
+    "cartesian_to_lonlat",
+    "lonlat_to_cartesian",
+    "resolve_ellipsoid",
+    "vertex_to_lonlat",
+]
