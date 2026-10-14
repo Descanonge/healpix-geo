@@ -109,7 +109,6 @@ __all__ = [
     "nested",
     "ring",
     "zuniq",
-    "slices",
     "geometry",
     "Bbox",
     "RaggedArray",
