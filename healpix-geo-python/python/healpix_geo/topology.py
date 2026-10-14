@@ -2,18 +2,20 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+import numpy as np
+
 from healpix_geo import _healpix_geo_python
+from healpix_geo.utils import _check_cell_ids
 
 if TYPE_CHECKING:
-    import numpy as np
-    import numpy.typing as npt
+    from numpy.typing import NDArray
 
-    from healpix_geo.typing import Direction
+    from healpix_geo.nested import Direction
 
 
 def base_cell_relationship(
     base_cell: int, direction: Direction
-) -> tuple[int, npt.NDArray[np.int32], npt.NDArray[np.int32]] | None:
+) -> tuple[int | None, NDArray[np.int8], NDArray[np.int8]]:
     """Return the adjacent base cell and relative coordinate orientation.
 
     Parameters
@@ -44,11 +46,6 @@ def base_cell_relationship(
     >>> target_cell is None
     True
     """
-    if not isinstance(base_cell, int):
-        raise TypeError("base_cell must be an integer")
-    elif base_cell not in range(0, 12):
-        raise ValueError(
-            f"base_cell must be an integer between 0 and 11, got {base_cell!r}"
-        )
+    _check_cell_ids(np.asarray(base_cell), 0)
 
     return _healpix_geo_python.base_cell_relationship(base_cell, direction)

@@ -6,19 +6,24 @@ import marray
 import numpy as np
 
 from healpix_geo import _healpix_geo_python
-from healpix_geo.utils import _check_depth
+from healpix_geo.utils import (
+    _check_depth,
+    validate_cell_ids,
+    validate_tuple2,
+    validate_tuple4,
+)
 
 if TYPE_CHECKING:
-    from typing import Literal
+    from typing import Any, Literal
 
-    import numpy.typing as npt
+    from numpy.typing import NDArray
 
-    from healpix_geo.typing import DepthType
+    from healpix_geo.typing import Array1D, ArrayLikeFloat, ArrayLikeInt, EllipsoidLike
 
 
 def to_nested(
-    ipix: npt.NDArray[np.uint64], num_threads: int = 0
-) -> tuple[npt.NDArray[np.uint64], DepthType]:
+    ipix: ArrayLikeInt, num_threads: int = 0
+) -> tuple[NDArray[np.uint64], NDArray[np.uint8]]:
     """Convert from zuniq to nested
 
     Parameters
@@ -56,14 +61,14 @@ def to_nested(
     >>> depth
     array([1, 3, 2, 4], dtype=uint8)
     """
-    ipix = np.atleast_1d(ipix).astype(np.uint64)
+    ipix = validate_cell_ids(ipix)
 
     return _healpix_geo_python.zuniq.to_nested(ipix, num_threads)
 
 
 def to_ring(
-    ipix: npt.NDArray[np.uint64], num_threads: int = 0
-) -> tuple[npt.NDArray[np.uint64], DepthType]:
+    ipix: NDArray[np.uint64], num_threads: int = 0
+) -> tuple[NDArray[np.uint64], NDArray[np.uint8]]:
     """Convert from zuniq to ring
 
     Parameters
@@ -101,12 +106,14 @@ def to_ring(
     >>> depth
     array([1, 3, 2, 4], dtype=uint8)
     """
-    ipix = np.atleast_1d(ipix).astype(np.uint64)
+    ipix = validate_cell_ids(ipix)
 
     return _healpix_geo_python.zuniq.to_ring(ipix, num_threads)
 
 
-def healpix_to_lonlat(ipix, ellipsoid, num_threads=0):
+def healpix_to_lonlat(
+    ipix: ArrayLikeInt, ellipsoid: EllipsoidLike, num_threads: int = 0
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
     r"""Get the longitudes and latitudes of the center of some HEALPix cells.
 
     Parameters
@@ -145,12 +152,18 @@ def healpix_to_lonlat(ipix, ellipsoid, num_threads=0):
     >>> lat
     array([2.85869025e-07, 1.42934512e-07, 1.42934512e-07])
     """
-    ipix = np.atleast_1d(ipix).astype(np.uint64)
+    ipix = validate_cell_ids(ipix)
 
     return _healpix_geo_python.zuniq.healpix_to_lonlat(ipix, ellipsoid, num_threads)
 
 
-def lonlat_to_healpix(longitude, latitude, depth, ellipsoid="sphere", num_threads=0):
+def lonlat_to_healpix(
+    longitude: ArrayLikeFloat,
+    latitude: ArrayLikeFloat,
+    depth: int,
+    ellipsoid: EllipsoidLike = "sphere",
+    num_threads: int = 0,
+) -> NDArray[np.uint64]:
     r"""Get the HEALPix indexes that contains specific points.
 
     Parameters
@@ -203,7 +216,9 @@ def lonlat_to_healpix(longitude, latitude, depth, ellipsoid="sphere", num_thread
     )
 
 
-def healpix_to_cartesian(ipix, ellipsoid="sphere", num_threads=0):
+def healpix_to_cartesian(
+    ipix: ArrayLikeInt, ellipsoid: EllipsoidLike = "sphere", num_threads: int = 0
+) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
     r"""Get the cartesian coordinates of the center of the given HEALPix cells.
 
     Parameters
@@ -244,13 +259,19 @@ def healpix_to_cartesian(ipix, ellipsoid="sphere", num_threads=0):
     >>> z
     array([4240471.60205904, 2121029.89621885, 2121029.89621885])
     """
-    ipix = np.atleast_1d(ipix)
-    ipix = ipix.astype(np.uint64)
+    ipix = validate_cell_ids(ipix)
 
     return _healpix_geo_python.zuniq.healpix_to_cartesian(ipix, ellipsoid, num_threads)
 
 
-def cartesian_to_healpix(x, y, z, depth, ellipsoid="sphere", num_threads=0):
+def cartesian_to_healpix(
+    x: ArrayLikeFloat,
+    y: ArrayLikeFloat,
+    z: ArrayLikeFloat,
+    depth: int,
+    ellipsoid: EllipsoidLike = "sphere",
+    num_threads: int = 0,
+) -> NDArray[np.uint64]:
     r"""Get the HEALPix indexes that contain specific points.
 
     Parameters
@@ -311,7 +332,9 @@ def cartesian_to_healpix(x, y, z, depth, ellipsoid="sphere", num_threads=0):
     )
 
 
-def vertices(ipix, ellipsoid, step=1, num_threads=0):
+def vertices(
+    ipix: ArrayLikeInt, ellipsoid: EllipsoidLike, step: int = 1, num_threads: int = 0
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
     """Get the longitudes and latitudes of the vertices of some HEALPix cells in zuniq encoding.
 
     This method returns the 4 vertices of each cell in `ipix`.
@@ -368,16 +391,16 @@ def vertices(ipix, ellipsoid, step=1, num_threads=0):
             [4.49999999e+01, 2.13443412e-07],
             [4.49999998e+01, 1.42295608e-07]]])
     """
-    ipix = np.atleast_1d(ipix).astype(np.uint64)
+    ipix = validate_cell_ids(ipix)
 
     return _healpix_geo_python.zuniq.vertices(ipix, ellipsoid, step, num_threads)
 
 
 def vertex_indices(
-    ipix: npt.NDArray[np.uint64],
+    ipix: NDArray[np.uint64],
     *,
     num_threads: int = 0,
-) -> npt.NDArray[np.uint64]:
+) -> NDArray[np.uint64]:
     """Get the indices of the 4 vertices of the given cells.
 
     Parameters
@@ -419,14 +442,19 @@ def vertex_indices(
            [1729382253957480448, 1729382251809996801, 1729382249662513152,
             1729382251809996800]], dtype=uint64)
     """
-    ipix = np.astype(np.atleast_1d(ipix), np.uint64)
+    ipix = validate_cell_ids(ipix)
 
     return _healpix_geo_python.zuniq.vertex_indices(ipix, num_threads)
 
 
 def bilinear_interpolation(
-    longitude, latitude, depth, *, ellipsoid="sphere", num_threads=0
-):
+    longitude: ArrayLikeFloat,
+    latitude: ArrayLikeFloat,
+    depth: int,
+    *,
+    ellipsoid: EllipsoidLike = "sphere",
+    num_threads: int = 0,
+) -> tuple[Any, Any]:
     """Get the cell ids and weights necessary to bilinearly interpolate the given values.
 
     Parameters
@@ -518,11 +546,11 @@ def bilinear_interpolation(
 
 
 def neighbours(
-    ipix: npt.NDArray[np.uint64],
+    ipix: ArrayLikeInt,
     *,
     connectivity: Literal["edge", "vertex", "all"] = "all",
     num_threads: int = 0,
-):
+) -> NDArray[np.int64]:
     """Get the direction-preserving immediate neighbours of some HEALPix cells at a given depth.
 
     Parameters
@@ -548,12 +576,14 @@ def neighbours(
         Missing directional positions are represented by ``-1`` and never shift
         other positions.
     """
-    ipix = np.astype(np.atleast_1d(ipix), np.uint64)
+    ipix = validate_cell_ids(ipix)
 
     return _healpix_geo_python.zuniq.neighbours(ipix, connectivity, num_threads)
 
 
-def kth_neighbours(ipix, ring, num_threads=0):
+def kth_neighbours(
+    ipix: ArrayLikeInt, ring: int, num_threads: int = 0
+) -> NDArray[np.int64]:
     """Get the kth ring of neighbouring cells around some HEALPix cells at a given depth.
 
     This method returns a :math:`N` x :math:`8 k` `np.uint64` numpy array containing the neighbours of each cell of the :math:`N` sized `ipix` array.
@@ -615,12 +645,14 @@ def kth_neighbours(ipix, ring, num_threads=0):
                    463856467968,        257698037760,        188978561024,
                    154618822656,         51539607552,         17179869184]])
     """
-    ipix = np.astype(np.atleast_1d(ipix), np.uint64)
+    ipix = validate_cell_ids(ipix)
 
     return _healpix_geo_python.zuniq.kth_neighbours(ipix, ring, num_threads)
 
 
-def kth_neighbourhood(ipix, ring, num_threads=0):
+def kth_neighbourhood(
+    ipix: ArrayLikeInt, ring: int, num_threads: int = 0
+) -> NDArray[np.int64]:
     """Get the kth ring neighbouring cells of some HEALPix cells.
 
     This method returns a :math:`N` x :math:`(2 k + 1)^2` `np.uint64` numpy array containing the neighbours of each cell of the :math:`N` sized `ipix` array.
@@ -711,12 +743,18 @@ def kth_neighbourhood(ipix, ring, num_threads=0):
                    188978561024,        154618822656,         51539607552,
                     17179869184]])
     """
-    ipix = np.astype(np.atleast_1d(ipix), np.uint64)
+    ipix = validate_cell_ids(ipix)
 
     return _healpix_geo_python.zuniq.kth_neighbourhood(ipix, ring, num_threads)
 
 
-def zone_coverage(bbox, depth, *, ellipsoid="sphere", flat=True):
+def zone_coverage(
+    bbox: tuple[float, float, float, float],
+    depth: int,
+    *,
+    ellipsoid: EllipsoidLike = "sphere",
+    flat: bool = True,
+) -> tuple[Array1D[np.uint64], Array1D[np.bool]]:
     """Search the cells covering the given bounding box
 
     Parameters
@@ -739,12 +777,22 @@ def zone_coverage(bbox, depth, *, ellipsoid="sphere", flat=True):
     """
     _check_depth(depth)
 
+    bbox = validate_tuple4(bbox, "bbox")
+
     return _healpix_geo_python.zuniq.zone_coverage(
         depth, bbox, ellipsoid=ellipsoid, flat=flat
     )
 
 
-def box_coverage(center, size, angle, depth, *, ellipsoid="sphere", flat=True):
+def box_coverage(
+    center: tuple[float, float],
+    size: tuple[float, float],
+    angle: float,
+    depth: int,
+    *,
+    ellipsoid: EllipsoidLike = "sphere",
+    flat: bool = True,
+) -> tuple[Array1D[np.uint64], Array1D[np.bool]]:
     """Search the cells covering the given box.
 
     Parameters
@@ -771,17 +819,21 @@ def box_coverage(center, size, angle, depth, *, ellipsoid="sphere", flat=True):
     """
     _check_depth(depth)
 
-    if not isinstance(center, tuple):
-        center = tuple(center)
-    if not isinstance(size, tuple):
-        size = tuple(size)
+    center = validate_tuple2(center, "center")
+    size = validate_tuple2(size, "size")
 
     return _healpix_geo_python.zuniq.box_coverage(
         depth, center, size, angle, ellipsoid=ellipsoid, flat=flat
     )
 
 
-def polygon_coverage(vertices, depth, *, ellipsoid="sphere", flat=True):
+def polygon_coverage(
+    vertices: ArrayLikeFloat,
+    depth: int,
+    *,
+    ellipsoid: EllipsoidLike = "sphere",
+    flat: bool = True,
+) -> tuple[Array1D[np.uint64], Array1D[np.bool]]:
     """Search the cells covering the given polygon.
 
     Parameters
@@ -807,14 +859,24 @@ def polygon_coverage(vertices, depth, *, ellipsoid="sphere", flat=True):
     """
     _check_depth(depth)
 
+    vertices = np.asarray(vertices, dtype=np.float64)
+    if vertices.ndim != 2 or vertices.shape[1] != 2:
+        raise IndexError("Vertices should be of shape (N, 2).")
+
     return _healpix_geo_python.zuniq.polygon_coverage(
         depth, vertices, ellipsoid=ellipsoid, flat=flat
     )
 
 
 def cone_coverage(
-    center, radius, depth, *, delta_depth=0, ellipsoid="sphere", flat=True
-):
+    center: tuple[float, float],
+    radius: float,
+    depth: int,
+    *,
+    delta_depth: int = 0,
+    ellipsoid: EllipsoidLike = "sphere",
+    flat: bool = True,
+) -> tuple[Array1D[np.uint64], Array1D[np.bool]]:
     """Search the cells covering the given cone
 
     Cone in this case means a circle on the surface of the reference ellipsoid.
@@ -844,8 +906,7 @@ def cone_coverage(
     """
     _check_depth(depth)
 
-    if not isinstance(center, tuple):
-        center = tuple(center)
+    center = validate_tuple2(center, "center")
 
     return _healpix_geo_python.zuniq.cone_coverage(
         depth, center, radius, delta_depth=delta_depth, ellipsoid=ellipsoid, flat=flat
@@ -853,15 +914,15 @@ def cone_coverage(
 
 
 def elliptical_cone_coverage(
-    center,
-    ellipse_geometry,
-    position_angle,
-    depth,
+    center: tuple[float, float],
+    ellipse_geometry: tuple[float, float],
+    position_angle: float,
+    depth: int,
     *,
-    delta_depth=0,
-    ellipsoid="sphere",
-    flat=True,
-):
+    delta_depth: int = 0,
+    ellipsoid: EllipsoidLike = "sphere",
+    flat: bool = True,
+) -> tuple[Array1D[np.uint64], Array1D[np.bool]]:
     """Search the cells covering the given elliptical cone.
 
     Elliptical cone in this case refers to an ellipse on the surface of the reference ellipsoid.
@@ -893,10 +954,8 @@ def elliptical_cone_coverage(
     """
     _check_depth(depth)
 
-    if not isinstance(center, tuple):
-        center = tuple(center)
-    if not isinstance(ellipse_geometry, tuple):
-        ellipse_geometry = tuple(ellipse_geometry)
+    center = validate_tuple2(center, "center")
+    ellipse_geometry = validate_tuple2(ellipse_geometry, "ellipse_geometry")
 
     return _healpix_geo_python.zuniq.elliptical_cone_coverage(
         depth,

@@ -1,13 +1,21 @@
 import numpy as np
+from numpy.typing import NDArray
 
 import healpix_geo.ellipsoid  # noqa: F401
 from healpix_geo import _healpix_geo_python, geometry, nested, ring, zuniq
 from healpix_geo._healpix_geo_python import RaggedArray
 from healpix_geo.geometry import Bbox
 from healpix_geo.mesh import vertex_to_lonlat
+from healpix_geo.typing import EllipsoidLike
 
 
-def cartesian_to_lonlat(x, y, z, ellipsoid="sphere", num_threads=0):
+def cartesian_to_lonlat(
+    x: float | NDArray[np.floating],
+    y: float | NDArray[np.floating],
+    z: float | NDArray[np.floating],
+    ellipsoid: EllipsoidLike = "sphere",
+    num_threads: int = 0,
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
     """Convert cartesian coordinates to geographic coordinates on the surface of the ellipsoid.
 
     This drops the height coordinate, resulting in a lossy conversion for coordinates that are not on the surface.
@@ -43,14 +51,19 @@ def cartesian_to_lonlat(x, y, z, ellipsoid="sphere", num_threads=0):
     array([41.93785391, 19.55202227, 19.55202227])
     """
 
-    x = np.atleast_1d(x).astype("float64")
-    y = np.atleast_1d(y).astype("float64")
-    z = np.atleast_1d(z).astype("float64")
+    x = np.atleast_1d(x).astype(np.float64)
+    y = np.atleast_1d(y).astype(np.float64)
+    z = np.atleast_1d(z).astype(np.float64)
 
     return _healpix_geo_python.cartesian_to_lonlat(x, y, z, ellipsoid, num_threads)
 
 
-def lonlat_to_cartesian(longitude, latitude, ellipsoid="sphere", num_threads=0):
+def lonlat_to_cartesian(
+    longitude: float | NDArray[np.floating],
+    latitude: float | NDArray[np.floating],
+    ellipsoid: EllipsoidLike = "sphere",
+    num_threads: int = 0,
+) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
     """Convert geographic coordinates to cartesian coordinates.
 
     Parameters
@@ -84,8 +97,8 @@ def lonlat_to_cartesian(longitude, latitude, ellipsoid="sphere", num_threads=0):
     >>> z
     array([4240471.60204581, 2121029.8965948 , 2121029.8965948 ])
     """
-    longitude = np.atleast_1d(longitude).astype("float64")
-    latitude = np.atleast_1d(latitude).astype("float64")
+    longitude = np.atleast_1d(longitude).astype(np.float64)
+    latitude = np.atleast_1d(latitude).astype(np.float64)
 
     return _healpix_geo_python.lonlat_to_cartesian(
         longitude, latitude, ellipsoid, num_threads

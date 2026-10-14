@@ -5,21 +5,21 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from healpix_geo import _healpix_geo_python
-from healpix_geo.utils import _check_depth
+from healpix_geo.utils import _check_depth, validate_cell_ids
 
 if TYPE_CHECKING:
-    import numpy.typing as npt
+    from numpy.typing import NDArray
 
-    from healpix_geo.typing import EllipsoidLike
+    from healpix_geo.typing import ArrayLikeInt, EllipsoidLike
 
 
 def vertex_to_lonlat(
-    vertex_ids: npt.NDArray[np.uint64],
+    vertex_ids: ArrayLikeInt,
     depth: int,
     *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
-) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
     """Longitude and latitude coordinates for the given vertex ids
 
     Parameters
@@ -64,12 +64,11 @@ def vertex_to_lonlat(
            [  0.       , -90.       ]])
     """
     _check_depth(depth)
-    depth = int(depth)
-    vertex_ids = np.astype(np.atleast_1d(vertex_ids), np.uint64)
+    vertex_ids = validate_cell_ids(vertex_ids, depth)
 
-    assert np.all(
-        vertex_ids < 12 * 4**depth + 2
-    ), f"Some vertex ids exceed the valid range for depth {depth}"
+    imax = 12 * 4**depth + 2
+    if np.any(vertex_ids >= imax):
+        raise ValueError(f"Some vertex ids are outside the valid range [0, {imax - 1}]")
 
     return _healpix_geo_python.vertex_to_lonlat(
         depth, vertex_ids, ellipsoid, num_threads

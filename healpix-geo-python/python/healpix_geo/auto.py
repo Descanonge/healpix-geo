@@ -1,11 +1,19 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from types import ModuleType
-from typing import Any, Literal
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
-import numpy.typing as npt
 
 from healpix_geo.typing import EllipsoidLike
+
+if TYPE_CHECKING:
+    from typing import Any
+
+    from numpy.typing import NDArray
+
+    from healpix_geo.typing import Array1D, ArrayLikeFloat, ArrayLikeInt
 
 
 def _dispatch_module(indexing_scheme: str) -> ModuleType:
@@ -41,14 +49,14 @@ class Grid:
     ellipsoid: EllipsoidLike = "sphere"
     """The reference ellipsoid of the grid."""
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if isinstance(self.ellipsoid, str):
             from healpix_geo.ellipsoid import resolve
 
             # normalize to an object or dict
             object.__setattr__(self, "ellipsoid", resolve(self.ellipsoid))
 
-    def _as_params(self):
+    def _as_params(self) -> dict:
         params = {"ellipsoid": self.ellipsoid}
         if self.indexing_scheme != "zuniq":
             params["depth"] = self.level
@@ -57,13 +65,13 @@ class Grid:
 
 
 def convert(
-    ipix: npt.NDArray[np.uint64],
+    ipix: ArrayLikeInt,
     grid: Grid,
     *,
     to: SchemeType,
-    level: npt.NDArray[np.uint8] | None = None,
+    level: NDArray[np.uint8] | None = None,
     num_threads: int = 0,
-) -> tuple[npt.NDArray[np.uint64], int | npt.NDArray[np.uint8]]:
+) -> tuple[NDArray[np.uint64], int | NDArray[np.uint8]]:
     """Convert the cell ids to a different indexing scheme
 
     Parameters
@@ -119,8 +127,8 @@ def convert(
 
 
 def healpix_to_lonlat(
-    ipix: npt.NDArray[np.uint64], grid: Grid, *, num_threads: int = 0
-) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
+    ipix: ArrayLikeInt, grid: Grid, *, num_threads: int = 0
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
     r"""Get the longitudes and latitudes of the center of some HEALPix cells.
 
     Parameters
@@ -157,12 +165,12 @@ def healpix_to_lonlat(
 
 
 def lonlat_to_healpix(
-    lon: npt.NDArray[np.float64],
-    lat: npt.NDArray[np.float64],
+    lon: ArrayLikeFloat,
+    lat: ArrayLikeFloat,
     grid: Grid,
     *,
     num_threads: int = 0,
-) -> npt.NDArray[np.uint64]:
+) -> NDArray[np.uint64]:
     r"""Get the HEALPix indexes that contains specific points.
 
     Parameters
@@ -201,8 +209,8 @@ def lonlat_to_healpix(
 
 
 def healpix_to_cartesian(
-    ipix: npt.NDArray[np.uint64], grid: Grid, num_threads: int = 0
-) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64], npt.NDArray[np.float64]]:
+    ipix: ArrayLikeInt, grid: Grid, num_threads: int = 0
+) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
     r"""Get the cartesian coordinates of the center of the given HEALPix cells.
 
     Parameters
@@ -249,12 +257,12 @@ def healpix_to_cartesian(
 
 
 def cartesian_to_healpix(
-    x: npt.NDArray[np.float64],
-    y: npt.NDArray[np.float64],
-    z: npt.NDArray[np.float64],
+    x: ArrayLikeFloat,
+    y: ArrayLikeFloat,
+    z: ArrayLikeFloat,
     grid: Grid,
     num_threads: int = 0,
-) -> npt.NDArray[np.uint64]:
+) -> NDArray[np.uint64]:
     r"""Get the HEALPix indexes that contain specific points.
 
     Parameters
@@ -303,8 +311,8 @@ def cartesian_to_healpix(
 
 
 def vertices(
-    ipix: npt.NDArray[np.uint64], grid: Grid, *, step: int = 1, num_threads: int = 0
-) -> (npt.NDArray[np.float64], npt.NDArray[np.float64]):
+    ipix: ArrayLikeInt, grid: Grid, *, step: int = 1, num_threads: int = 0
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
     """Get the longitudes and latitudes of the vertices of some HEALPix cells.
 
     This method returns the 4 vertices of each cell in `ipix`.
@@ -426,8 +434,8 @@ def vertices(
 
 
 def bilinear_interpolation(
-    longitude: npt.NDArray[np.floating],
-    latitude: npt.NDArray[np.floating],
+    longitude: ArrayLikeFloat,
+    latitude: ArrayLikeFloat,
     grid: Grid,
     *,
     num_threads: int = 0,
@@ -514,8 +522,8 @@ def bilinear_interpolation(
 
 
 def kth_neighbours(
-    ipix: npt.NDArray[np.uint64], grid: Grid, *, ring: int, num_threads: int = 0
-) -> npt.NDArray[np.int64]:
+    ipix: ArrayLikeInt, grid: Grid, *, ring: int, num_threads: int = 0
+) -> NDArray[np.int64]:
     """Get the kth ring neighbouring cells of some HEALPix cells.
 
     This method returns a :math:`N` x :math:`8 k` `np.uint64` numpy array containing the neighbours of each cell of the :math:`N` sized `ipix` array.
@@ -574,8 +582,8 @@ def kth_neighbours(
 
 
 def kth_neighbourhood(
-    ipix: npt.NDArray[np.uint64], grid: Grid, *, ring: int, num_threads: int = 0
-) -> npt.NDArray[np.int64]:
+    ipix: ArrayLikeInt, grid: Grid, *, ring: int, num_threads: int = 0
+) -> NDArray[np.int64]:
     """Get the kth ring neighbouring cells of some HEALPix cells.
 
     This method returns a :math:`N` x :math:`(2 k + 1)^2` `np.uint64` numpy array containing the neighbours of each cell of the :math:`N` sized `ipix` array.
@@ -653,8 +661,8 @@ def kth_neighbourhood(
 def zone_coverage(
     bbox: tuple[float, float, float, float], grid: Grid, *, flat: bool = True
 ) -> (
-    tuple[npt.NDArray[np.uint64], npt.NDArray[np.uint8], npt.NDArray[np.bool]]
-    | tuple[npt.NDArray[np.uint64], npt.NDArray[np.bool]]
+    tuple[Array1D[np.uint64], Array1D[np.uint8], Array1D[np.bool]]
+    | tuple[Array1D[np.uint64], Array1D[np.bool]]
 ):
     """Search the cells covering the given bounding box
 
@@ -684,15 +692,15 @@ def zone_coverage(
 
 
 def box_coverage(
-    center: tuple[float, float] | npt.NDArray[np.float64],
-    size: tuple[float, float] | npt.NDArray[np.float64],
+    center: tuple[float, float],
+    size: tuple[float, float],
     angle: float,
     grid: Grid,
     *,
     flat: bool = True,
 ) -> (
-    tuple[npt.NDArray[np.uint64], npt.NDArray[np.uint8], npt.NDArray[np.bool]]
-    | tuple[npt.NDArray[np.uint64], npt.NDArray[np.bool]]
+    tuple[Array1D[np.uint64], Array1D[np.uint8], Array1D[np.bool]]
+    | tuple[Array1D[np.uint64], Array1D[np.bool]]
 ):
     """Search the cells covering the given box.
 
@@ -731,10 +739,10 @@ def box_coverage(
 
 
 def polygon_coverage(
-    vertices: npt.NDArray[np.float64], grid: Grid, *, flat: bool = True
+    vertices: ArrayLikeFloat, grid: Grid, *, flat: bool = True
 ) -> (
-    tuple[npt.NDArray[np.uint64], npt.NDArray[np.uint8], npt.NDArray[np.bool]]
-    | tuple[npt.NDArray[np.uint64], npt.NDArray[np.bool]]
+    tuple[Array1D[np.uint64], Array1D[np.uint8], Array1D[np.bool]]
+    | tuple[Array1D[np.uint64], Array1D[np.bool]]
 ):
     """Search the cells covering the given polygon.
 
@@ -764,15 +772,15 @@ def polygon_coverage(
 
 
 def cone_coverage(
-    center: tuple[float, float] | npt.NDArray[np.float64],
+    center: tuple[float, float],
     radius: float,
     grid: Grid,
     *,
     delta_level: int = 0,
     flat: bool = True,
 ) -> (
-    tuple[npt.NDArray[np.uint64], npt.NDArray[np.uint8], npt.NDArray[np.bool]]
-    | tuple[npt.NDArray[np.uint64], npt.NDArray[np.bool]]
+    tuple[Array1D[np.uint64], Array1D[np.uint8], Array1D[np.bool]]
+    | tuple[Array1D[np.uint64], Array1D[np.bool]]
 ):
     """Search the cells covering the given cone
 
@@ -811,17 +819,16 @@ def cone_coverage(
 
 
 def elliptical_cone_coverage(
-    center,
-    ellipse_geometry,
-    position_angle,
-    grid,
+    center: tuple[float, float],
+    ellipse_geometry: tuple[float, float],
+    position_angle: float,
+    grid: Grid,
     *,
-    delta_level=0,
-    ellipsoid="sphere",
-    flat=True,
+    delta_level: int = 0,
+    flat: bool = True,
 ) -> (
-    tuple[npt.NDArray[np.uint64], npt.NDArray[np.uint8], npt.NDArray[np.bool]]
-    | tuple[npt.NDArray[np.uint64], npt.NDArray[np.bool]]
+    tuple[Array1D[np.uint64], Array1D[np.uint8], Array1D[np.bool]]
+    | tuple[Array1D[np.uint64], Array1D[np.bool]]
 ):
     """Search the cells covering the given elliptical cone.
 
