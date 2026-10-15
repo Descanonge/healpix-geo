@@ -28,7 +28,7 @@ def base_cell_relationship(
     -------
     target_cell : int
         The id of the target base cell.
-    displacement_i, displacement_j : array-like of int32
+    displacement_i, displacement_j : numpy.ndarray of numpy.int8
         The change in direction between the base vectors of the source and target base cells.
 
     Examples

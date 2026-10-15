@@ -22,7 +22,7 @@ def cartesian_to_lonlat(
 
     Parameters
     ----------
-    x, y, z : array-like
+    x, y, z : array-like of float
         The cartesian coordinates in meters. All arrays must have the exactly same shape (no broadcasting).
     ellipsoid : ellipsoid-like, default: "sphere"
         The ellipsoid to evaluate the coordinates on.
@@ -33,7 +33,7 @@ def cartesian_to_lonlat(
 
     Returns
     -------
-    lon, lat : array-like
+    lon, lat : numpy.ndarray of numpy.float64
         The equivalent geographic coordinates.
 
     Examples
@@ -68,7 +68,7 @@ def lonlat_to_cartesian(
 
     Parameters
     ----------
-    longitude, latitude : array-like
+    longitude, latitude : array-like of float
         The geographic coordinates in degrees. All arrays must have the exactly same shape (no broadcasting).
     ellipsoid : ellipsoid-like, default: "sphere"
         The ellipsoid to evaluate the coordinates on.
@@ -79,7 +79,7 @@ def lonlat_to_cartesian(
 
     Returns
     -------
-    x, y, z : array-like
+    x, y, z : numpy.ndarray of numpy.float64
         The equivalent cartesian coordinates.
 
     Examples

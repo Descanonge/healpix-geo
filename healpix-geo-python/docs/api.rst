@@ -117,6 +117,10 @@ Vectorisation
 
 All functions are **vectorized** and accept:
 
-- Scalars (automatically converted to arrays)
-- 1D NumPy arrays
-- Multidimensional NumPy arrays (depending on the function)
+- Scalars (automatically converted to 1D arrays)
+- NumPy arrays (1D or ND depending on the function)
+- (Nested) sequences
+
+HEALPix indices should be represented as 64-bits unsigned integers, but all
+functions will accept signed integers as well. Inputs will systematically be
+checked for values outside the range `[0, 12*4**depth]`.

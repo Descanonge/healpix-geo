@@ -28,8 +28,8 @@ def to_nested(
 
     Parameters
     ----------
-    ipix : `numpy.ndarray`
-        The HEALPix cell indexes in the zuniq scheme given as a `np.uint64` numpy array.
+    ipix : array-like of int
+        The HEALPix cell indexes in the zuniq scheme.
     num_threads : int, optional
         Specifies the number of threads to use for the computation. Default to 0 means
         it will choose the number of threads based on the RAYON_NUM_THREADS environment variable (if set),
@@ -37,10 +37,10 @@ def to_nested(
 
     Returns
     -------
-    nested : array-like of int
+    nested : numpy.ndarray of numpy.uint64
         The cell ids in the nested scheme.
-    depth : int or array-like of int
-        The HEALPix cell depth given as scalar or a `np.uint8` numpy array.
+    depth : numpy.ndarray of numpy.uint8
+        The HEALPix cell depth for every cell.
 
     Examples
     --------
@@ -67,14 +67,14 @@ def to_nested(
 
 
 def to_ring(
-    ipix: NDArray[np.uint64], num_threads: int = 0
+    ipix: ArrayLikeInt, num_threads: int = 0
 ) -> tuple[NDArray[np.uint64], NDArray[np.uint8]]:
     """Convert from zuniq to ring
 
     Parameters
     ----------
-    ipix : `numpy.ndarray`
-        The HEALPix cell indexes in the zuniq scheme given as a `np.uint64` numpy array.
+    ipix : array-like of int
+        The HEALPix cell indexes in the zuniq scheme.
     num_threads : int, optional
         Specifies the number of threads to use for the computation. Default to 0 means
         it will choose the number of threads based on the RAYON_NUM_THREADS environment variable (if set),
@@ -82,10 +82,10 @@ def to_ring(
 
     Returns
     -------
-    ring : array-like of int
+    ring : numpy.ndarray of numpy.uint64
         The cell ids in the ring scheme.
-    depth : int or array-like of int
-        The HEALPix cell depth given as scalar or a `np.uint8` numpy array.
+    depth : numpy.ndarray of numpy.uint8
+        The HEALPix cell depth for every cell.
 
     Examples
     --------
@@ -118,8 +118,8 @@ def healpix_to_lonlat(
 
     Parameters
     ----------
-    ipix : `numpy.ndarray`
-        The HEALPix cell indexes given as a `np.uint64` numpy array.
+    ipix : array-like of int
+        The HEALPix cell indexes.
     ellipsoid : ellipsoid-like, default: "sphere"
         Reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
@@ -131,7 +131,7 @@ def healpix_to_lonlat(
 
     Returns
     -------
-    lon, lat : array-like
+    lon, lat : numpy.ndarray of numpy.float64
         The coordinates of the center of the HEALPix cells given as a longitude, latitude tuple.
 
     Raises
@@ -168,12 +168,12 @@ def lonlat_to_healpix(
 
     Parameters
     ----------
-    lon : array-like
+    lon : array-like of float
         The longitudes of the input points, in degrees.
-    lat : array-like
+    lat : array-like of float
         The latitudes of the input points, in degrees.
-    depth : int or array-like of int
-        The HEALPix cell depth given as a `np.uint8` numpy array.
+    depth : int
+        The HEALPix cell depth.
     ellipsoid : ellipsoid-like, default: "sphere"
         Reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
@@ -185,8 +185,8 @@ def lonlat_to_healpix(
 
     Returns
     -------
-    ipix : `numpy.ndarray`
-        A numpy array containing all the HEALPix cell indexes stored as `np.uint64`.
+    ipix : numpy.ndarray of numpy.uint64
+        A numpy array containing all the HEALPix cell indexes.
 
     Raises
     ------
@@ -223,8 +223,8 @@ def healpix_to_cartesian(
 
     Parameters
     ----------
-    ipix : `numpy.ndarray`
-        The HEALPix cell indexes given as a `np.uint64` numpy array.
+    ipix : array-like of int
+        The HEALPix cell indexes.
     ellipsoid : ellipsoid-like, default: "sphere"
         Reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
@@ -236,7 +236,7 @@ def healpix_to_cartesian(
 
     Returns
     -------
-    x, y, z : array-like
+    x, y, z : numpy.ndarray of numpy.float64
         The coordinates of the center of the HEALPix cells.
 
     Raises
@@ -276,14 +276,14 @@ def cartesian_to_healpix(
 
     Parameters
     ----------
-    x : array-like
+    x : array-like of float
         The x coordinate of the input points, in meters.
-    y : array-like
+    y : array-like of float
         The y coordinate of the input points, in meters.
-    z : array-like
+    z : array-like of float
         The z coordinate of the input points, in meters.
-    depth : int or array-like of int
-        The HEALPix cell depth given as a `np.uint8` numpy array.
+    depth : int
+        The HEALPix cell depth.
     ellipsoid : ellipsoid-like, default: "sphere"
         Reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
@@ -295,8 +295,8 @@ def cartesian_to_healpix(
 
     Returns
     -------
-    ipix : `numpy.ndarray`
-        A numpy array containing all the HEALPix cell indexes stored as `np.uint64`.
+    ipix : numpy.ndarray of numpy.uint64
+        A numpy array containing all the HEALPix cell indexes.
 
     Raises
     ------
@@ -341,8 +341,8 @@ def vertices(
 
     Parameters
     ----------
-    ipix : `numpy.ndarray`
-        The HEALPix cell indexes given as a `np.uint64` numpy array.
+    ipix : array-like of int
+        The HEALPix cell indexes.
     ellipsoid : ellipsoid-like, default: "sphere"
         Reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
@@ -359,9 +359,9 @@ def vertices(
 
     Returns
     -------
-    longitude, latitude : array-like
+    longitude, latitude : numpy.ndarray of numpy.float64
         The sky coordinates of the 4 vertices of the HEALPix cells.
-        `lon` and `lat` are of shape :math:`N` x :math:`4` numpy arrays where N is the number of HEALPix cell given in `ipix`.
+        `lon` and `lat` are of shape :math:`N` x :math:`4` arrays where N is the number of HEALPix cell given in `ipix`.
 
     Raises
     ------
@@ -405,7 +405,7 @@ def vertex_indices(
 
     Parameters
     ----------
-    ipix : array-like of numpy.uint64
+    ipix : array-like of int
         The HEALPix cell indexes.
     num_threads : int, optional
         Specifies the number of threads to use for the computation. Default to 0 means
@@ -414,7 +414,7 @@ def vertex_indices(
 
     Returns
     -------
-    vertex_ids : array-like of numpy.uint64
+    vertex_ids : numpy.ndarray of numpy.uint64
         The identifiers of vertices of the given cells.
 
     Raises
@@ -457,13 +457,17 @@ def bilinear_interpolation(
 ) -> tuple[Any, Any]:
     """Get the cell ids and weights necessary to bilinearly interpolate the given values.
 
+    The returned array are masked where the weights are zero. They are created using
+    `marray <https://pypi.org/project/marray/>`__ and thus are compatible with the
+    Python array API standard.
+
     Parameters
     ----------
-    longitude : array-like
+    longitude : array-like of float
         The longitudes of the input points, in degrees.
-    latitude : array-like
+    latitude : array-like of float
         The latitudes of the input points, in degrees.
-    depth : int or array-like
+    depth : int
         The depth of the HEALPix cells.
     ellipsoid : ellipsoid-like, default: "sphere"
         Reference ellipsoid to evaluate healpix on. If the reference ellipsoid
@@ -476,9 +480,9 @@ def bilinear_interpolation(
 
     Returns
     -------
-    cell_ids : array-like
+    cell_ids : masked numpy.ndarray of numpy.uint64
         The neighbours above and below the given points as a :math:`N` x :math:`4` masked array.
-    weights : array-like
+    weights : masked numpy.ndarray of numpy.float64
         The associated weights as a :math:`N` x :math:`4` masked array.
 
     Raises
@@ -555,8 +559,8 @@ def neighbours(
 
     Parameters
     ----------
-    ipix : `numpy.ndarray`
-        The HEALPix cell indexes given as a `np.uint64` numpy array.
+    ipix : array-like of int
+        The HEALPix cell indexes.
     connectivity : {"edge", "vertex", "all"}, default: "all"
         The connectivity of the neighbours. The different kinds are:
         - ``"edge"`` connectivity returns the four edge-sharing neighbours in ``SW, NW, NE, SE`` order.
@@ -569,8 +573,8 @@ def neighbours(
 
     Returns
     -------
-    neighbours : `numpy.ndarray`
-        A :math:`N` x :math:`n` ``np.int64`` array, with :math:`n = 4` for edge or vertex
+    neighbours : numpy.ndarray of numpy.int64
+        A :math:`N` x :math:`n` array, with :math:`n = 4` for edge or vertex
         connectivity and :math:`n = 8` for both together. Scalar inputs are
         normalized to one-dimensional input, producing shape ``(1, 4)`` or ``(1, 8)``.
         Missing directional positions are represented by ``-1`` and never shift
@@ -592,8 +596,8 @@ def kth_neighbours(
 
     Parameters
     ----------
-    ipix : `numpy.ndarray`
-        The HEALPix cell indexes given as a `np.uint64` numpy array.
+    ipix : array-like of int
+        The HEALPix cell indexes.
     ring : int
         The number of rings. `ring=0` returns just the input cell ids, `ring=1` returns the 8 (or 7) immediate
         neighbours, `ring=2` returns the 16 neighbours of the immediate neighbours, and so on.
@@ -604,8 +608,8 @@ def kth_neighbours(
 
     Returns
     -------
-    neighbours : `numpy.ndarray`
-        A :math:`N` x :math:`8 k` `np.int64` numpy array containing the kth ring neighbours of each cell.
+    neighbours : numpy.ndarray of numpy.int64
+        A :math:`N` x :math:`8 k` array containing the kth ring neighbours of each cell.
 
     Raises
     ------
@@ -661,8 +665,8 @@ def kth_neighbourhood(
 
     Parameters
     ----------
-    ipix : `numpy.ndarray`
-        The HEALPix cell indexes given as a `np.uint64` numpy array.
+    ipix : array-like of int
+        The HEALPix cell indexes.
     ring : int
         The number of rings. `ring=0` returns just the input cell ids, `ring=1` returns the 8 (or 7) immediate
         neighbours, `ring=2` returns the 8 (or 7) immediate neighbours plus their immediate neighbours (a total of 24 cells), and so on.
@@ -673,8 +677,8 @@ def kth_neighbourhood(
 
     Returns
     -------
-    neighbours : `numpy.ndarray`
-        A :math:`N` x :math:`(2 k + 1)^2` `np.int64` numpy array containing the kth ring neighbours of each cell.
+    neighbours : numpy.ndarray of numpy.int64
+        A :math:`N` x :math:`(2 k + 1)^2` array containing the kth ring neighbours of each cell.
         The :math:`5^{th}` element corresponds to the index of HEALPix cell from which the neighbours are evaluated.
         All its 8 neighbours occup the remaining elements of the line.
 
@@ -770,9 +774,9 @@ def zone_coverage(
 
     Returns
     -------
-    cell_ids : numpy.ndarray
+    cell_ids : numpy.ndarray of numpy.uint64
         The rasterized cell ids.
-    fully_covered : numpy.ndarray
+    fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the bounding box.
     """
     _check_depth(depth)
@@ -797,10 +801,11 @@ def box_coverage(
 
     Parameters
     ----------
-    center : numpy.ndarray or tuple of float
+    center : tuple of float or numpy.ndarray of float
         The center of the box, either as a 2-sized array or as a 2-tuple of float.
-    size : numpy.ndarray or tuple of float
-        The size of the box, in degree.
+    size : tuple of float or numpy.ndarray of float
+        The size of the box, in degree, either as a 2-sized array of as a 2-tuple of
+        float.
     angle : float
         The angle by which the box is rotated, in degree.
     depth : int
@@ -812,9 +817,9 @@ def box_coverage(
 
     Returns
     -------
-    cell_ids : numpy.ndarray
+    cell_ids : numpy.ndarray of numpy.uint64
         The rasterized cell ids.
-    fully_covered : numpy.ndarray
+    fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the box.
     """
     _check_depth(depth)
@@ -838,8 +843,8 @@ def polygon_coverage(
 
     Parameters
     ----------
-    vertices : numpy.ndarray
-        The vertices of the polygon without holes. Must be an array of shape ``(n, 2)``.
+    vertices : array-like of float
+        The vertices of the polygon without holes. Must be of shape ``(n, 2)``.
     depth : int
         The maximum depth of the cells to be returned.
     ellipsoid : ellipsoid-like, default: "sphere"
@@ -852,9 +857,9 @@ def polygon_coverage(
 
     Returns
     -------
-    cell_ids : numpy.ndarray
+    cell_ids : numpy.ndarray of numpy.uint64
         The rasterized cell ids.
-    fully_covered : numpy.ndarray
+    fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the polygon.
     """
     _check_depth(depth)
@@ -883,8 +888,8 @@ def cone_coverage(
 
     Parameters
     ----------
-    center : numpy.ndarray or tuple of float
-        The center of the box, either as a 2-sized array or as a 2-tuple of float.
+    center : tuple of float or numpy.ndarray of float
+        The center of the cone, either as a 2-sized array or as a 2-tuple of float.
     radius : float
         The radius of the cone, in degree.
     depth : int
@@ -899,9 +904,9 @@ def cone_coverage(
 
     Returns
     -------
-    cell_ids : numpy.ndarray
+    cell_ids : numpy.ndarray of numpy.uint64
         The rasterized cell ids.
-    fully_covered : numpy.ndarray
+    fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the circle.
     """
     _check_depth(depth)
@@ -929,9 +934,9 @@ def elliptical_cone_coverage(
 
     Parameters
     ----------
-    center : numpy.ndarray or tuple of float
-        The center of the box, either as a 2-sized array or as a 2-tuple of float.
-    ellipse_geometry : numpy.ndarray or tuple of float
+    center : tuple of float or numpy.ndarray of float
+        The center of the cone, either as a 2-sized array or as a 2-tuple of float.
+    ellipse_geometry : tuple of float or numpy.ndarray of float
         The semimajor and semimajor axis, as a 2-sized array or as a 2-tuple of float.
     position_angle : float
         The orientation of the ellipse.
@@ -947,9 +952,9 @@ def elliptical_cone_coverage(
 
     Returns
     -------
-    cell_ids : numpy.ndarray
+    cell_ids : numpy.ndarray of numpy.uint64
         The rasterized cell ids.
-    fully_covered : numpy.ndarray
+    fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the ellipse.
     """
     _check_depth(depth)
