@@ -7,7 +7,6 @@ import numpy as np
 
 from healpix_geo import _healpix_geo_python
 from healpix_geo.utils import (
-    _check_cell_ids,
     _check_depth,
     _check_ring,
     validate_cell_ids,
@@ -1013,8 +1012,8 @@ def zone_coverage(
 
 
 def box_coverage(
-    center: tuple[float, float],
-    size: tuple[float, float],
+    center: tuple[float, float] | Array1D[np.floating],
+    size: tuple[float, float] | Array1D[np.floating],
     angle: float,
     depth: int,
     *,
@@ -1100,7 +1099,7 @@ def polygon_coverage(
 
 
 def cone_coverage(
-    center: tuple[float, float],
+    center: tuple[float, float] | Array1D[np.floating],
     radius: float,
     depth: int,
     *,
@@ -1151,8 +1150,8 @@ def cone_coverage(
 
 
 def elliptical_cone_coverage(
-    center: tuple[float, float],
-    ellipse_geometry: tuple[float, float],
+    center: tuple[float, float] | Array1D[np.floating],
+    ellipse_geometry: tuple[float, float] | Array1D[np.floating],
     position_angle: float,
     depth: int,
     *,

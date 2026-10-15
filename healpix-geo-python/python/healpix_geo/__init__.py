@@ -6,13 +6,13 @@ from healpix_geo import _healpix_geo_python, geometry, nested, ring, zuniq
 from healpix_geo._healpix_geo_python import RaggedArray
 from healpix_geo.geometry import Bbox
 from healpix_geo.mesh import vertex_to_lonlat
-from healpix_geo.typing import EllipsoidLike
+from healpix_geo.typing import ArrayLikeFloat, EllipsoidLike
 
 
 def cartesian_to_lonlat(
-    x: float | NDArray[np.floating],
-    y: float | NDArray[np.floating],
-    z: float | NDArray[np.floating],
+    x: ArrayLikeFloat,
+    y: ArrayLikeFloat,
+    z: ArrayLikeFloat,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
@@ -59,8 +59,8 @@ def cartesian_to_lonlat(
 
 
 def lonlat_to_cartesian(
-    longitude: float | NDArray[np.floating],
-    latitude: float | NDArray[np.floating],
+    longitude: ArrayLikeFloat,
+    latitude: ArrayLikeFloat,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:

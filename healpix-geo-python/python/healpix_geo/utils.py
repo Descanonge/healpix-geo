@@ -6,7 +6,7 @@ from typing import TypeVar, cast
 import numpy as np
 from numpy.typing import NDArray
 
-from healpix_geo.typing import ArrayLikeInt
+from healpix_geo.typing import Array1D, ArrayLikeInt
 
 
 def _check_depth(depth: ArrayLikeInt) -> None:
@@ -75,22 +75,27 @@ def validate_cell_ids(
 _T = TypeVar("_T")
 
 
-def _check_tuple_length(seq: Sequence, length: int, *, name: str = "") -> None:
+def _check_tuple_length(
+    seq: Sequence | Array1D, length: int, *, name: str = ""
+) -> None:
     """Check sequence is of correct length."""
-    if len(seq) != length:
+    if len(seq) != length or (isinstance(seq, np.ndarray) and seq.ndim != 1):
         msg = f"Expected tuple of length {length}"
         if name:
-            msg += f" for argument '{name}"
+            msg += f" for argument '{name}'"
+        msg += f", received '{seq}'"
         raise IndexError(msg)
 
 
-def validate_tuple2(seq: Sequence[_T], name: str = "") -> tuple[_T, _T]:
+def validate_tuple2(seq: Sequence[float] | Array1D, name: str = "") -> tuple[_T, _T]:
     """Check sequence is of length 2 and return as a tuple."""
     _check_tuple_length(seq, 2, name=name)
     return cast(tuple[_T, _T], tuple(seq))
 
 
-def validate_tuple4(seq: Sequence[_T], name: str = "") -> tuple[_T, _T, _T, _T]:
+def validate_tuple4(
+    seq: Sequence[_T] | Array1D, name: str = ""
+) -> tuple[_T, _T, _T, _T]:
     """Check sequence is of length 4 and return as a tuple."""
     _check_tuple_length(seq, 4, name=name)
     return cast(tuple[_T, _T, _T, _T], tuple(seq))

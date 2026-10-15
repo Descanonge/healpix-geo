@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Literal
 import numpy as np
 
 from healpix_geo.typing import EllipsoidLike
+from healpix_geo.utils import validate_cell_ids
 
 if TYPE_CHECKING:
     from typing import Any
@@ -69,9 +70,9 @@ def convert(
     grid: Grid,
     *,
     to: SchemeType,
-    level: NDArray[np.uint8] | None = None,
+    level: int | NDArray[np.uint8] | None = None,
     num_threads: int = 0,
-) -> tuple[NDArray[np.uint64], int | NDArray[np.uint8]]:
+) -> NDArray[np.uint64] | tuple[NDArray[np.uint64], int | NDArray[np.uint8]]:
     """Convert the cell ids to a different indexing scheme
 
     Parameters
@@ -101,7 +102,7 @@ def convert(
     """
     base_indexing_schemes = {"nested", "ring"}
     if grid.indexing_scheme == to:
-        return ipix
+        return validate_cell_ids(ipix)
 
     params = {"num_threads": num_threads}
     if grid.indexing_scheme not in base_indexing_schemes and level is not None:
@@ -692,8 +693,8 @@ def zone_coverage(
 
 
 def box_coverage(
-    center: tuple[float, float],
-    size: tuple[float, float],
+    center: tuple[float, float] | Array1D[np.floating],
+    size: tuple[float, float] | Array1D[np.floating],
     angle: float,
     grid: Grid,
     *,
@@ -772,7 +773,7 @@ def polygon_coverage(
 
 
 def cone_coverage(
-    center: tuple[float, float],
+    center: tuple[float, float] | Array1D[np.floating],
     radius: float,
     grid: Grid,
     *,
@@ -819,8 +820,8 @@ def cone_coverage(
 
 
 def elliptical_cone_coverage(
-    center: tuple[float, float],
-    ellipse_geometry: tuple[float, float],
+    center: tuple[float, float] | Array1D[np.floating],
+    ellipse_geometry: tuple[float, float] | Array1D[np.floating],
     position_angle: float,
     grid: Grid,
     *,
