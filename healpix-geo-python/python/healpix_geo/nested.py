@@ -436,9 +436,27 @@ def base_cell_coordinates_to_healpix(
     i_ = np.atleast_1d(i)
     j_ = np.atleast_1d(j)
 
-    _check_cell_ids(base_cell_, 0)
-    _check_cell_ids(i_, depth_)
-    _check_cell_ids(j_, depth_)
+    if base_cell_.shape != i_.shape or base_cell_.shape != j_.shape:
+        raise ValueError(
+            "All arrays ust have the same shape. Got "
+            f"base_cell={base_cell_.shape}, i={i_.shape}, and j={j_.shape}."
+        )
+    if (
+        not isinstance(depth_, int) and depth_.ndim > 0
+    ) and depth_.shape != base_cell_.shape:
+        raise ValueError(
+            "An array valued depth must have the same shape as the other arrays."
+            f" Got {depth_.shape}."
+        )
+
+    if np.any(base_cell_ < 0) or np.any(base_cell_ > 11):
+        raise ValueError("Base cell must be in range [0, 11].")
+
+    nside = 2**depth_
+    if np.any(i_ < 0) or np.any(i_ >= nside):
+        raise ValueError("i must be in the [0, 2**depth - 1] closed range.")
+    if np.any(j_ < 0) or np.any(j_ >= nside):
+        raise ValueError("j must be in the [0, 2**depth - 1] closed range.")
 
     return _healpix_geo_python.nested.base_cell_coordinates_to_healpix(
         np.ascontiguousarray(base_cell_, dtype=np.uint8),

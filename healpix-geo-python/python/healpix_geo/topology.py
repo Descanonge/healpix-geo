@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from healpix_geo import _healpix_geo_python
-from healpix_geo.utils import _check_cell_ids
 
 if TYPE_CHECKING:
     from numpy.typing import NDArray
@@ -46,6 +45,7 @@ def base_cell_relationship(
     >>> target_cell is None
     True
     """
-    _check_cell_ids(np.asarray(base_cell), 0)
+    if base_cell < 0 or base_cell > 11:
+        raise ValueError("Base cell must be in range [0, 11].")
 
     return _healpix_geo_python.base_cell_relationship(base_cell, direction)
