@@ -75,15 +75,22 @@ def validate_cell_ids(
 _T = TypeVar("_T")
 
 
-def validate_tuple2(seq: Sequence[_T], name: str) -> tuple[_T, _T]:
+def _check_tuple_length(seq: Sequence, length: int, *, name: str = "") -> None:
+    """Check sequence is of correct length."""
+    if len(seq) != length:
+        msg = f"Expected tuple of length {length}"
+        if name:
+            msg += f" for argument '{name}"
+        raise IndexError(msg)
+
+
+def validate_tuple2(seq: Sequence[_T], name: str = "") -> tuple[_T, _T]:
     """Check sequence is of length 2 and return as a tuple."""
-    if len(seq) != 2:
-        raise IndexError(f"Expected tuple of length 2 for argument '{name}'")
+    _check_tuple_length(seq, 2, name=name)
     return cast(tuple[_T, _T], tuple(seq))
 
 
-def validate_tuple4(seq: Sequence[_T], name: str) -> tuple[_T, _T, _T, _T]:
+def validate_tuple4(seq: Sequence[_T], name: str = "") -> tuple[_T, _T, _T, _T]:
     """Check sequence is of length 4 and return as a tuple."""
-    if len(seq) != 4:
-        raise IndexError(f"Expected tuple of length 4 for argument '{name}'")
+    _check_tuple_length(seq, 4, name=name)
     return cast(tuple[_T, _T, _T, _T], tuple(seq))
