@@ -27,24 +27,28 @@ def _check_ring(depth: int | NDArray[np.uint8], ring: int) -> None:
         )
 
 
-def _check_cell_ids(
-    cell_ids: NDArray[np.integer], depth: int | NDArray[np.uint8]
-) -> None:
+def _check_cell_ids(cell_ids: ArrayLikeInt, depth: ArrayLikeInt | None = None) -> None:
     """Check cell ids are in valid range [0, N].
 
     If depth is an array, check it has the same shape as cell ids.
     """
+    cell_ids_ = np.atleast_1d(cell_ids)
+    if depth is None:
+        if np.any(cell_ids_ < 0):
+            raise ValueError("The input HEALPix cells contains a negative value.")
+        return
+
     depth_ = np.asarray(depth, dtype=np.uint64)
     npix = 12 * 4**depth_
 
-    if np.any(cell_ids >= npix) or np.any(cell_ids < 0):
+    if depth_.ndim > 0 and cell_ids_.shape != depth_.shape:
         raise ValueError(
-            f"The input HEALPix cells contains a value out of [0, {npix - 1}]"
+            "An array valued depth must have the same shape as the cell ids."
         )
 
-    if depth_.ndim > 0 and cell_ids.shape != depth_.shape:
+    if np.any(cell_ids_ >= npix) or np.any(cell_ids_ < 0):
         raise ValueError(
-            "A array valued depth must have the same shape as the cell ids"
+            f"The input HEALPix cells contains a value out of [0, {npix - 1}]"
         )
 
 
@@ -64,12 +68,7 @@ def validate_cell_ids(
     are below max index and have same shape.
     """
     cell_ids_ = np.asarray(cell_ids)
-    if depth is None:
-        if np.any(cell_ids_ < 0):
-            raise ValueError("The input HEALPix cells contains a negative value.")
-    else:
-        depth_ = np.asarray(depth)
-        _check_cell_ids(cell_ids_, depth_)
+    _check_cell_ids(cell_ids_, depth)
     return np.atleast_1d(cell_ids_.astype(np.uint64))
 
 
