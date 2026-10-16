@@ -14,6 +14,7 @@ def cartesian_to_lonlat(
     x: ArrayLikeFloat,
     y: ArrayLikeFloat,
     z: ArrayLikeFloat,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
@@ -63,6 +64,7 @@ def cartesian_to_lonlat(
 def lonlat_to_cartesian(
     longitude: ArrayLikeFloat,
     latitude: ArrayLikeFloat,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:

@@ -222,7 +222,7 @@ def lonlat_to_healpix(
 
 
 def healpix_to_cartesian(
-    ipix: ArrayLikeInt, grid: Grid, num_threads: int = 0
+    ipix: ArrayLikeInt, grid: Grid, *, num_threads: int = 0
 ) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
     r"""Get the cartesian coordinates of the center of the given HEALPix cells.
 
@@ -274,6 +274,7 @@ def cartesian_to_healpix(
     y: ArrayLikeFloat,
     z: ArrayLikeFloat,
     grid: Grid,
+    *,
     num_threads: int = 0,
 ) -> NDArray[np.uint64]:
     r"""Get the HEALPix indexes that contain specific points.

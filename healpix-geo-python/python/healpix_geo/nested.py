@@ -34,7 +34,7 @@ def create_empty(depth: int) -> RangeMOCIndex:
 
 
 def to_ring(
-    ipix: ArrayLikeInt, depth: ArrayLikeInt, num_threads: int = 0
+    ipix: ArrayLikeInt, depth: ArrayLikeInt, *, num_threads: int = 0
 ) -> NDArray[np.uint64]:
     """Convert from nested to ring
 
@@ -71,7 +71,7 @@ def to_ring(
 
 
 def to_zuniq(
-    ipix: ArrayLikeInt, depth: ArrayLikeInt, num_threads: int = 0
+    ipix: ArrayLikeInt, depth: ArrayLikeInt, *, num_threads: int = 0
 ) -> NDArray[np.uint64]:
     """Convert from nested to zuniq
 
@@ -111,6 +111,7 @@ def to_zuniq(
 def healpix_to_lonlat(
     ipix: ArrayLikeInt,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
@@ -167,6 +168,7 @@ def lonlat_to_healpix(
     longitude: ArrayLikeFloat,
     latitude: ArrayLikeFloat,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> NDArray[np.uint64]:
@@ -226,6 +228,7 @@ def lonlat_to_healpix(
 def healpix_to_cartesian(
     ipix: ArrayLikeInt,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
@@ -285,6 +288,7 @@ def cartesian_to_healpix(
     y: ArrayLikeFloat,
     z: ArrayLikeFloat,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> NDArray[np.uint64]:
@@ -350,7 +354,7 @@ def cartesian_to_healpix(
 
 
 def healpix_to_base_cell_coordinates(
-    cell_ids: ArrayLikeInt, depth: ArrayLikeInt, num_threads: int = 0
+    cell_ids: ArrayLikeInt, depth: ArrayLikeInt, *, num_threads: int = 0
 ) -> tuple[NDArray[np.uint8], NDArray[np.uint32], NDArray[np.uint32]]:
     """Convert cell ids to base cell-local coordinates.
 
@@ -402,6 +406,7 @@ def base_cell_coordinates_to_healpix(
     i: ArrayLikeInt,
     j: ArrayLikeInt,
     depth: ArrayLikeInt,
+    *,
     num_threads: int = 0,
 ) -> NDArray[np.uint64]:
     """Convert base cell-local coordinates to cell ids.
@@ -470,6 +475,7 @@ def base_cell_coordinates_to_healpix(
 def vertices(
     ipix: ArrayLikeInt,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     step: int = 1,
     num_threads: int = 0,
@@ -729,7 +735,7 @@ def neighbours(
 
 
 def kth_neighbours(
-    ipix: ArrayLikeInt, depth: int, ring: int, num_threads: int = 0
+    ipix: ArrayLikeInt, depth: int, ring: int, *, num_threads: int = 0
 ) -> NDArray[np.int64]:
     """Get the kth ring of neighbouring cells around some HEALPix cells at a given depth.
 
@@ -791,7 +797,7 @@ def kth_neighbours(
 
 
 def kth_neighbourhood(
-    ipix: ArrayLikeInt, depth: int, ring: int, num_threads: int = 0
+    ipix: ArrayLikeInt, depth: int, ring: int, *, num_threads: int = 0
 ) -> NDArray[np.int64]:
     """Get the kth ring neighbouring cells of some HEALPix cells at a given depth.
 
@@ -870,7 +876,7 @@ def kth_neighbourhood(
 
 
 def zoom_to(
-    ipix: ArrayLikeInt, depth: int, new_depth: int, num_threads: int = 0
+    ipix: ArrayLikeInt, depth: int, new_depth: int, *, num_threads: int = 0
 ) -> NDArray[np.uint64]:
     r"""Change the resolutions the given cell ids
 
@@ -901,7 +907,7 @@ def zoom_to(
 
 
 def siblings(
-    ipix: ArrayLikeInt, depth: int, num_threads: int = 0
+    ipix: ArrayLikeInt, depth: int, *, num_threads: int = 0
 ) -> NDArray[np.uint64]:
     r"""Find the siblings for every cell
 
@@ -925,7 +931,7 @@ def siblings(
 
 
 def angular_distances(
-    from_: ArrayLikeInt, to_: ArrayLikeInt, depth: int, num_threads: int = 0
+    from_: ArrayLikeInt, to_: ArrayLikeInt, depth: int, *, num_threads: int = 0
 ) -> NDArray[np.float64]:
     """Compute the angular distances between cell centers
 

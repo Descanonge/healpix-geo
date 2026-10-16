@@ -25,7 +25,7 @@ if TYPE_CHECKING:
 
 
 def to_nested(
-    ipix: ArrayLikeInt, depth: ArrayLikeInt, num_threads: int = 0
+    ipix: ArrayLikeInt, depth: ArrayLikeInt, *, num_threads: int = 0
 ) -> NDArray[np.uint64]:
     """Convert from ring to nested
 
@@ -73,7 +73,7 @@ def to_nested(
 
 
 def to_zuniq(
-    ipix: ArrayLikeInt, depth: ArrayLikeInt, num_threads: int = 0
+    ipix: ArrayLikeInt, depth: ArrayLikeInt, *, num_threads: int = 0
 ) -> NDArray[np.uint64]:
     """Convert from nested to zuniq
 
@@ -113,6 +113,7 @@ def to_zuniq(
 def healpix_to_lonlat(
     ipix: ArrayLikeInt,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
@@ -168,6 +169,7 @@ def lonlat_to_healpix(
     longitude: ArrayLikeFloat,
     latitude: ArrayLikeFloat,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> NDArray[np.uint64]:
@@ -226,6 +228,7 @@ def lonlat_to_healpix(
 def healpix_to_cartesian(
     ipix: ArrayLikeInt,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
@@ -285,6 +288,7 @@ def cartesian_to_healpix(
     y: ArrayLikeFloat,
     z: ArrayLikeFloat,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> NDArray[np.uint64]:
@@ -352,6 +356,7 @@ def cartesian_to_healpix(
 def vertices(
     ipix: ArrayLikeInt,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike,
     step: int = 1,
     num_threads: int = 0,
@@ -612,7 +617,7 @@ def neighbours(
 
 
 def kth_neighbours(
-    ipix: ArrayLikeInt, depth: int, ring: int, num_threads: int = 0
+    ipix: ArrayLikeInt, depth: int, ring: int, *, num_threads: int = 0
 ) -> NDArray[np.int64]:
     """Get the kth ring of neighbouring cells around some HEALPix cells at a given depth.
 
@@ -668,7 +673,7 @@ def kth_neighbours(
 
 
 def kth_neighbourhood(
-    ipix: ArrayLikeInt, depth: int, ring: int, num_threads: int = 0
+    ipix: ArrayLikeInt, depth: int, ring: int, *, num_threads: int = 0
 ) -> NDArray[np.int64]:
     """Get the kth ring neighbouring cells of some HEALPix cells at a given depth.
 
@@ -732,7 +737,7 @@ def kth_neighbourhood(
 
 
 def angular_distances(
-    from_: ArrayLikeInt, to_: ArrayLikeInt, depth: int, num_threads: int = 0
+    from_: ArrayLikeInt, to_: ArrayLikeInt, depth: int, *, num_threads: int = 0
 ) -> NDArray[np.float64]:
     """Compute the angular distances
 
