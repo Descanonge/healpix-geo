@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from healpix_geo import _healpix_geo_python
-from healpix_geo.utils import check_depth, validate_cell_ids
+from healpix_geo.utils import check_depth
 
 if TYPE_CHECKING:
     from numpy.typing import NDArray
@@ -64,10 +64,10 @@ def vertex_to_lonlat(
            [  0.       , -90.       ]])
     """
     check_depth(depth)
-    vertex_ids = validate_cell_ids(vertex_ids, depth)
+    vertex_ids = np.atleast_1d(vertex_ids).astype(np.uint64)
 
     imax = 12 * 4**depth + 2
-    if np.any(vertex_ids >= imax):
+    if np.any(vertex_ids < 0) or np.any(vertex_ids >= imax):
         raise ValueError(f"Some vertex ids are outside the valid range [0, {imax - 1}]")
 
     return _healpix_geo_python.vertex_to_lonlat(
