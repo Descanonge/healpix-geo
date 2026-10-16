@@ -243,3 +243,56 @@ class TestValidateTuple:
     def test_bad_4(self, seq):
         with pytest.raises(IndexError, match="Expected tuple of length 4"):
             utils.validate_tuple4(seq)
+
+
+class TestCheckSameShape:
+    @pytest.mark.parametrize(
+        "arrays",
+        [
+            (np.array(0),),
+            (np.ones(8),),
+            (np.array(0), np.array(8)),
+            (np.ones(5), np.ones(5)),
+            (np.ones((2, 3)), np.ones((2, 3)), np.ones((2, 3))),
+        ],
+    )
+    def test_pass(self, arrays):
+        # all as args
+        utils.check_same_shape(*arrays)
+
+        # all as kwargs
+        n = len(arrays)
+        names = [chr(97 + i) for i in range(n)]
+        utils.check_same_shape(**dict(zip(names, arrays)))
+
+        # half as kwargs
+        utils.check_same_shape(
+            *arrays[: n // 2], **dict(zip(names[n // 2 :], arrays[n // 2 :]))
+        )
+
+    @pytest.mark.parametrize(
+        "arrays",
+        [
+            (np.array(0), np.ones(1)),
+            (np.array(0), np.ones(2)),
+            (np.ones(1), np.ones(2)),
+            (np.ones((2, 3)), np.ones((2, 3)), np.ones((2, 1))),
+        ],
+    )
+    def test_fail(self, arrays):
+        match = "All arrays must have the same shape."
+        # all as args
+        with pytest.raises(ValueError, match=match):
+            utils.check_same_shape(*arrays)
+
+        # all as kwargs
+        n = len(arrays)
+        names = [chr(97 + i) for i in range(n)]
+        with pytest.raises(ValueError, match=match):
+            utils.check_same_shape(**dict(zip(names, arrays)))
+
+        # half as kwargs
+        with pytest.raises(ValueError, match=match):
+            utils.check_same_shape(
+                *arrays[: n // 2], **dict(zip(names[n // 2 :], arrays[n // 2 :]))
+            )

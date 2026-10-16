@@ -9,6 +9,7 @@ from healpix_geo import _healpix_geo_python
 from healpix_geo.utils import (
     check_depth,
     check_ring,
+    check_same_shape,
     validate_cell_ids,
     validate_depth,
     validate_tuple2,
@@ -215,6 +216,8 @@ def lonlat_to_healpix(
     longitude = np.atleast_1d(longitude).astype(np.float64)
     latitude = np.atleast_1d(latitude).astype(np.float64)
 
+    check_same_shape(longitude=longitude, latitude=latitude)
+
     return _healpix_geo_python.ring.lonlat_to_healpix(
         depth, longitude, latitude, ellipsoid, num_threads
     )
@@ -338,6 +341,8 @@ def cartesian_to_healpix(
     x = np.atleast_1d(x).astype(np.float64)
     y = np.atleast_1d(y).astype(np.float64)
     z = np.atleast_1d(z).astype(np.float64)
+
+    check_same_shape(x=x, y=y, z=z)
 
     return _healpix_geo_python.ring.cartesian_to_healpix(
         depth, x, y, z, ellipsoid, num_threads
@@ -553,6 +558,8 @@ def bilinear_interpolation(
     check_depth(depth)
     longitude = np.atleast_1d(longitude).astype(np.float64)
     latitude = np.atleast_1d(latitude).astype(np.float64)
+
+    check_same_shape(longitude=longitude, latitude=latitude)
 
     ipix, weights = _healpix_geo_python.ring.bilinear_interpolation(
         depth, longitude, latitude, ellipsoid, num_threads

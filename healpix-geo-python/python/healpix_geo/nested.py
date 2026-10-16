@@ -9,6 +9,7 @@ from healpix_geo import _healpix_geo_python
 from healpix_geo.utils import (
     check_depth,
     check_ring,
+    check_same_shape,
     validate_cell_ids,
     validate_depth,
     validate_tuple2,
@@ -215,6 +216,8 @@ def lonlat_to_healpix(
     longitude = np.atleast_1d(longitude).astype(np.float64)
     latitude = np.atleast_1d(latitude).astype(np.float64)
 
+    check_same_shape(longitude=longitude, latitude=latitude)
+
     return _healpix_geo_python.nested.lonlat_to_healpix(
         depth, longitude, latitude, ellipsoid, num_threads
     )
@@ -339,6 +342,8 @@ def cartesian_to_healpix(
     y = np.atleast_1d(y).astype(np.float64)
     z = np.atleast_1d(z).astype(np.float64)
 
+    check_same_shape(x=x, y=y, z=z)
+
     return _healpix_geo_python.nested.cartesian_to_healpix(
         depth, x, y, z, ellipsoid, num_threads
     )
@@ -435,11 +440,7 @@ def base_cell_coordinates_to_healpix(
     i_ = np.atleast_1d(i)
     j_ = np.atleast_1d(j)
 
-    if base_cell_.shape != i_.shape or base_cell_.shape != j_.shape:
-        raise ValueError(
-            "All arrays ust have the same shape. Got "
-            f"base_cell={base_cell_.shape}, i={i_.shape}, and j={j_.shape}."
-        )
+    check_same_shape(base_cell=base_cell_, i=i_, j=j_)
     if (
         not isinstance(depth_, int) and depth_.ndim > 0
     ) and depth_.shape != base_cell_.shape:
@@ -673,6 +674,8 @@ def bilinear_interpolation(
     check_depth(depth)
     longitude = np.atleast_1d(longitude).astype(np.float64)
     latitude = np.atleast_1d(latitude).astype(np.float64)
+
+    check_same_shape(longitude=longitude, latitude=latitude)
 
     ipix, weights = _healpix_geo_python.nested.bilinear_interpolation(
         depth, longitude, latitude, ellipsoid, num_threads

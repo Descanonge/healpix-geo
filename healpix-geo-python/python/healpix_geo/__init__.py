@@ -7,6 +7,7 @@ from healpix_geo._healpix_geo_python import RaggedArray
 from healpix_geo.geometry import Bbox
 from healpix_geo.mesh import vertex_to_lonlat
 from healpix_geo.typing import ArrayLikeFloat, EllipsoidLike
+from healpix_geo.utils import check_same_shape
 
 
 def cartesian_to_lonlat(
@@ -50,10 +51,11 @@ def cartesian_to_lonlat(
     >>> lat
     array([41.93785391, 19.55202227, 19.55202227])
     """
-
     x = np.atleast_1d(x).astype(np.float64)
     y = np.atleast_1d(y).astype(np.float64)
     z = np.atleast_1d(z).astype(np.float64)
+
+    check_same_shape(x=x, y=y, z=z)
 
     return _healpix_geo_python.cartesian_to_lonlat(x, y, z, ellipsoid, num_threads)
 
@@ -99,6 +101,8 @@ def lonlat_to_cartesian(
     """
     longitude = np.atleast_1d(longitude).astype(np.float64)
     latitude = np.atleast_1d(latitude).astype(np.float64)
+
+    check_same_shape(longitude=longitude, latitude=latitude)
 
     return _healpix_geo_python.lonlat_to_cartesian(
         longitude, latitude, ellipsoid, num_threads

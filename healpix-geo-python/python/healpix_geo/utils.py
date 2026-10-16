@@ -17,7 +17,7 @@ def check_depth(depth: ArrayLikeInt) -> None:
 
 
 def check_ring(depth: int | NDArray[np.uint8], ring: int) -> None:
-    """Check ring is in valid range [0, Nside]."""
+    """Check ring is in valid range [0, 2**depth]."""
     nside = 2 ** np.asarray(depth, dtype=np.uint64)
 
     if np.any(ring > nside):
@@ -28,7 +28,7 @@ def check_ring(depth: int | NDArray[np.uint8], ring: int) -> None:
 
 
 def check_cell_ids(cell_ids: ArrayLikeInt, depth: ArrayLikeInt | None = None) -> None:
-    """Check cell ids are in valid range [0, N].
+    """Check cell ids are in valid range [0, Nmax].
 
     If depth is an array, check it has the same shape as cell ids.
     """
@@ -70,6 +70,25 @@ def validate_cell_ids(
     cell_ids_ = np.asarray(cell_ids)
     check_cell_ids(cell_ids_, depth)
     return np.atleast_1d(cell_ids_.astype(np.uint64))
+
+
+def check_same_shape(*arrays: np.ndarray, **arrays_kw: np.ndarray) -> None:
+    """Check if all passed arrays have the same shape.
+
+    Pass arrays as keyword arguments to get a more informative error message.
+
+    Raises
+    ------
+    ValueError:
+        All arrays do not have the same shape.
+    """
+    shapes = {a.shape for a in arrays} | {a.shape for a in arrays_kw.values()}
+    if len(shapes) != 1:
+        shapes_str = [str(a.shape) for a in arrays]
+        shapes_str += [f"{name}={a.shape}" for name, a in arrays_kw.items()]
+        raise ValueError(
+            f"All arrays must have the same shape. Received {', '.join(shapes_str)}"
+        )
 
 
 _T = TypeVar("_T")
