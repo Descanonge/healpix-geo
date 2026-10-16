@@ -10,14 +10,26 @@ from healpix_geo.typing import Array1D, ArrayLikeInt
 
 
 def check_depth(depth: ArrayLikeInt) -> None:
-    """Check depth is in valid range [0, 29]."""
+    """Check depth is in valid range [0, 29].
+
+    Raises
+    ------
+    ValueError
+        If `depth` has values outside its valid range [0, 29].
+    """
     depth_ = np.array(depth)
     if np.any(depth_ < 0) or np.any(depth_ > 29):
         raise ValueError("Depth must be in the [0, 29] closed range.")
 
 
 def check_ring(depth: int | NDArray[np.uint8], ring: int) -> None:
-    """Check ring is in valid range [0, 2**depth]."""
+    """Check ring is in valid range [0, 2**depth].
+
+    Raises
+    ------
+    ValueError
+        If `ring` is outside its valid range :math:`[0, 2^{depth}[`
+    """
     nside = 2 ** np.asarray(depth, dtype=np.uint64)
 
     if np.any(ring > nside):
@@ -28,9 +40,17 @@ def check_ring(depth: int | NDArray[np.uint8], ring: int) -> None:
 
 
 def check_cell_ids(cell_ids: ArrayLikeInt, depth: ArrayLikeInt | None = None) -> None:
-    """Check cell ids are in valid range [0, Nmax].
+    """Check cell ids are in valid range.
 
     If depth is an array, check it has the same shape as cell ids.
+
+    Raises
+    ------
+    ValueError
+        If `cell_ids` has negative values, or values outside the valid range :math:`[0,
+        12 \\times 4^{depth}]` when `depth` is supplied.
+    ValueError
+        If `depth` is an array with a different shape as `cell_ids`.
     """
     cell_ids_ = np.atleast_1d(cell_ids)
     if depth is None:
@@ -53,7 +73,13 @@ def check_cell_ids(cell_ids: ArrayLikeInt, depth: ArrayLikeInt | None = None) ->
 
 
 def validate_depth(depth: ArrayLikeInt) -> int | NDArray[np.uint8]:
-    """Check depth value and return it as unsigned integer array."""
+    """Check depth value and return it as unsigned integer array.
+
+    Raises
+    ------
+    ValueError
+        If `depth` has values outside its valid range [0, 29].
+    """
     depth_ = np.asarray(depth)
     check_depth(depth_)
     return int(depth_.item()) if depth_.ndim == 0 else depth_.astype(np.uint8)
@@ -66,6 +92,14 @@ def validate_cell_ids(
 
     If depth is None, only check that the ids are positive, otherwise also check they
     are below max index and have same shape.
+
+    Raises
+    ------
+    ValueError
+        If `cell_ids` has negative values, or values outside the valid range :math:`[0,
+        12 \\times 4^{depth}]` when `depth` is supplied.
+    ValueError
+        If `depth` is an array with a different shape as `cell_ids`.
     """
     cell_ids_ = np.asarray(cell_ids)
     check_cell_ids(cell_ids_, depth)
@@ -103,11 +137,17 @@ def _check_tuple_length(
         if name:
             msg += f" for argument '{name}'"
         msg += f", received '{seq}'"
-        raise IndexError(msg)
+        raise ValueError(msg)
 
 
 def validate_tuple2(seq: Sequence[float] | Array1D, name: str = "") -> tuple[_T, _T]:
-    """Check sequence is of length 2 and return as a tuple."""
+    """Check sequence is of length 2 and return as a tuple.
+
+    Raise
+    -----
+    ValueError
+        The sequence is not one-dimensional of length 2.
+    """
     _check_tuple_length(seq, 2, name=name)
     return cast(tuple[_T, _T], tuple(seq))
 
@@ -115,6 +155,12 @@ def validate_tuple2(seq: Sequence[float] | Array1D, name: str = "") -> tuple[_T,
 def validate_tuple4(
     seq: Sequence[_T] | Array1D, name: str = ""
 ) -> tuple[_T, _T, _T, _T]:
-    """Check sequence is of length 4 and return as a tuple."""
+    """Check sequence is of length 4 and return as a tuple.
+
+    Raise
+    -----
+    ValueError
+        The sequence is not one-dimensional of length 4.
+    """
     _check_tuple_length(seq, 4, name=name)
     return cast(tuple[_T, _T, _T, _T], tuple(seq))

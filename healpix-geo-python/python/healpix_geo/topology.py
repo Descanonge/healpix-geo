@@ -31,6 +31,11 @@ def base_cell_relationship(
     displacement_i, displacement_j : numpy.ndarray of numpy.int8
         The change in direction between the base vectors of the source and target base cells.
 
+    Raises
+    ------
+    ValueError
+        If `base_cell` is outside the range [0, 11].
+
     Examples
     --------
     >>> from healpix_geo.topology import base_cell_relationship

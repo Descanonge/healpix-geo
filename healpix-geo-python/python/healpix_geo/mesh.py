@@ -30,15 +30,23 @@ def vertex_to_lonlat(
         The depth of the cells the vertices are computed for.
     ellipsoid : ellipsoid-like, default: "sphere"
         Reference ellipsoid to evaluate the healpix vertex ids on.
-    nthreads : int, optional
-        Specifies the number of threads to use for the computation. Default to 0 means
-        it will choose the number of threads based on the RAYON_NUM_THREADS environment variable (if set),
-        or the number of logical CPUs (otherwise)
+    num_threads : int, optional
+        Specifies the number of threads to use for the computation. The default (0)
+        means it will choose the number of threads based on the RAYON_NUM_THREADS
+        environment variable (if set), or the number of logical CPUs (otherwise)
 
     Returns
     -------
     longitude, latitude : numpy.ndarray of numpy.float64
         The coordinates of the given vertices. Both arrays have the same shape as the array of vertex ids.
+
+    Raises
+    ------
+    ValueError
+        If `vertex_ids` has values outside the range
+        :math:`[0, 12 \\times 4^{depth} + 1]`.
+    ValueError
+        If `depth` is outside the range [0, 29].
 
     Examples
     --------

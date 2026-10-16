@@ -15,9 +15,6 @@ Depth
 Index, ipix
     The unique numeric identifier of a HEALPix cell at a given level. Type: 64-bit unsigned integer (uint64).
 
-array-like
-    Anything that can be coerced into a numpy array: scalars, (nested) sequences, arrays.
-
 geometry-like
     A shapely geometry object. Typically a `Point`, `LineString`, or `Polygon` object.
 ```

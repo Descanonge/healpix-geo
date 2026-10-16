@@ -20,23 +20,32 @@ def cartesian_to_lonlat(
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
     """Convert cartesian coordinates to geographic coordinates on the surface of the ellipsoid.
 
-    This drops the height coordinate, resulting in a lossy conversion for coordinates that are not on the surface.
+    This drops the height coordinate, resulting in a lossy conversion for coordinates
+    that are not on the surface.
 
     Parameters
     ----------
     x, y, z : array-like of float
-        The cartesian coordinates in meters. All arrays must have the exactly same shape (no broadcasting).
+        The cartesian coordinates in meters. All arrays must have the exactly same shape
+        (no broadcasting).
     ellipsoid : ellipsoid-like, default: "sphere"
         The ellipsoid to evaluate the coordinates on.
     num_threads : int, optional
-        Specifies the number of threads to use for the computation. Default to 0 means
-        it will choose the number of threads based on the RAYON_NUM_THREADS environment variable (if set),
-        or the number of logical CPUs (otherwise)
+        Specifies the number of threads to use for the computation. The default (0)
+        means it will choose the number of threads based on the RAYON_NUM_THREADS
+        environment variable (if set), or the number of logical CPUs (otherwise)
 
     Returns
     -------
     lon, lat : numpy.ndarray of numpy.float64
-        The equivalent geographic coordinates.
+        The equivalent geographic coordinates, with the same shape as the inputs.
+
+    Raises
+    ------
+    ValueError
+        If `x`, `y` and `z` do not have the same shape.
+    ValueError
+        If the name of the ellipsoid is unknown.
 
     Examples
     --------
@@ -73,18 +82,26 @@ def lonlat_to_cartesian(
     Parameters
     ----------
     longitude, latitude : array-like of float
-        The geographic coordinates in degrees. All arrays must have the exactly same shape (no broadcasting).
+        The geographic coordinates in degrees. All arrays must have the exactly same
+        shape (no broadcasting).
     ellipsoid : ellipsoid-like, default: "sphere"
         The ellipsoid to evaluate the coordinates on.
     num_threads : int, optional
-        Specifies the number of threads to use for the computation. Default to 0 means
-        it will choose the number of threads based on the RAYON_NUM_THREADS environment variable (if set),
-        or the number of logical CPUs (otherwise)
+        Specifies the number of threads to use for the computation. The default (0)
+        means it will choose the number of threads based on the RAYON_NUM_THREADS
+        environment variable (if set), or the number of logical CPUs (otherwise)
 
     Returns
     -------
     x, y, z : numpy.ndarray of numpy.float64
-        The equivalent cartesian coordinates.
+        The equivalent cartesian coordinates, with the same shape as the inputs.
+
+    Raises
+    ------
+    ValueError
+        If `longitude` and `latitude` do not have the same shape.
+    ValueError
+        If the name of the ellipsoid is unknown.
 
     Examples
     --------
