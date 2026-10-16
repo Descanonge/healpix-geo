@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from healpix_geo import _healpix_geo_python
-from healpix_geo.utils import _check_depth, validate_cell_ids
+from healpix_geo.utils import check_depth, validate_cell_ids
 
 if TYPE_CHECKING:
     from numpy.typing import NDArray
@@ -63,7 +63,7 @@ def vertex_to_lonlat(
            [270.       , -41.8103149],
            [  0.       , -90.       ]])
     """
-    _check_depth(depth)
+    check_depth(depth)
     vertex_ids = validate_cell_ids(vertex_ids, depth)
 
     imax = 12 * 4**depth + 2

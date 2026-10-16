@@ -7,8 +7,8 @@ import numpy as np
 
 from healpix_geo import _healpix_geo_python
 from healpix_geo.utils import (
-    _check_depth,
-    _check_ring,
+    check_depth,
+    check_ring,
     validate_cell_ids,
     validate_depth,
     validate_tuple2,
@@ -155,7 +155,7 @@ def healpix_to_lonlat(
     >>> lat
     array([60.54441647, 78.33504545, 78.33504545])
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.ring.healpix_to_lonlat(
@@ -211,7 +211,7 @@ def lonlat_to_healpix(
     >>> ipix
     array([336, 436, 114], dtype=uint64)
     """
-    _check_depth(depth)
+    check_depth(depth)
     longitude = np.atleast_1d(longitude).astype(np.float64)
     latitude = np.atleast_1d(latitude).astype(np.float64)
 
@@ -269,7 +269,7 @@ def healpix_to_cartesian(
     >>> z
     array([5530555.70358274, 6224606.75696243, 6224606.75696243])
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.ring.healpix_to_cartesian(
@@ -334,7 +334,7 @@ def cartesian_to_healpix(
     >>> ipix
     array([336, 436, 114], dtype=uint64)
     """
-    _check_depth(depth)
+    check_depth(depth)
     x = np.atleast_1d(x).astype(np.float64)
     y = np.atleast_1d(y).astype(np.float64)
     z = np.atleast_1d(z).astype(np.float64)
@@ -408,7 +408,7 @@ def vertices(
             [270.        ,  89.98857866],
             [270.        ,  89.97715732]]])
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.ring.vertices(depth, ipix, ellipsoid, step, num_threads)
@@ -461,7 +461,7 @@ def vertex_indices(
            [100608001, 100591618, 100575233, 100591617],
            [100607999, 100591616, 100575231, 100591615]], dtype=uint64)
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.ring.vertex_indices(depth, ipix, num_threads)
@@ -550,7 +550,7 @@ def bilinear_interpolation(
                [False, False, False, False]])
     )
     """
-    _check_depth(depth)
+    check_depth(depth)
     longitude = np.atleast_1d(longitude).astype(np.float64)
     latitude = np.atleast_1d(latitude).astype(np.float64)
 
@@ -598,7 +598,7 @@ def neighbours(
         Missing directional positions are represented by ``-1`` and never shift
         other positions.
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.ring.neighbours(depth, ipix, connectivity, num_threads)
@@ -653,8 +653,8 @@ def kth_neighbours(
            [102,  75,  52,  33,  18,  54,  76,  30,  16,   6,  17,  41,  24,
               5,  13,  25, 139, 107,  79,  55,  39,  58,  81, 108]])
     """
-    _check_depth(depth)
-    _check_ring(depth, ring)
+    check_depth(depth)
+    check_ring(depth, ring)
     ipix = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.ring.kth_neighbours(depth, ipix, ring, num_threads)
@@ -717,8 +717,8 @@ def kth_neighbourhood(
              75,  52,  33,  18,  54,  76,  30,  16,   6,  17,  41,  24,   5,
              13,  25, 139, 107,  79,  55,  39,  58,  81, 108]])
     """
-    _check_depth(depth)
-    _check_ring(depth, ring)
+    check_depth(depth)
+    check_ring(depth, ring)
     ipix = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.ring.kth_neighbourhood(depth, ipix, ring, num_threads)
@@ -752,7 +752,7 @@ def angular_distances(
     ValueError
         When the Healpix cell indexes given have values out of :math:`[0, 4^{depth}[`.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     from_ = validate_cell_ids(from_, depth)
 
@@ -809,7 +809,7 @@ def zone_coverage(
     fully_covered : numpy.ndarray
         Boolean array marking whether the cells are fully covered by the bounding box.
     """
-    _check_depth(depth)
+    check_depth(depth)
     bbox = validate_tuple4(bbox, "bbox")
 
     return _healpix_geo_python.ring.zone_coverage(
@@ -854,7 +854,7 @@ def box_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the box.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     center = validate_tuple2(center, "center")
     size = validate_tuple2(size, "size")
@@ -897,7 +897,7 @@ def polygon_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the polygon.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     vertices = np.asarray(vertices, dtype=np.float64)
     if vertices.ndim != 2 or vertices.shape[1] != 2:
@@ -947,7 +947,7 @@ def cone_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the circle.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     center = validate_tuple2(center, "center")
 
@@ -997,7 +997,7 @@ def elliptical_cone_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the ellipse.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     center = validate_tuple2(center, "center")
     ellipse_geometry = validate_tuple2(ellipse_geometry, "ellipse_geometry")

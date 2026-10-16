@@ -9,7 +9,7 @@ from healpix_geo import utils
 class TestCheckDepth:
     @pytest.mark.parametrize("depth", [0, 15, 29, [0], [29], np.array([0, 15, 29])])
     def test_pass(self, depth):
-        utils._check_depth(depth)
+        utils.check_depth(depth)
 
     @pytest.mark.parametrize(
         "depth", [-1, -5, 30, 45, [-1], [5, 30], np.array([5, 30])]
@@ -18,7 +18,7 @@ class TestCheckDepth:
         with pytest.raises(
             ValueError, match=r"Depth must be in the \[0, 29\] closed range"
         ):
-            utils._check_depth(depth)
+            utils.check_depth(depth)
 
 
 class TestCheckCellIds:
@@ -33,7 +33,7 @@ class TestCheckCellIds:
         ],
     )
     def test_pass_int_depth(self, cell_ids, depth):
-        utils._check_cell_ids(cell_ids, depth)
+        utils.check_cell_ids(cell_ids, depth)
 
     @pytest.mark.parametrize(
         ["cell_ids", "depth"],
@@ -49,28 +49,28 @@ class TestCheckCellIds:
         with pytest.raises(
             ValueError, match="The input HEALPix cells contains a value out of"
         ):
-            utils._check_cell_ids(cell_ids, depth)
+            utils.check_cell_ids(cell_ids, depth)
 
     @pytest.mark.parametrize(
         "cell_ids",
         [0, 190, 16549809516, [190], np.array([0, 190, 16549809516])],
     )
     def test_pass_no_depth(self, cell_ids):
-        utils._check_cell_ids(cell_ids)
+        utils.check_cell_ids(cell_ids)
 
     @pytest.mark.parametrize("cell_ids", [-1, -5, -68980, [-5], np.array([-1, 5])])
     def test_no_depth_negative(self, cell_ids):
         with pytest.raises(
             ValueError, match="The input HEALPix cells contains a negative value"
         ):
-            utils._check_cell_ids(cell_ids)
+            utils.check_cell_ids(cell_ids)
 
     @pytest.mark.parametrize(
         ["cell_ids", "depth"],
         [(5, [0]), ([5, 30], [0, 2]), (np.array([[5], [30]]), np.array([[0], [2]]))],
     )
     def test_pass_array_depth(self, cell_ids, depth):
-        utils._check_cell_ids(cell_ids, depth)
+        utils.check_cell_ids(cell_ids, depth)
 
     @pytest.mark.parametrize(
         ["cell_ids", "depth"],
@@ -84,7 +84,7 @@ class TestCheckCellIds:
         with pytest.raises(
             ValueError, match="The input HEALPix cells contains a value out of"
         ):
-            utils._check_cell_ids(cell_ids, depth)
+            utils.check_cell_ids(cell_ids, depth)
 
     @pytest.mark.parametrize(
         ["cell_ids", "depth"],
@@ -101,7 +101,7 @@ class TestCheckCellIds:
             ValueError,
             match="An array valued depth must have the same shape as the cell ids",
         ):
-            utils._check_cell_ids(cell_ids, depth)
+            utils.check_cell_ids(cell_ids, depth)
 
 
 @pytest.mark.parametrize(
@@ -124,7 +124,7 @@ class TestCheckCellIds:
 )
 def test_check_ring(depth, ring, context):
     with context:
-        utils._check_ring(depth, ring)
+        utils.check_ring(depth, ring)
 
 
 class TestValidateDepth:
@@ -156,7 +156,7 @@ class TestValidateDepth:
         with pytest.raises(
             ValueError, match=r"Depth must be in the \[0, 29\] closed range"
         ):
-            utils._check_depth(depth)
+            utils.check_depth(depth)
 
 
 class TestValidateCellIds:

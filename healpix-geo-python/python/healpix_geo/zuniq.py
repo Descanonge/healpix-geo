@@ -7,7 +7,7 @@ import numpy as np
 
 from healpix_geo import _healpix_geo_python
 from healpix_geo.utils import (
-    _check_depth,
+    check_depth,
     validate_cell_ids,
     validate_tuple2,
     validate_tuple4,
@@ -207,7 +207,7 @@ def lonlat_to_healpix(
     array([2742692173068632064, 5165628772593958912,  346777171307528192],
           dtype=uint64)
     """
-    _check_depth(depth)
+    check_depth(depth)
     longitude = np.atleast_1d(longitude).astype("float64")
     latitude = np.atleast_1d(latitude).astype("float64")
 
@@ -322,7 +322,7 @@ def cartesian_to_healpix(
     array([2742692173068632064, 5165628772593958912,  346777171307528192],
           dtype=uint64)
     """
-    _check_depth(depth)
+    check_depth(depth)
     x = np.atleast_1d(x).astype("float64")
     y = np.atleast_1d(y).astype("float64")
     z = np.atleast_1d(z).astype("float64")
@@ -535,7 +535,7 @@ def bilinear_interpolation(
                [False, False, False, False]])
     )
     """
-    _check_depth(depth)
+    check_depth(depth)
     longitude = np.atleast_1d(longitude).astype("float64")
     latitude = np.atleast_1d(latitude).astype("float64")
 
@@ -779,7 +779,7 @@ def zone_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the bounding box.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     bbox = validate_tuple4(bbox, "bbox")
 
@@ -822,7 +822,7 @@ def box_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the box.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     center = validate_tuple2(center, "center")
     size = validate_tuple2(size, "size")
@@ -862,7 +862,7 @@ def polygon_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the polygon.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     vertices = np.asarray(vertices, dtype=np.float64)
     if vertices.ndim != 2 or vertices.shape[1] != 2:
@@ -909,7 +909,7 @@ def cone_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the circle.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     center = validate_tuple2(center, "center")
 
@@ -957,7 +957,7 @@ def elliptical_cone_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the ellipse.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     center = validate_tuple2(center, "center")
     ellipse_geometry = validate_tuple2(ellipse_geometry, "ellipse_geometry")

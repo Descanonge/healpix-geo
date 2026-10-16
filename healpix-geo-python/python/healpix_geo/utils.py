@@ -9,14 +9,14 @@ from numpy.typing import NDArray
 from healpix_geo.typing import Array1D, ArrayLikeInt
 
 
-def _check_depth(depth: ArrayLikeInt) -> None:
+def check_depth(depth: ArrayLikeInt) -> None:
     """Check depth is in valid range [0, 29]."""
     depth_ = np.array(depth)
     if np.any(depth_ < 0) or np.any(depth_ > 29):
         raise ValueError("Depth must be in the [0, 29] closed range.")
 
 
-def _check_ring(depth: int | NDArray[np.uint8], ring: int) -> None:
+def check_ring(depth: int | NDArray[np.uint8], ring: int) -> None:
     """Check ring is in valid range [0, Nside]."""
     nside = 2 ** np.asarray(depth, dtype=np.uint64)
 
@@ -27,7 +27,7 @@ def _check_ring(depth: int | NDArray[np.uint8], ring: int) -> None:
         )
 
 
-def _check_cell_ids(cell_ids: ArrayLikeInt, depth: ArrayLikeInt | None = None) -> None:
+def check_cell_ids(cell_ids: ArrayLikeInt, depth: ArrayLikeInt | None = None) -> None:
     """Check cell ids are in valid range [0, N].
 
     If depth is an array, check it has the same shape as cell ids.
@@ -55,7 +55,7 @@ def _check_cell_ids(cell_ids: ArrayLikeInt, depth: ArrayLikeInt | None = None) -
 def validate_depth(depth: ArrayLikeInt) -> int | NDArray[np.uint8]:
     """Check depth value and return it as unsigned integer array."""
     depth_ = np.asarray(depth)
-    _check_depth(depth_)
+    check_depth(depth_)
     return int(depth_.item()) if depth_.ndim == 0 else depth_.astype(np.uint8)
 
 
@@ -68,7 +68,7 @@ def validate_cell_ids(
     are below max index and have same shape.
     """
     cell_ids_ = np.asarray(cell_ids)
-    _check_cell_ids(cell_ids_, depth)
+    check_cell_ids(cell_ids_, depth)
     return np.atleast_1d(cell_ids_.astype(np.uint64))
 
 

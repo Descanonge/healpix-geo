@@ -7,8 +7,8 @@ import numpy as np
 
 from healpix_geo import _healpix_geo_python
 from healpix_geo.utils import (
-    _check_depth,
-    _check_ring,
+    check_depth,
+    check_ring,
     validate_cell_ids,
     validate_depth,
     validate_tuple2,
@@ -154,7 +154,7 @@ def healpix_to_lonlat(
     >>> lat
     array([41.93785391, 19.55202227, 19.55202227])
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix_ = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.nested.healpix_to_lonlat(
@@ -211,7 +211,7 @@ def lonlat_to_healpix(
     >>> ipix
     array([304, 573,  38], dtype=uint64)
     """
-    _check_depth(depth)
+    check_depth(depth)
     longitude = np.atleast_1d(longitude).astype(np.float64)
     latitude = np.atleast_1d(latitude).astype(np.float64)
 
@@ -269,7 +269,7 @@ def healpix_to_cartesian(
     >>> z
     array([4240471.60205904, 2121029.89621885, 2121029.89621885])
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix_ = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.nested.healpix_to_cartesian(
@@ -334,7 +334,7 @@ def cartesian_to_healpix(
     >>> ipix
     array([304, 573,  38], dtype=uint64)
     """
-    _check_depth(depth)
+    check_depth(depth)
     x = np.atleast_1d(x).astype(np.float64)
     y = np.atleast_1d(y).astype(np.float64)
     z = np.atleast_1d(z).astype(np.float64)
@@ -531,7 +531,7 @@ def vertices(
             [4.49670410e+01, 4.66274299e-02],
             [4.49560547e+01, 3.73019424e-02]]])
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix_ = validate_cell_ids(ipix, depth)
     return _healpix_geo_python.nested.vertices(
         depth, ipix_, ellipsoid, step, num_threads
@@ -582,7 +582,7 @@ def vertex_indices(
            [100608001, 100591618, 100575233, 100591617],
            [100607999, 100591616, 100575231, 100591615]], dtype=uint64)
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix_ = validate_cell_ids(ipix, depth)
     return _healpix_geo_python.nested.vertex_indices(depth, ipix_, num_threads)
 
@@ -670,7 +670,7 @@ def bilinear_interpolation(
                [False, False, False, False]])
     )
     """
-    _check_depth(depth)
+    check_depth(depth)
     longitude = np.atleast_1d(longitude).astype(np.float64)
     latitude = np.atleast_1d(latitude).astype(np.float64)
 
@@ -718,7 +718,7 @@ def neighbours(
         Missing directional positions are represented by ``-1`` and never shift
         other positions.
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix_ = validate_cell_ids(ipix, depth)
     return _healpix_geo_python.nested.neighbours(
         depth, ipix_, connectivity, num_threads
@@ -780,9 +780,9 @@ def kth_neighbours(
                    41,        44,        45,        39,        37,        15,
                    13,         7,         5,         4,         1,         0]])
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix = validate_cell_ids(ipix, depth)
-    _check_ring(depth, ring)
+    check_ring(depth, ring)
 
     return _healpix_geo_python.nested.kth_neighbours(depth, ipix, ring, num_threads)
 
@@ -859,9 +859,9 @@ def kth_neighbourhood(
                    15,        13,         7,         5,         4,         1,
                     0]])
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix_ = validate_cell_ids(ipix, depth)
-    _check_ring(depth, ring)
+    check_ring(depth, ring)
 
     return _healpix_geo_python.nested.kth_neighbourhood(depth, ipix_, ring, num_threads)
 
@@ -886,8 +886,8 @@ def zoom_to(
         A :math:`N` (`depth >= new_depth`) or :math:`N` x :math:`4^{\delta d}` array containing the parents or children of the given cells.
         If `depth == new_depth`, returns the input pixels
     """
-    _check_depth(depth)
-    _check_depth(new_depth)
+    check_depth(depth)
+    check_depth(new_depth)
 
     ipix_ = validate_cell_ids(ipix, depth)
 
@@ -915,7 +915,7 @@ def siblings(
         A :math:`N` x :math:`4` or :math:`N` x :math:`12` array containing the siblings of the given cells.
         If `depth == 0`, the siblings are the base cells.
     """
-    _check_depth(depth)
+    check_depth(depth)
     ipix_ = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.nested.siblings(depth, ipix_, num_threads)
@@ -949,7 +949,7 @@ def angular_distances(
     ValueError
         When the Healpix cell indexes given have values out of :math:`[0, 4^{depth}[`.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     from_ = validate_cell_ids(from_, depth)
 
@@ -1006,7 +1006,7 @@ def zone_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the bounding box.
     """
-    _check_depth(depth)
+    check_depth(depth)
     bbox = validate_tuple4(bbox, "bbox")
 
     return _healpix_geo_python.nested.zone_coverage(
@@ -1050,7 +1050,7 @@ def box_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the box.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     center = validate_tuple2(center, "center")
     size = validate_tuple2(size, "size")
@@ -1091,7 +1091,7 @@ def polygon_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the polygon.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     vertices = np.asarray(vertices, dtype=np.float64)
     if vertices.ndim != 2 or vertices.shape[1] != 2:
@@ -1139,7 +1139,7 @@ def cone_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the circle.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     center = validate_tuple2(center, "center")
 
@@ -1193,7 +1193,7 @@ def elliptical_cone_coverage(
     fully_covered : numpy.ndarray of numpy.bool
         Boolean array marking whether the cells are fully covered by the ellipse.
     """
-    _check_depth(depth)
+    check_depth(depth)
 
     center = validate_tuple2(center, "center")
     ellipse_geometry = validate_tuple2(ellipse_geometry, "ellipse_geometry")
