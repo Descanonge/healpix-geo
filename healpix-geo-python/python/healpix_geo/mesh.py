@@ -30,7 +30,7 @@ def vertex_to_lonlat(
         The depth of the cells the vertices are computed for.
     ellipsoid : ellipsoid-like, default: "sphere"
         Reference ellipsoid to evaluate the healpix vertex ids on.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)

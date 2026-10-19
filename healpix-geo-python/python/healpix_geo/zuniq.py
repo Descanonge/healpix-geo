@@ -31,7 +31,7 @@ def to_nested(
     ----------
     ipix : array-like of int
         The HEALPix cell indices in the zuniq scheme.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -82,7 +82,7 @@ def to_ring(
     ----------
     ipix : array-like of int
         The HEALPix cell indices in the zuniq scheme.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -136,7 +136,7 @@ def healpix_to_lonlat(
         The reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
         :py:func:`cdshealpix.nested.healpix_to_lonlat`.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -192,7 +192,7 @@ def lonlat_to_healpix(
         The reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
         :py:func:`cdshealpix.nested.lonlat_to_healpix`.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -248,7 +248,7 @@ def healpix_to_cartesian(
         The reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
         :py:func:`cdshealpix.nested.healpix_to_lonlat`.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -309,7 +309,7 @@ def cartesian_to_healpix(
         The reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
         :py:func:`cdshealpix.nested.lonlat_to_healpix`.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -381,7 +381,7 @@ def vertices(
         The number of subdivision of the cell edges. At 1, only return the 4 corners of
         the cell. At 2, return the 4 corners of the cell plus the center of each edge.
         And so on. The number of vertices returned is ``4 * step``.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -439,7 +439,7 @@ def vertex_indices(
     ----------
     ipix : array-like of int
         The HEALPix cell indices in the zuniq indexing scheme.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -505,7 +505,7 @@ def bilinear_interpolation(
         The reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
         :py:func:`cdshealpix.nested.vertices`.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -611,7 +611,7 @@ def neighbours(
           neighbours. The order is ``S, W, N, E``.
         - ``"all"`` returns all immediate neighbours. The order is always ``S, SW, W,
           NW, N, NE, E, SE``.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -651,7 +651,7 @@ def kth_neighbours(
     ring : int
         The number of rings. `ring=0` returns just the input cell ids, `ring=1` returns the 8 (or 7) immediate
         neighbours, `ring=2` returns the 16 neighbours of the immediate neighbours, and so on.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -731,7 +731,7 @@ def kth_neighbourhood(
         The number of rings. `ring=0` returns just the input cell ids, `ring=1` returns
         the 8 (or 7) immediate neighbours, `ring=2` returns the 8 (or 7) immediate
         neighbours plus their immediate neighbours (a total of 24 cells), and so on.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)

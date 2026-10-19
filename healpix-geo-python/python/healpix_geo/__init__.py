@@ -30,7 +30,7 @@ def cartesian_to_lonlat(
         (no broadcasting).
     ellipsoid : ellipsoid-like, default: "sphere"
         The ellipsoid to evaluate the coordinates on.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -86,7 +86,7 @@ def lonlat_to_cartesian(
         shape (no broadcasting).
     ellipsoid : ellipsoid-like, default: "sphere"
         The ellipsoid to evaluate the coordinates on.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)

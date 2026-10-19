@@ -98,7 +98,7 @@ def convert(
         indexing scheme the input cell ids will be returned unmodified.
     level : int or `numpy.ndarray`, optional
         The levels in case the cells have a different sizes.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -164,7 +164,7 @@ def healpix_to_lonlat(
         The HEALPix cell indices, in the indexing scheme specified by `grid`.
     grid : Grid
         The definition of the HEALPix grid.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -218,7 +218,7 @@ def lonlat_to_healpix(
         The latitudes of the input points, in degrees.
     grid : Grid
         The definition of the HEALPix grid.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -265,7 +265,7 @@ def healpix_to_cartesian(
         The HEALPix cells indices, in the indexing scheme specified by `grid`.
     grid : Grid
         The definition of the HEALPix grid.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -325,7 +325,7 @@ def cartesian_to_healpix(
         The z coordinate of the input points, in meters.
     grid : Grid
         The definition of the HEALPix grid.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -379,7 +379,7 @@ def vertices(
         The number of subdivision of the cell edges. At 1, only return the 4 corners of
         the cell. At 2, return the 4 corners of the cell plus the center of each edge.
         And so on. The number of vertices returned is ``4 * step``.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
@@ -517,7 +517,7 @@ def bilinear_interpolation(
         The latitudes of the input points, in degrees.
     grid : Grid
         The definition of the HEALPix grid.
-    num_threads : int, optional
+    num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
         environment variable (if set), or the number of logical CPUs (otherwise)
