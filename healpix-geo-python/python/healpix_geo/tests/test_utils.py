@@ -236,12 +236,12 @@ class TestValidateTuple:
 
     @pytest.mark.parametrize("seq", [[0], (0.5, 1.5, 2.5), np.array([0, 1, 2, 3])])
     def test_bad_2(self, seq):
-        with pytest.raises(IndexError, match="Expected tuple of length 2"):
+        with pytest.raises(ValueError, match="Expected tuple of length 2"):
             utils.validate_tuple2(seq)
 
     @pytest.mark.parametrize("seq", [[0], (0.5, 1.5, 2.5), np.array([0, 1])])
     def test_bad_4(self, seq):
-        with pytest.raises(IndexError, match="Expected tuple of length 4"):
+        with pytest.raises(ValueError, match="Expected tuple of length 4"):
             utils.validate_tuple4(seq)
 
 
