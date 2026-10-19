@@ -18,6 +18,7 @@ class RangeMOCIndex:
 
     Only works with cell ids following the "nested" scheme.
     """
+
     def __getstate__(self, /) -> bytes: ...
     def __reduce__(self, /) -> tuple[Any, Any, Any]: ...
     def __setstate__(self, /, state: bytes) -> None: ...
@@ -31,6 +32,7 @@ class RangeMOCIndex:
             The cell ids contained by the index.
         """
         ...
+
     def compacted_cell_ids(self, /) -> Array1D[np.uint64]:
         """
         Retrieve the compacted cell ids
@@ -43,12 +45,14 @@ class RangeMOCIndex:
             The compacted cell ids as array of dtype ``uint64``.
         """
         ...
+
     @property
     def depth(self, /) -> int:
         """
         The depth of the index.
         """
         ...
+
     def difference(self, /, other: RangeMOCIndex) -> RangeMOCIndex:
         r"""
         Compute the set difference of two indexes
@@ -71,6 +75,7 @@ class RangeMOCIndex:
             The set difference of the two indexes.
         """
         ...
+
     @property
     def ellipsoid(self, /) -> dict[str, float]: ...
     @classmethod
@@ -84,6 +89,7 @@ class RangeMOCIndex:
             The cell depth.
         """
         ...
+
     @classmethod
     def from_cell_ids(
         cls,
@@ -103,6 +109,7 @@ class RangeMOCIndex:
             The cells to construct the the index from.
         """
         ...
+
     @classmethod
     def from_compacted(
         cls,
@@ -122,6 +129,7 @@ class RangeMOCIndex:
             The cell ids in ``zuniq`` indexing scheme as a :math:`N` ``uint64`` array
         """
         ...
+
     @classmethod
     def from_ranges(
         cls,
@@ -141,6 +149,7 @@ class RangeMOCIndex:
             The ranges to construct the index from as a :math:`N` x :math:`2` array.
         """
         ...
+
     @classmethod
     def full_domain(
         cls, /, depth: int, ellipsoid: EllipsoidLike = "sphere"
@@ -156,6 +165,7 @@ class RangeMOCIndex:
             The cell depth.
         """
         ...
+
     def intersection(self, /, other: RangeMOCIndex) -> RangeMOCIndex:
         """
         Compute the set intersection of two indexes
@@ -172,6 +182,7 @@ class RangeMOCIndex:
             The intersection of the two indexes.
         """
         ...
+
     def isel(self, /, indexer: slice | NDArray[np.integer]) -> RangeMOCIndex:
         """
         Subset the index using positions
@@ -187,12 +198,14 @@ class RangeMOCIndex:
             The resulting subset.
         """
         ...
+
     @property
     def nbytes(self, /) -> int:
         """
         The size of the ranges in bytes, minus any overhead.
         """
         ...
+
     def query(
         self, /, geometry: Bbox | Point | LineString | Polygon
     ) -> tuple[list[slice], RangeMOCIndex]:
@@ -214,6 +227,7 @@ class RangeMOCIndex:
             The index for the queried cell ids.
         """
         ...
+
     def ranges(self, /) -> Array2D[np.uint64]:
         """
         Extract the underlying connected ranges
@@ -224,6 +238,7 @@ class RangeMOCIndex:
             The ranges as a :math:`N` x :math:`2` array of dtype ``uint64``.
         """
         ...
+
     def refine(self, /, depth: int) -> RangeMOCIndex:
         """
         Change the internal depth of the index
@@ -241,6 +256,7 @@ class RangeMOCIndex:
             The refined index with a different level
         """
         ...
+
     def sel(
         self, /, indexer: slice | NDArray[np.integer]
     ) -> tuple[slice | NDArray[np.integer], RangeMOCIndex]:
@@ -260,12 +276,14 @@ class RangeMOCIndex:
             The integer positions of the selected cells as a uint64 array.
         """
         ...
+
     @property
     def size(self, /) -> int:
         """
         The number of items in the index.
         """
         ...
+
     def symmetric_difference(self, /, other: RangeMOCIndex) -> RangeMOCIndex:
         r"""
         Compute the symmetric set difference of two indexes
@@ -288,6 +306,7 @@ class RangeMOCIndex:
             The symmetric set difference of the two indexes.
         """
         ...
+
     def union(self, /, other: RangeMOCIndex) -> RangeMOCIndex:
         """
         Compute the set union of two indexes

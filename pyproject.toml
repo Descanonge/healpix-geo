@@ -25,7 +25,7 @@ select = [
   "UP",  # Pyupgrade
   "TID", # flake8-tidy-imports
   "W",
-  "ANN",  # flake8-annotations
+  "ANN", # flake8-annotations
 ]
 extend-safe-fixes = [
   "TID252", # absolute imports

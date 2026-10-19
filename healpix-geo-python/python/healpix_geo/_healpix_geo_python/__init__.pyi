@@ -24,6 +24,7 @@ class RaggedArray:
     data : numpy.ndarray
         The data of the array.
     """
+
     def __new__(
         cls, /, offsets: np.ndarray[tuple[int], np.dtype[np.integer]], data: np.ndarray
     ) -> RaggedArray: ...
@@ -39,6 +40,7 @@ class RaggedArray:
             A function that performs elementwise calculations.
         """
         ...
+
     def as_awkward(self, /) -> awkward.Array:
         """
         convert to a awkward array
@@ -48,11 +50,13 @@ class RaggedArray:
         Requires `awkward` to be installed.
         """
         ...
+
     def as_masked_array(self, /) -> Any:
         """
         convert to a rectangular masked array
         """
         ...
+
     def as_ragged(self, /) -> ragged.array:
         """
         convert to a ragged array
@@ -62,6 +66,7 @@ class RaggedArray:
         Requires `ragged` to be installed.
         """
         ...
+
     @property
     def data(self, /) -> np.ndarray: ...
     @property
@@ -70,6 +75,7 @@ class RaggedArray:
         The numpy dtype of the array
         """
         ...
+
     @property
     def ndim(self, /) -> Literal[2]:
         """
@@ -78,6 +84,7 @@ class RaggedArray:
         This will always be ``2``.
         """
         ...
+
     @property
     def offsets(self, /) -> np.ndarray[tuple[int], np.dtype[np.uint64]]: ...
     @property
