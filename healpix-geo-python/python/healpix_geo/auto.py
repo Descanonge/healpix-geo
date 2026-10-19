@@ -109,20 +109,23 @@ def convert(
         The HEALPix cell indices in the target indexing scheme, with the same shape as
         the input.
     levels : int or numpy.ndarray of numpy.uint8
-        The refinement level of the cell indices. If the input scheme was
-        ``"nested"`` or ``"ring"`` and `level` was not passed this will be the
-        grid object's refinement level, otherwise an array of refinement levels.
+        The refinement level of the cell indices. Not returned if the output and input
+        schemes are identical.
+
+        - For ``nested`` and ``ring``: the `grid` object refinement level
+        - For ``zuniq``: an array of refinement levels
 
     Raises
     ------
     ValueError
-        If `ipix` has negative values for 'zuniq', or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for 'nested' and 'ring'.
+        If `ipix` has negative values for ``zuniq``, or outside the range
+        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
-        If `level` argument is specified for 'zuniq'.
+        If `level` is specified for ``zuniq`` or no level is specified for ``nested`` or
+        ``ring``, neither via `grid.level` or `level`
     ValueError
         If `to` indexing scheme is unknown.
     """
@@ -130,7 +133,7 @@ def convert(
     if grid.indexing_scheme == to:
         return validate_cell_ids(ipix)
 
-    params = {"num_threads": num_threads}
+    params: dict[str, Any] = {"num_threads": num_threads}
     if grid.indexing_scheme not in base_indexing_schemes and level is not None:
         raise ValueError(
             f"indexing scheme {grid.indexing_scheme} already contains"
@@ -139,6 +142,11 @@ def convert(
     elif grid.indexing_scheme in base_indexing_schemes:
         if level is None:
             level = grid.level
+        if level is None:
+            raise ValueError(
+                "A level must be supplied via `grid.level` or `level` for "
+                f"target indexing scheme '{to}' (received None)."
+            )
         params["depth"] = level
 
     module = _dispatch_module(grid.indexing_scheme)
@@ -150,7 +158,7 @@ def convert(
     if grid.indexing_scheme not in {"nested", "ring"} and to in {"nested", "ring"}:
         return result
     else:
-        return result, level
+        return result, level  # type: ignore[invalid-return-type]
 
 
 def healpix_to_lonlat(
