@@ -51,7 +51,7 @@ class RaggedArray:
         """
         ...
 
-    def as_masked_array(self, /) -> Any:
+    def as_masked_array(self, /) -> Any:  # noqa: ANN401
         """
         convert to a rectangular masked array
         """
