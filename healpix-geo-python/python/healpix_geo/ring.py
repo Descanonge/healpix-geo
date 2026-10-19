@@ -393,7 +393,7 @@ def vertices(
     ipix: ArrayLikeInt,
     depth: int,
     *,
-    ellipsoid: EllipsoidLike,
+    ellipsoid: EllipsoidLike = "sphere",
     step: int = 1,
     num_threads: int = 0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:

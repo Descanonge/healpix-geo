@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 
 
 def to_nested(
-    ipix: ArrayLikeInt, num_threads: int = 0
+    ipix: ArrayLikeInt, *, num_threads: int = 0
 ) -> tuple[NDArray[np.uint64], NDArray[np.uint8]]:
     """Convert from zuniq to nested
 
@@ -74,7 +74,7 @@ def to_nested(
 
 
 def to_ring(
-    ipix: ArrayLikeInt, num_threads: int = 0
+    ipix: ArrayLikeInt, *, num_threads: int = 0
 ) -> tuple[NDArray[np.uint64], NDArray[np.uint8]]:
     """Convert from zuniq to ring
 
@@ -124,7 +124,7 @@ def to_ring(
 
 
 def healpix_to_lonlat(
-    ipix: ArrayLikeInt, ellipsoid: EllipsoidLike, num_threads: int = 0
+    ipix: ArrayLikeInt, *, ellipsoid: EllipsoidLike = "sphere", num_threads: int = 0
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
     """Get the longitudes and latitudes of the center of some HEALPix cells.
 
@@ -174,6 +174,7 @@ def lonlat_to_healpix(
     longitude: ArrayLikeFloat,
     latitude: ArrayLikeFloat,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> NDArray[np.uint64]:
@@ -235,7 +236,7 @@ def lonlat_to_healpix(
 
 
 def healpix_to_cartesian(
-    ipix: ArrayLikeInt, ellipsoid: EllipsoidLike = "sphere", num_threads: int = 0
+    ipix: ArrayLikeInt, *, ellipsoid: EllipsoidLike = "sphere", num_threads: int = 0
 ) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
     """Get the cartesian coordinates of the center of the given HEALPix cells.
 
@@ -288,6 +289,7 @@ def cartesian_to_healpix(
     y: ArrayLikeFloat,
     z: ArrayLikeFloat,
     depth: int,
+    *,
     ellipsoid: EllipsoidLike = "sphere",
     num_threads: int = 0,
 ) -> NDArray[np.uint64]:
@@ -357,7 +359,11 @@ def cartesian_to_healpix(
 
 
 def vertices(
-    ipix: ArrayLikeInt, ellipsoid: EllipsoidLike, step: int = 1, num_threads: int = 0
+    ipix: ArrayLikeInt,
+    *,
+    ellipsoid: EllipsoidLike = "sphere",
+    step: int = 1,
+    num_threads: int = 0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
     """Get the longitudes and latitudes of the vertices of some HEALPix cells in zuniq encoding.
 
@@ -629,7 +635,7 @@ def neighbours(
 
 
 def kth_neighbours(
-    ipix: ArrayLikeInt, ring: int, num_threads: int = 0
+    ipix: ArrayLikeInt, ring: int, *, num_threads: int = 0
 ) -> NDArray[np.int64]:
     """Get the kth ring of neighbouring cells around some HEALPix cells at a given depth.
 
@@ -704,7 +710,7 @@ def kth_neighbours(
 
 
 def kth_neighbourhood(
-    ipix: ArrayLikeInt, ring: int, num_threads: int = 0
+    ipix: ArrayLikeInt, ring: int, *, num_threads: int = 0
 ) -> NDArray[np.int64]:
     """Get the kth ring neighbouring cells of some HEALPix cells.
 
