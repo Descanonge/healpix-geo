@@ -643,6 +643,7 @@ def neighbours(
     depth : int
         The depth of the HEALPix cells.
     connectivity : {"edge", "vertex", "all"}, default: "all"
+
         The connectivity of the neighbours:
         - ``"edge"`` connectivity returns the four edge-sharing neighbours in ``SW, NW,
           NE, SE`` order.
@@ -747,10 +748,10 @@ def kth_neighbourhood(
 ) -> NDArray[np.int64]:
     """Get the kth ring neighbouring cells of some HEALPix cells at a given depth.
 
-    This method returns an array containing the :math:`(2\\mathrm{ring}+1)^2` neighbours
-    of each input cell. The "center" neighbour at index
-    :math:`2\\mathrm{ring}(\\mathrm{ring}+1)` corresponds to the input cell (the 5th
-    cell for ``ring=1`` for instance).
+    This method returns an array containing the :math:`(2\\cdot\\mathrm{ring}+1)^2`
+    neighbours of each input cell. The "center" neighbour at index
+    :math:`2\\cdot\\mathrm{ring}\\cdot(\\mathrm{ring}+1)` corresponds to the input cell
+    (the 5th cell for ``ring=1`` for instance).
 
     This method is wrapped around the `kth_neighbourhood
     <https://docs.rs/cdshealpix/0.1.5/cdshealpix/nested/struct.Layer.html#method.neighbours_in_kth_ring>`__
@@ -775,8 +776,8 @@ def kth_neighbourhood(
     -------
     neighbours : numpy.ndarray of numpy.int64
         The HEALPix cell indices of the kth ring neighbours of each cell, with the same
-        shape as the input plus one axis of size :math:`(2\\mathrm{ring} + 1)^2`. If
-        `ipix` has shape S, the output will be of shape ``(*S, (2 * ring + 1)**2)``.
+        shape as the input plus one axis of size :math:`(2\\cdot\\mathrm{ring} + 1)^2`.
+        If `ipix` has shape S, the output will be of shape ``(*S, (2 * ring + 1)**2)``.
         Missing neighbours will be represented by -1.
 
     Raises
@@ -992,7 +993,7 @@ def polygon_coverage(
     Parameters
     ----------
     vertices : array-like of float
-        The vertices of the polygon without holes. Must be of shape ``(n, 2)``.
+        The vertices of the polygon without holes. Must be of shape ``(N, 2)``.
     depth : int
         The maximum depth of the cells to be returned.
     ellipsoid : ellipsoid-like, default: "sphere"

@@ -186,10 +186,10 @@ def healpix_to_lonlat(
     Raises
     ------
     ValueError
-        If `ipix` has negative values for 'zuniq', or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for 'nested' and 'ring'.
+        If `ipix` has negative values for ``zuniq``, or outside the range
+        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
 
     Examples
@@ -240,7 +240,7 @@ def lonlat_to_healpix(
     Raises
     ------
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If `longitude` and `latitude` do not have the same shape.
@@ -287,10 +287,10 @@ def healpix_to_cartesian(
     Raises
     ------
     ValueError
-        If `ipix` has negative values for 'zuniq', or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for 'nested' and 'ring'.
+        If `ipix` has negative values for ``zuniq``, or outside the range
+        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
 
     Examples
@@ -347,7 +347,7 @@ def cartesian_to_healpix(
     Raises
     ------
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If `x`, `y` and `z` do not have the same shape.
@@ -402,10 +402,10 @@ def vertices(
     Raises
     ------
     ValueError
-        If `ipix` has negative values for 'zuniq', or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for 'nested' and 'ring'.
+        If `ipix` has negative values for ``zuniq``, or outside the range
+        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If the name of the ellipsoid is unknown.
@@ -544,7 +544,7 @@ def bilinear_interpolation(
     Raises
     ------
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If `longitude` and `latitude` do not have the same shape.
@@ -639,10 +639,10 @@ def kth_neighbours(
     Raises
     ------
     ValueError
-        If `ipix` has negative values for 'zuniq', or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for 'nested' and 'ring'.
+        If `ipix` has negative values for ``zuniq``, or outside the range
+        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If `ring` is outside its valid range :math:`[0, 2^{level}[`
@@ -684,10 +684,10 @@ def kth_neighbourhood(
 ) -> NDArray[np.int64]:
     """Get the kth ring neighbouring cells of some HEALPix cells.
 
-    This method returns an array containing the :math:`(2\\mathrm{ring}+1)^2` neighbours
-    of each input cell. The "center" neighbour at index
-    :math:`2\\mathrm{ring}(\\mathrm{ring}+1)` corresponds to the input cell (the 5th
-    cell for ``ring=1`` for instance).
+    This method returns an array containing the :math:`(2\\cdot\\mathrm{ring}+1)^2`
+    neighbours of each input cell. The "center" neighbour at index
+    :math:`2\\cdot\\mathrm{ring}\\cdot(\\mathrm{ring}+1)` corresponds to the input cell
+    (the 5th cell for ``ring=1`` for instance).
 
     This method is wrapped around the `kth_neighbourhood
     <https://docs.rs/cdshealpix/0.1.5/cdshealpix/nested/struct.Layer.html#method.kth_neighbourhood>`__
@@ -713,17 +713,17 @@ def kth_neighbourhood(
     -------
     neighbours : numpy.ndarray of numpy.int64
         The HEALPix cell indices of the kth ring neighbours of each cell, with the same
-        shape as the input plus one axis of size :math:`(2\\mathrm{ring} + 1)^2`. If
-        `ipix` has shape S, the output will be of shape ``(*S, (2 * ring + 1)**2)``.
+        shape as the input plus one axis of size :math:`(2\\cdot\\mathrm{ring} + 1)^2`.
+        If `ipix` has shape S, the output will be of shape ``(*S, (2 * ring + 1)**2)``.
         Missing neighbours will be represented by -1.
 
     Raises
     ------
     ValueError
-        If `ipix` has negative values for 'zuniq', or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for 'nested' and 'ring'.
+        If `ipix` has negative values for ``zuniq``, or outside the range
+        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If `ring` is outside its valid range :math:`[0, 2^{level}[`
@@ -808,7 +808,7 @@ def zone_coverage(
     Raises
     ------
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If `bbox` is not of length 4.
@@ -862,7 +862,7 @@ def box_coverage(
     Raises
     ------
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If `center` and `size` are not one-dimensional of length 2.
@@ -889,7 +889,7 @@ def polygon_coverage(
     Parameters
     ----------
     vertices : array-like of float
-        The vertices of the polygon without holes. Must be of shape ``(n, 2)``.
+        The vertices of the polygon without holes. Must be of shape ``(N, 2)``.
     grid : Grid
         The definition of the HEALPix grid. The grid level will be the maximum level of
         cells to be returned.
@@ -910,7 +910,7 @@ def polygon_coverage(
     Raises
     ------
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If `vertices` is not of shape (N, 2).
@@ -963,7 +963,7 @@ def cone_coverage(
     Raises
     ------
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If `center` is not one-dimensional of length 2.
@@ -1026,7 +1026,7 @@ def elliptical_cone_coverage(
     Raises
     ------
     ValueError
-        If `grid.level` is outside the range [0, 29] for 'nested' or 'ring' indexing
+        If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
     ValueError
         If `center` and `ellipse_geometry` are not one-dimensional of length 2.
