@@ -84,7 +84,7 @@ HEALPix indices
 ~~~~~~~~~~~~~~~
 
 - **ipix** (input: *array-like of int*, output: :class:`~numpy.ndarray` of
-  :attr:`~numpy.uint64`) : Indices of HEALPix cell. Signed integers are allowed
+  :attr:`~numpy.uint64`) : Indices of HEALPix cells. Signed integers are allowed
   as input (*i.e.* array-like of either builtin :class:`int` or
   :class:`numpy.integer`). All inputs will be checked for negative values in
   *zuniq* indexing and for values outside the range :math:`[0, 12\times
@@ -102,9 +102,11 @@ Geographical coordinates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **lon** (input: *array-like of float*, output: :class:`~numpy.ndarray` of
-  :attr:`~numpy.float64`) : Longitude(s) in decimal degrees [-180, 180]
+  :attr:`~numpy.float64`) : Longitude(s) in decimal degrees [-180, 180].
+  Positive towards East. 0° is Greenwich meridian.
 - **lat** (input: *array-like of float*, output: :class:`~numpy.ndarray` of
-  :attr:`~numpy.float64`) : Latitude(s) in decimal degrees [-90, 90]
+  :attr:`~numpy.float64`) : Latitude(s) in decimal degrees [-90, 90]. Positive
+  towards North. 0° is equator.
 - **x**, **y**, **z** (input: *array-like of float*, output:
   :class:`~numpy.ndarray` of :attr:`~numpy.float64`) : Cartesian coordinates, in
   meters.
@@ -119,9 +121,19 @@ Ellipsoids
   - ``"WGS72"`` : Old standard GPS
   - ``"sphere"`` : Perfect sphere
 
+The default is "sphere", in which case most functions will return the same
+result as their equivalent from :external+cdshealpix:doc:`cdshealpix<index>`.
+
 .. tip::
    **Always use** ``ellipsoid="WGS84"`` for real geospatial applications.
    See :doc:`tutorials/ellipsoid_basics` for more details.
+
+.. currentmodule:: healpix_geo
+
+.. autosummary::
+   :toctree: generated/
+
+   ellipsoid.resolve
 
 Others
 ~~~~~~
@@ -130,10 +142,3 @@ Others
   computation. The default (0) means it will choose the number of threads based
   on the RAYON_NUM_THREADS environment variable (if set), or the number of
   logical CPUs (otherwise)
-
-.. currentmodule:: healpix_geo
-
-.. autosummary::
-   :toctree: generated/
-
-   ellipsoid.resolve
