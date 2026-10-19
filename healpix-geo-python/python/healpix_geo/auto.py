@@ -119,7 +119,7 @@ def convert(
     ------
     ValueError
         If `ipix` has negative values for ``zuniq``, or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
+        :math:`[0, 12 \\times 4^{level}[` for ``nested`` and ``ring``.
     ValueError
         If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
@@ -187,7 +187,7 @@ def healpix_to_lonlat(
     ------
     ValueError
         If `ipix` has negative values for ``zuniq``, or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
+        :math:`[0, 12 \\times 4^{level}[` for ``nested`` and ``ring``.
     ValueError
         If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
@@ -288,7 +288,7 @@ def healpix_to_cartesian(
     ------
     ValueError
         If `ipix` has negative values for ``zuniq``, or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
+        :math:`[0, 12 \\times 4^{level}[` for ``nested`` and ``ring``.
     ValueError
         If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
@@ -403,7 +403,7 @@ def vertices(
     ------
     ValueError
         If `ipix` has negative values for ``zuniq``, or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
+        :math:`[0, 12 \\times 4^{level}[` for ``nested`` and ``ring``.
     ValueError
         If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
@@ -640,7 +640,7 @@ def kth_neighbours(
     ------
     ValueError
         If `ipix` has negative values for ``zuniq``, or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
+        :math:`[0, 12 \\times 4^{level}[` for ``nested`` and ``ring``.
     ValueError
         If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.
@@ -721,7 +721,7 @@ def kth_neighbourhood(
     ------
     ValueError
         If `ipix` has negative values for ``zuniq``, or outside the range
-        :math:`[0, 12 \\times 4^{level}]` for ``nested`` and ``ring``.
+        :math:`[0, 12 \\times 4^{level}[` for ``nested`` and ``ring``.
     ValueError
         If `grid.level` is outside the range [0, 29] for ``nested`` or ``ring`` indexing
         schemes.

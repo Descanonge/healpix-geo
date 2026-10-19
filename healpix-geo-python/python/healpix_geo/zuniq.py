@@ -150,7 +150,7 @@ def healpix_to_lonlat(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If the name of the ellipsoid is unknown.
 

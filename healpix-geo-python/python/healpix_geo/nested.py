@@ -58,7 +58,7 @@ def to_ring(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` has values outside the range [0, 29].
     ValueError
@@ -105,7 +105,7 @@ def to_zuniq(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` has values outside the range [0, 29].
     ValueError
@@ -161,7 +161,7 @@ def healpix_to_lonlat(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` is outside the range [0, 29].
     ValueError
@@ -284,7 +284,7 @@ def healpix_to_cartesian(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` is outside the range [0, 29].
     ValueError
@@ -416,7 +416,7 @@ def healpix_to_base_cell_coordinates(
     Raises
     ------
     ValueError
-        If `cell_ids` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `cell_ids` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` has values outside the range [0, 29].
     ValueError
@@ -565,7 +565,7 @@ def vertices(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` is outside the range [0, 29].
     ValueError
@@ -625,7 +625,7 @@ def vertex_indices(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` is outside the range [0, 29].
 
@@ -799,7 +799,7 @@ def neighbours(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` is outside the range [0, 29].
 
@@ -847,7 +847,7 @@ def kth_neighbours(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` is outside the range [0, 29].
     ValueError
@@ -923,7 +923,7 @@ def kth_neighbourhood(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` is outside the range [0, 29].
     ValueError
@@ -1000,7 +1000,7 @@ def zoom_to(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` or `new_depth` are outside the range [0, 29].
     """
@@ -1040,7 +1040,7 @@ def siblings(
     Raises
     ------
     ValueError
-        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}]`.
+        If `ipix` has values outside the range :math:`[0, 12 \\times 4^{depth}[`.
     ValueError
         If `depth` is outside the range [0, 29].
     """
@@ -1077,7 +1077,7 @@ def angular_distances(
     ------
     ValueError
         If `from_` or `to_` have values outside the range :math:`[0, 12 \\times
-        4^{depth}]`.
+        4^{depth}[`.
     ValueError
         If `from_` and `to_` have incompatible shapes.
     ValueError

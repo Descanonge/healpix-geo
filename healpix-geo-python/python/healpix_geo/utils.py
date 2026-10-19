@@ -48,7 +48,7 @@ def check_cell_ids(cell_ids: ArrayLikeInt, depth: ArrayLikeInt | None = None) ->
     ------
     ValueError
         If `cell_ids` has negative values, or values outside the valid range :math:`[0,
-        12 \\times 4^{depth}]` when `depth` is supplied.
+        12 \\times 4^{depth}[` when `depth` is supplied.
     ValueError
         If `depth` is an array with a different shape as `cell_ids`.
     """
@@ -97,7 +97,7 @@ def validate_cell_ids(
     ------
     ValueError
         If `cell_ids` has negative values, or values outside the valid range :math:`[0,
-        12 \\times 4^{depth}]` when `depth` is supplied.
+        12 \\times 4^{depth}[` when `depth` is supplied.
     ValueError
         If `depth` is an array with a different shape as `cell_ids`.
     """
