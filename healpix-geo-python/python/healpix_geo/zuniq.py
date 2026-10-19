@@ -650,8 +650,9 @@ def kth_neighbours(
     ipix : array-like of int
         The HEALPix cell indices in the zuniq indexing scheme.
     ring : int
-        The number of rings. `ring=0` returns just the input cell ids, `ring=1` returns the 8 (or 7) immediate
-        neighbours, `ring=2` returns the 16 neighbours of the immediate neighbours, and so on.
+        The number of rings. `ring=0` returns just the input cell ids, `ring=1` returns
+        the 8 (or 7) immediate neighbours, `ring=2` returns the 16 neighbours of the
+        immediate neighbours, and so on.
     num_threads : int, optional, default: 0
         Specifies the number of threads to use for the computation. The default (0)
         means it will choose the number of threads based on the RAYON_NUM_THREADS
@@ -669,8 +670,6 @@ def kth_neighbours(
     ------
     ValueError
         If `ipix` has negative values.
-    ValueError
-        If `ring` is outside its valid range :math:`[0, 2^{depth}[`
 
     Examples
     --------
@@ -749,8 +748,6 @@ def kth_neighbourhood(
     ------
     ValueError
         If `ipix` has negative values.
-    ValueError
-        If `ring` is outside its valid range :math:`[0, 2^{depth}[`
 
     Examples
     --------
