@@ -34,8 +34,8 @@ def check_ring(depth: int | NDArray[np.uint8], ring: int) -> None:
 
     if np.any(ring > nside):
         raise ValueError(
-            "Crossing base cell boundaries more than once is not supported."
-            f" Received ring={ring}, but expected an integer in the range of [0, {nside}]."
+            "Crossing base cell boundaries more than once is not supported. Received "
+            f" ring={ring}, but expected an integer in the range of [0, {nside}]."
         )
 
 

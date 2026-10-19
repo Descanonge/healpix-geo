@@ -38,7 +38,8 @@ def vertex_to_lonlat(
     Returns
     -------
     longitude, latitude : numpy.ndarray of numpy.float64
-        The coordinates of the given vertices. Both arrays have the same shape as the array of vertex ids.
+        The coordinates of the given vertices. Both arrays have the same shape as the
+        array of vertex ids.
 
     Raises
     ------

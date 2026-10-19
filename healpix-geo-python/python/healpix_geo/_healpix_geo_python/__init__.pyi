@@ -19,8 +19,8 @@ class RaggedArray:
     Attributes
     ----------
     offsets : numpy.ndarray of numpy.uint64
-        The offsets of each row, such that ``zip(offsets[:-1], offsets[1:])`` contains the start and stop
-        values that can be used to index ``data``.
+        The offsets of each row, such that ``zip(offsets[:-1], offsets[1:])`` contains
+        the start and stop values that can be used to index ``data``.
     data : numpy.ndarray
         The data of the array.
     """
@@ -32,7 +32,8 @@ class RaggedArray:
         """
         apply a element-wise function
 
-        For anything more elaborate, see the conversion functions or extract the offsets and data.
+        For anything more elaborate, see the conversion functions or extract the offsets
+        and data.
 
         Parameters
         ----------

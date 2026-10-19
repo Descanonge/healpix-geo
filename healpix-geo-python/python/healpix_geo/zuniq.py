@@ -1025,7 +1025,8 @@ def elliptical_cone_coverage(
 ) -> tuple[Array1D[np.uint64], Array1D[np.bool]]:
     """Search the cells covering the given elliptical cone.
 
-    Elliptical cone in this case refers to an ellipse on the surface of the reference ellipsoid.
+    Elliptical cone in this case refers to an ellipse on the surface of the reference
+    ellipsoid.
 
     Parameters
     ----------

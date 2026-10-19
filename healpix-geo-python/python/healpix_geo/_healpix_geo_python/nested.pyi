@@ -243,7 +243,8 @@ class RangeMOCIndex:
         """
         Change the internal depth of the index
 
-        This may change the region covered by the index if the new depth is smaller than the current depth.
+        This may change the region covered by the index if the new depth is smaller than
+        the current depth.
 
         Parameters
         ----------
@@ -266,7 +267,8 @@ class RangeMOCIndex:
         Parameters
         ----------
         indexer : slice of int or array-like
-            The cell ids or ranges of cell ids to find. If an array, must be of dtype uint64.
+            The cell ids or ranges of cell ids to find. If an array, must be of dtype
+            uint64.
 
         Returns
         -------
