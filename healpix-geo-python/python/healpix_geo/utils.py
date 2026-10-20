@@ -17,8 +17,8 @@ def check_depth(depth: ArrayLikeInt) -> None:
     ValueError
         If `depth` has values outside its valid range [0, 29].
     """
-    depth_ = np.array(depth)
-    if np.any(depth_ < 0) or np.any(depth_ > 29):
+    depth = np.array(depth)
+    if np.any(depth < 0) or np.any(depth > 29):
         raise ValueError("Depth must be in the [0, 29] closed range.")
 
 
@@ -52,21 +52,21 @@ def check_cell_ids(cell_ids: ArrayLikeInt, depth: ArrayLikeInt | None = None) ->
     ValueError
         If `depth` is an array with a different shape as `cell_ids`.
     """
-    cell_ids_ = np.atleast_1d(cell_ids)
+    cell_ids = np.atleast_1d(cell_ids)
     if depth is None:
-        if np.any(cell_ids_ < 0):
+        if np.any(cell_ids < 0):
             raise ValueError("The input HEALPix cells contains a negative value.")
         return
 
-    depth_ = np.asarray(depth, dtype=np.uint64)
-    npix = 12 * 4**depth_
+    depth = np.asarray(depth, dtype=np.uint64)
+    npix = 12 * 4**depth
 
-    if depth_.ndim > 0 and cell_ids_.shape != depth_.shape:
+    if depth.ndim > 0 and cell_ids.shape != depth.shape:
         raise ValueError(
             "An array valued depth must have the same shape as the cell ids."
         )
 
-    if np.any(cell_ids_ >= npix) or np.any(cell_ids_ < 0):
+    if np.any(cell_ids >= npix) or np.any(cell_ids < 0):
         raise ValueError(
             f"The input HEALPix cells contains a value out of [0, {npix - 1}]"
         )
@@ -80,9 +80,9 @@ def validate_depth(depth: ArrayLikeInt) -> int | NDArray[np.uint8]:
     ValueError
         If `depth` has values outside its valid range [0, 29].
     """
-    depth_ = np.asarray(depth)
-    check_depth(depth_)
-    return int(depth_.item()) if depth_.ndim == 0 else depth_.astype(np.uint8)
+    depth = np.asarray(depth)
+    check_depth(depth)
+    return int(depth.item()) if depth.ndim == 0 else depth.astype(np.uint8)
 
 
 def validate_cell_ids(
@@ -101,9 +101,9 @@ def validate_cell_ids(
     ValueError
         If `depth` is an array with a different shape as `cell_ids`.
     """
-    cell_ids_ = np.asarray(cell_ids)
-    check_cell_ids(cell_ids_, depth)
-    return np.atleast_1d(cell_ids_.astype(np.uint64))
+    cell_ids = np.asarray(cell_ids)
+    check_cell_ids(cell_ids, depth)
+    return np.atleast_1d(cell_ids.astype(np.uint64))
 
 
 def check_same_shape(*arrays: np.ndarray, **arrays_kw: np.ndarray) -> None:

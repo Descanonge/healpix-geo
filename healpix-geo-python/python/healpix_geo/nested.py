@@ -74,10 +74,10 @@ def to_ring(
     >>> ipix_ring
     array([ 44,   7,   9, 432], dtype=uint64)
     """
-    depth_ = validate_depth(depth)
-    ipix_ = validate_cell_ids(ipix, depth_)
+    depth = validate_depth(depth)
+    ipix = validate_cell_ids(ipix, depth)
 
-    return _healpix_geo_python.nested.to_ring(ipix_, depth_, num_threads)
+    return _healpix_geo_python.nested.to_ring(ipix, depth, num_threads)
 
 
 def to_zuniq(
@@ -122,10 +122,10 @@ def to_zuniq(
     array([4683743612465315840, 1130403506469994496, 1639310264362860544,
             206039682952200192], dtype=uint64)
     """
-    depth_ = validate_depth(depth)
-    ipix_ = validate_cell_ids(ipix, depth_)
+    depth = validate_depth(depth)
+    ipix = validate_cell_ids(ipix, depth)
 
-    return _healpix_geo_python.nested.to_zuniq(ipix_, depth_, num_threads)
+    return _healpix_geo_python.nested.to_zuniq(ipix, depth, num_threads)
 
 
 def healpix_to_lonlat(
@@ -180,10 +180,10 @@ def healpix_to_lonlat(
     array([41.93785391, 19.55202227, 19.55202227])
     """
     check_depth(depth)
-    ipix_ = validate_cell_ids(ipix, depth)
+    ipix = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.nested.healpix_to_lonlat(
-        depth, ipix_, ellipsoid, num_threads
+        depth, ipix, ellipsoid, num_threads
     )
 
 
@@ -305,10 +305,10 @@ def healpix_to_cartesian(
     array([4240471.60205904, 2121029.89621885, 2121029.89621885])
     """
     check_depth(depth)
-    ipix_ = validate_cell_ids(ipix, depth)
+    ipix = validate_cell_ids(ipix, depth)
 
     return _healpix_geo_python.nested.healpix_to_cartesian(
-        depth, ipix_, ellipsoid, num_threads
+        depth, ipix, ellipsoid, num_threads
     )
 
 
@@ -433,12 +433,12 @@ def healpix_to_base_cell_coordinates(
     >>> j
     array([0, 1, 0, 1], dtype=uint32)
     """
-    depth_ = validate_depth(depth)
-    cell_ids_ = validate_cell_ids(cell_ids, depth_)
-    cell_ids_ = np.ascontiguousarray(cell_ids_)
+    depth = validate_depth(depth)
+    cell_ids = validate_cell_ids(cell_ids, depth)
+    cell_ids = np.ascontiguousarray(cell_ids)
 
     return _healpix_geo_python.nested.healpix_to_base_cell_coordinates(
-        cell_ids_, depth_, num_threads
+        cell_ids, depth, num_threads
     )
 
 
@@ -490,36 +490,36 @@ def base_cell_coordinates_to_healpix(
     >>> base_cell_coordinates_to_healpix([0, 0, 1, 11], [0, 1, 0, 1], [0, 1, 0, 1], 1)
     array([ 0,  3,  4, 47], dtype=uint64)
     """
-    depth_ = validate_depth(depth)
+    depth = validate_depth(depth)
 
     # do not use validate_cell_ids to have more control over dtypes
-    base_cell_ = np.atleast_1d(base_cell)
-    i_ = np.atleast_1d(i)
-    j_ = np.atleast_1d(j)
+    base_cell = np.atleast_1d(base_cell)
+    i = np.atleast_1d(i)
+    j = np.atleast_1d(j)
 
-    check_same_shape(base_cell=base_cell_, i=i_, j=j_)
+    check_same_shape(base_cell=base_cell, i=i, j=j)
     if (
-        not isinstance(depth_, int) and depth_.ndim > 0
-    ) and depth_.shape != base_cell_.shape:
+        not isinstance(depth, int) and depth.ndim > 0
+    ) and depth.shape != base_cell.shape:
         raise ValueError(
             "An array valued depth must have the same shape as the other arrays."
-            f" Got {depth_.shape}."
+            f" Got {depth.shape}."
         )
 
-    if np.any(base_cell_ < 0) or np.any(base_cell_ > 11):
+    if np.any(base_cell < 0) or np.any(base_cell > 11):
         raise ValueError("Base cell must be in range [0, 11].")
 
-    nside = 2**depth_
-    if np.any(i_ < 0) or np.any(i_ >= nside):
+    nside = 2**depth
+    if np.any(i < 0) or np.any(i >= nside):
         raise ValueError("i must be in the [0, 2**depth - 1] closed range.")
-    if np.any(j_ < 0) or np.any(j_ >= nside):
+    if np.any(j < 0) or np.any(j >= nside):
         raise ValueError("j must be in the [0, 2**depth - 1] closed range.")
 
     return _healpix_geo_python.nested.base_cell_coordinates_to_healpix(
-        np.ascontiguousarray(base_cell_, dtype=np.uint8),
-        np.ascontiguousarray(i_, dtype=np.uint32),
-        np.ascontiguousarray(j_, dtype=np.uint32),
-        depth_,
+        np.ascontiguousarray(base_cell, dtype=np.uint8),
+        np.ascontiguousarray(i, dtype=np.uint32),
+        np.ascontiguousarray(j, dtype=np.uint32),
+        depth,
         num_threads,
     )
 
@@ -595,9 +595,9 @@ def vertices(
             [4.49560547e+01, 3.73019424e-02]]])
     """
     check_depth(depth)
-    ipix_ = validate_cell_ids(ipix, depth)
+    ipix = validate_cell_ids(ipix, depth)
     return _healpix_geo_python.nested.vertices(
-        depth, ipix_, ellipsoid, step, num_threads
+        depth, ipix, ellipsoid, step, num_threads
     )
 
 
@@ -648,8 +648,8 @@ def vertex_indices(
            [100607999, 100591616, 100575231, 100591615]], dtype=uint64)
     """
     check_depth(depth)
-    ipix_ = validate_cell_ids(ipix, depth)
-    return _healpix_geo_python.nested.vertex_indices(depth, ipix_, num_threads)
+    ipix = validate_cell_ids(ipix, depth)
+    return _healpix_geo_python.nested.vertex_indices(depth, ipix, num_threads)
 
 
 def bilinear_interpolation(
@@ -805,10 +805,8 @@ def neighbours(
 
     """
     check_depth(depth)
-    ipix_ = validate_cell_ids(ipix, depth)
-    return _healpix_geo_python.nested.neighbours(
-        depth, ipix_, connectivity, num_threads
-    )
+    ipix = validate_cell_ids(ipix, depth)
+    return _healpix_geo_python.nested.neighbours(depth, ipix, connectivity, num_threads)
 
 
 def kth_neighbours(
@@ -967,10 +965,10 @@ def kth_neighbourhood(
                     0]])
     """
     check_depth(depth)
-    ipix_ = validate_cell_ids(ipix, depth)
+    ipix = validate_cell_ids(ipix, depth)
     check_ring(depth, ring)
 
-    return _healpix_geo_python.nested.kth_neighbourhood(depth, ipix_, ring, num_threads)
+    return _healpix_geo_python.nested.kth_neighbourhood(depth, ipix, ring, num_threads)
 
 
 def zoom_to(
@@ -1007,12 +1005,12 @@ def zoom_to(
     check_depth(depth)
     check_depth(new_depth)
 
-    ipix_ = validate_cell_ids(ipix, depth)
+    ipix = validate_cell_ids(ipix, depth)
 
     if depth == new_depth:
-        return ipix_
+        return ipix
 
-    return _healpix_geo_python.nested.zoom_to(depth, ipix_, new_depth, num_threads)
+    return _healpix_geo_python.nested.zoom_to(depth, ipix, new_depth, num_threads)
 
 
 def siblings(
@@ -1045,9 +1043,9 @@ def siblings(
         If `depth` is outside the range [0, 29].
     """
     check_depth(depth)
-    ipix_ = validate_cell_ids(ipix, depth)
+    ipix = validate_cell_ids(ipix, depth)
 
-    return _healpix_geo_python.nested.siblings(depth, ipix_, num_threads)
+    return _healpix_geo_python.nested.siblings(depth, ipix, num_threads)
 
 
 def angular_distances(

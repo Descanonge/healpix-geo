@@ -77,10 +77,10 @@ def to_nested(
     >>> ipix_nested
     array([ 32, 125,  45,  91], dtype=uint64)
     """
-    depth_ = validate_depth(depth)
-    ipix_ = validate_cell_ids(ipix, depth_)
+    depth = validate_depth(depth)
+    ipix = validate_cell_ids(ipix, depth)
 
-    return _healpix_geo_python.ring.to_nested(ipix_, depth_, num_threads)
+    return _healpix_geo_python.ring.to_nested(ipix, depth, num_threads)
 
 
 def to_zuniq(
@@ -125,10 +125,10 @@ def to_zuniq(
     array([3530822107858468864,  806144333299318784,  882705526964617216,
            1106759608426299392], dtype=uint64)
     """
-    depth_ = validate_depth(depth)
-    ipix = validate_cell_ids(ipix, depth_)
+    depth = validate_depth(depth)
+    ipix = validate_cell_ids(ipix, depth)
 
-    return _healpix_geo_python.ring.to_zuniq(ipix, depth_, num_threads)
+    return _healpix_geo_python.ring.to_zuniq(ipix, depth, num_threads)
 
 
 def healpix_to_lonlat(
