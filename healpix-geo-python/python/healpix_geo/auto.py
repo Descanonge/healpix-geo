@@ -249,8 +249,8 @@ def lonlat_to_healpix(
     --------
     >>> import healpix_geo.auto as hg
     >>> import numpy as np
-    >>> lon = np.array([0, 50, 25], dtype="float64")
-    >>> lat = np.array([6, -12, 45], dtype="float64")
+    >>> lon = np.array([0, 50, 25], dtype=np.float64)
+    >>> lat = np.array([6, -12, 45], dtype=np.float64)
     >>> grid = hg.Grid(level=3, indexing_scheme="nested", ellipsoid="WGS84")
     >>> ipix = hg.lonlat_to_healpix(lon, lat, grid)
     >>> ipix
@@ -562,8 +562,8 @@ def bilinear_interpolation(
 
     Define coordinates
 
-    >>> lon = np.array([-15.0, -10.0, -5.0, 0.0, 5.0], dtype="float64")
-    >>> lat = np.array([30.0, 35.0, 40.0, 45.0, 50.0], dtype="float64")
+    >>> lon = np.array([-15.0, -10.0, -5.0, 0.0, 5.0], dtype=np.float64)
+    >>> lat = np.array([30.0, 35.0, 40.0, 45.0, 50.0], dtype=np.float64)
 
     Compute interpolation weights
 

@@ -54,7 +54,7 @@ def vertex_to_lonlat(
     >>> from healpix_geo import vertex_to_lonlat
     >>> import numpy as np
     >>> depth = 0
-    >>> vertex_ids = np.arange(12 * 4**depth + 2, dtype="uint64")
+    >>> vertex_ids = np.arange(12 * 4**depth + 2, dtype=np.uint64)
     >>> lon, lat = vertex_to_lonlat(vertex_ids, depth, ellipsoid="sphere")
     >>> np.stack([lon, lat], axis=-1)
     array([[  0.       ,  90.       ],

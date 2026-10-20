@@ -63,7 +63,7 @@ def to_nested(
 
     Scalar depth:
 
-    >>> ipix_ring = np.array([1190, 189, 870, 432], dtype="uint64")
+    >>> ipix_ring = np.array([1190, 189, 870, 432], dtype=np.uint64)
     >>> depth = 4
     >>> ipix_nested = healpix_geo.ring.to_nested(ipix_ring, depth)
     >>> ipix_nested
@@ -71,8 +71,8 @@ def to_nested(
 
     Array depth:
 
-    >>> ipix_ring = np.array([44, 7, 9, 432], dtype="uint64")
-    >>> depth = np.array([1, 3, 2, 4], dtype="uint8")
+    >>> ipix_ring = np.array([44, 7, 9, 432], dtype=np.uint64)
+    >>> depth = np.array([1, 3, 2, 4], dtype=np.uint8)
     >>> ipix_nested = healpix_geo.ring.to_nested(ipix_ring, depth)
     >>> ipix_nested
     array([ 32, 125,  45,  91], dtype=uint64)
@@ -118,8 +118,8 @@ def to_zuniq(
     --------
     >>> import healpix_geo.nested
     >>> import numpy as np
-    >>> ipix_ring = np.array([32, 125, 45, 91], dtype="uint64")
-    >>> depth = np.array([1, 3, 2, 4], dtype="uint8")
+    >>> ipix_ring = np.array([32, 125, 45, 91], dtype=np.uint64)
+    >>> depth = np.array([1, 3, 2, 4], dtype=np.uint8)
     >>> ipix_zuniq = healpix_geo.ring.to_zuniq(ipix_ring, depth)
     >>> ipix_zuniq
     array([3530822107858468864,  806144333299318784,  882705526964617216,
@@ -237,8 +237,8 @@ def lonlat_to_healpix(
     --------
     >>> from healpix_geo.ring import lonlat_to_healpix
     >>> import numpy as np
-    >>> lon = np.array([0, 50, 25], dtype="float64")
-    >>> lat = np.array([6, -12, 45], dtype="float64")
+    >>> lon = np.array([0, 50, 25], dtype=np.float64)
+    >>> lat = np.array([6, -12, 45], dtype=np.float64)
     >>> depth = 3
     >>> ipix = lonlat_to_healpix(lon, lat, depth, ellipsoid="WGS84")
     >>> ipix
@@ -366,11 +366,11 @@ def cartesian_to_healpix(
     >>> from healpix_geo.ring import cartesian_to_healpix
     >>> import numpy as np
     >>> x = np.array(
-    ...     [6343428.894701699, 4010777.6054728953, 4094327.79214653], dtype="float64"
+    ...     [6343428.894701699, 4010777.6054728953, 4094327.79214653], dtype=np.float64
     ... )
-    >>> y = np.array([0.0, 4779858.620418726, 1909216.4044747741], dtype="float64")
+    >>> y = np.array([0.0, 4779858.620418726, 1909216.4044747741], dtype=np.float64)
     >>> z = np.array(
-    ...     [662257.957592079, -1317402.5312295998, 4487348.408865919], dtype="float64"
+    ...     [662257.957592079, -1317402.5312295998, 4487348.408865919], dtype=np.float64
     ... )
     >>> depth = 3
     >>> ipix = cartesian_to_healpix(x, y, z, depth, ellipsoid="WGS84")

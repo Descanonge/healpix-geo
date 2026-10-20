@@ -60,7 +60,7 @@ def to_nested(
     ...         1639310264362860544,
     ...         206039682952200192,
     ...     ],
-    ...     dtype="uint64",
+    ...     dtype=np.uint64,
     ... )
     >>> ipix_nested, depth = healpix_geo.zuniq.to_nested(ipix_zuniq)
     >>> ipix_nested
@@ -110,7 +110,7 @@ def to_ring(
     ...         1639310264362860544,
     ...         206039682952200192,
     ...     ],
-    ...     dtype="uint64",
+    ...     dtype=np.uint64,
     ... )
     >>> ipix_ring, depth = healpix_geo.zuniq.to_ring(ipix_zuniq)
     >>> ipix_ring
@@ -216,8 +216,8 @@ def lonlat_to_healpix(
     --------
     >>> from healpix_geo.zuniq import lonlat_to_healpix
     >>> import numpy as np
-    >>> lon = np.array([0, 50, 25], dtype="float64")
-    >>> lat = np.array([6, -12, 45], dtype="float64")
+    >>> lon = np.array([0, 50, 25], dtype=np.float64)
+    >>> lat = np.array([6, -12, 45], dtype=np.float64)
     >>> depth = 3
     >>> ipix = lonlat_to_healpix(lon, lat, depth, ellipsoid="WGS84")
     >>> ipix
@@ -225,8 +225,8 @@ def lonlat_to_healpix(
           dtype=uint64)
     """
     check_depth(depth)
-    longitude = np.atleast_1d(longitude).astype("float64")
-    latitude = np.atleast_1d(latitude).astype("float64")
+    longitude = np.atleast_1d(longitude).astype(np.float64)
+    latitude = np.atleast_1d(latitude).astype(np.float64)
 
     check_same_shape(longitude=longitude, latitude=latitude)
 
@@ -334,11 +334,11 @@ def cartesian_to_healpix(
     >>> from healpix_geo.zuniq import cartesian_to_healpix
     >>> import numpy as np
     >>> x = np.array(
-    ...     [6343428.894701699, 4010777.6054728953, 4094327.79214653], dtype="float64"
+    ...     [6343428.894701699, 4010777.6054728953, 4094327.79214653], dtype=np.float64
     ... )
-    >>> y = np.array([0.0, 4779858.620418726, 1909216.4044747741], dtype="float64")
+    >>> y = np.array([0.0, 4779858.620418726, 1909216.4044747741], dtype=np.float64)
     >>> z = np.array(
-    ...     [662257.957592079, -1317402.5312295998, 4487348.408865919], dtype="float64"
+    ...     [662257.957592079, -1317402.5312295998, 4487348.408865919], dtype=np.float64
     ... )
     >>> depth = 3
     >>> ipix = cartesian_to_healpix(x, y, z, depth, ellipsoid="WGS84")
@@ -347,9 +347,9 @@ def cartesian_to_healpix(
           dtype=uint64)
     """
     check_depth(depth)
-    x = np.atleast_1d(x).astype("float64")
-    y = np.atleast_1d(y).astype("float64")
-    z = np.atleast_1d(z).astype("float64")
+    x = np.atleast_1d(x).astype(np.float64)
+    y = np.atleast_1d(y).astype(np.float64)
+    z = np.atleast_1d(z).astype(np.float64)
 
     check_same_shape(x=x, y=y, z=z)
 
@@ -576,8 +576,8 @@ def bilinear_interpolation(
     )
     """
     check_depth(depth)
-    longitude = np.atleast_1d(longitude).astype("float64")
-    latitude = np.atleast_1d(latitude).astype("float64")
+    longitude = np.atleast_1d(longitude).astype(np.float64)
+    latitude = np.atleast_1d(latitude).astype(np.float64)
 
     check_same_shape(longitude=longitude, latitude=latitude)
 
@@ -675,7 +675,7 @@ def kth_neighbours(
     --------
     >>> from healpix_geo.zuniq import kth_neighbours
     >>> import numpy as np
-    >>> ipix = np.array([1460288880640, 223338299392, 360777252864], dtype="uint64")
+    >>> ipix = np.array([1460288880640, 223338299392, 360777252864], dtype=np.uint64)
     >>> ring = 3
     >>> neighbours = kth_neighbours(ipix, ring)
     >>> neighbours
@@ -753,7 +753,7 @@ def kth_neighbourhood(
     --------
     >>> from healpix_geo.zuniq import kth_neighbourhood
     >>> import numpy as np
-    >>> ipix = np.array([1460288880640, 223338299392, 360777252864], dtype="uint64")
+    >>> ipix = np.array([1460288880640, 223338299392, 360777252864], dtype=np.uint64)
     >>> ring = 3
     >>> neighbours = kth_neighbourhood(ipix, ring)
     >>> neighbours
