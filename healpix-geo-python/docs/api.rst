@@ -15,6 +15,7 @@ Overview
    api/ring
    api/zuniq
    api/auto
+   api/validation
 
 `healpix-geo` is organised in several modules following the **HEALPix indexing scheme** used :
 

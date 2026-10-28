@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Literal
 import numpy as np
 
 from healpix_geo.typing import EllipsoidLike
-from healpix_geo.utils import validate_cell_ids
+from healpix_geo.validation import validate_cell_ids
 
 if TYPE_CHECKING:
     from typing import Any

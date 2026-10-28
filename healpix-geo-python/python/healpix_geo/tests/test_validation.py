@@ -3,13 +3,13 @@ from contextlib import nullcontext
 import numpy as np
 import pytest
 
-from healpix_geo import utils
+from healpix_geo import validation
 
 
 class TestCheckDepth:
     @pytest.mark.parametrize("depth", [0, 15, 29, [0], [29], np.array([0, 15, 29])])
     def test_pass(self, depth):
-        utils.check_depth(depth)
+        validation.check_depth(depth)
 
     @pytest.mark.parametrize(
         "depth", [-1, -5, 30, 45, [-1], [5, 30], np.array([5, 30])]
@@ -18,7 +18,7 @@ class TestCheckDepth:
         with pytest.raises(
             ValueError, match=r"Depth must be in the \[0, 29\] closed range"
         ):
-            utils.check_depth(depth)
+            validation.check_depth(depth)
 
 
 class TestCheckCellIds:
@@ -33,7 +33,7 @@ class TestCheckCellIds:
         ],
     )
     def test_pass_int_depth(self, cell_ids, depth):
-        utils.check_cell_ids(cell_ids, depth)
+        validation.check_cell_ids(cell_ids, depth)
 
     @pytest.mark.parametrize(
         ["cell_ids", "depth"],
@@ -49,28 +49,28 @@ class TestCheckCellIds:
         with pytest.raises(
             ValueError, match="The input HEALPix cells contains a value out of"
         ):
-            utils.check_cell_ids(cell_ids, depth)
+            validation.check_cell_ids(cell_ids, depth)
 
     @pytest.mark.parametrize(
         "cell_ids",
         [0, 190, 16549809516, [190], np.array([0, 190, 16549809516])],
     )
     def test_pass_no_depth(self, cell_ids):
-        utils.check_cell_ids(cell_ids)
+        validation.check_cell_ids(cell_ids)
 
     @pytest.mark.parametrize("cell_ids", [-1, -5, -68980, [-5], np.array([-1, 5])])
     def test_no_depth_negative(self, cell_ids):
         with pytest.raises(
             ValueError, match="The input HEALPix cells contains a negative value"
         ):
-            utils.check_cell_ids(cell_ids)
+            validation.check_cell_ids(cell_ids)
 
     @pytest.mark.parametrize(
         ["cell_ids", "depth"],
         [(5, [0]), ([5, 30], [0, 2]), (np.array([[5], [30]]), np.array([[0], [2]]))],
     )
     def test_pass_array_depth(self, cell_ids, depth):
-        utils.check_cell_ids(cell_ids, depth)
+        validation.check_cell_ids(cell_ids, depth)
 
     @pytest.mark.parametrize(
         ["cell_ids", "depth"],
@@ -84,7 +84,7 @@ class TestCheckCellIds:
         with pytest.raises(
             ValueError, match="The input HEALPix cells contains a value out of"
         ):
-            utils.check_cell_ids(cell_ids, depth)
+            validation.check_cell_ids(cell_ids, depth)
 
     @pytest.mark.parametrize(
         ["cell_ids", "depth"],
@@ -101,7 +101,7 @@ class TestCheckCellIds:
             ValueError,
             match="An array valued depth must have the same shape as the cell ids",
         ):
-            utils.check_cell_ids(cell_ids, depth)
+            validation.check_cell_ids(cell_ids, depth)
 
 
 @pytest.mark.parametrize(
@@ -124,7 +124,7 @@ class TestCheckCellIds:
 )
 def test_check_ring(depth, ring, context):
     with context:
-        utils.check_ring(depth, ring)
+        validation.check_ring(depth, ring)
 
 
 class TestValidateDepth:
@@ -141,7 +141,7 @@ class TestValidateDepth:
         ],
     )
     def test_validate_depth(self, depth, expected):
-        validated = utils.validate_depth(depth)
+        validated = validation.validate_depth(depth)
         if isinstance(expected, int):
             assert validated == expected
         else:
@@ -156,7 +156,7 @@ class TestValidateDepth:
         with pytest.raises(
             ValueError, match=r"Depth must be in the \[0, 29\] closed range"
         ):
-            utils.check_depth(depth)
+            validation.check_depth(depth)
 
 
 class TestValidateCellIds:
@@ -174,7 +174,7 @@ class TestValidateCellIds:
         ],
     )
     def test_basic(self, cell_ids, depth, expected):
-        validated = utils.validate_cell_ids(cell_ids, depth)
+        validated = validation.validate_cell_ids(cell_ids, depth)
         assert validated.shape == expected.shape
         assert validated.dtype == expected.dtype
         np.testing.assert_array_equal(validated, expected)
@@ -195,7 +195,7 @@ class TestValidateCellIds:
         with pytest.raises(
             ValueError, match="The input HEALPix cells contains a value out of"
         ):
-            utils.validate_cell_ids(cell_ids, depth)
+            validation.validate_cell_ids(cell_ids, depth)
 
     @pytest.mark.parametrize(
         ["cell_ids", "expected"],
@@ -206,7 +206,7 @@ class TestValidateCellIds:
         ],
     )
     def test_no_depth(self, cell_ids, expected):
-        validated = utils.validate_cell_ids(cell_ids)
+        validated = validation.validate_cell_ids(cell_ids)
         assert validated.shape == expected.shape
         assert validated.dtype == expected.dtype
         np.testing.assert_array_equal(validated, expected)
@@ -216,13 +216,13 @@ class TestValidateCellIds:
         with pytest.raises(
             ValueError, match="The input HEALPix cells contains a negative value."
         ):
-            utils.validate_cell_ids(cell_ids)
+            validation.validate_cell_ids(cell_ids)
 
 
 class TestValidateTuple:
     @pytest.mark.parametrize("seq", [[0, 1], (0.5, 1.5), np.array([0, 1])])
     def test_pass_2(self, seq):
-        validated = utils.validate_tuple2(seq)
+        validated = validation.validate_tuple2(seq)
         assert isinstance(validated, tuple)
         assert len(validated) == 2
 
@@ -230,19 +230,19 @@ class TestValidateTuple:
         "seq", [[0, 1, 2, 3], (0.5, 1.5, 2.5, 3.5), np.array([0, 1, 2, 3])]
     )
     def test_pass_4(self, seq):
-        validated = utils.validate_tuple4(seq)
+        validated = validation.validate_tuple4(seq)
         assert isinstance(validated, tuple)
         assert len(validated) == 4
 
     @pytest.mark.parametrize("seq", [[0], (0.5, 1.5, 2.5), np.array([0, 1, 2, 3])])
     def test_bad_2(self, seq):
         with pytest.raises(ValueError, match="Expected tuple of length 2"):
-            utils.validate_tuple2(seq)
+            validation.validate_tuple2(seq)
 
     @pytest.mark.parametrize("seq", [[0], (0.5, 1.5, 2.5), np.array([0, 1])])
     def test_bad_4(self, seq):
         with pytest.raises(ValueError, match="Expected tuple of length 4"):
-            utils.validate_tuple4(seq)
+            validation.validate_tuple4(seq)
 
 
 class TestCheckSameShape:
@@ -258,15 +258,15 @@ class TestCheckSameShape:
     )
     def test_pass(self, arrays):
         # all as args
-        utils.check_same_shape(*arrays)
+        validation.check_same_shape(*arrays)
 
         # all as kwargs
         n = len(arrays)
         names = [chr(97 + i) for i in range(n)]
-        utils.check_same_shape(**dict(zip(names, arrays)))
+        validation.check_same_shape(**dict(zip(names, arrays)))
 
         # half as kwargs
-        utils.check_same_shape(
+        validation.check_same_shape(
             *arrays[: n // 2], **dict(zip(names[n // 2 :], arrays[n // 2 :]))
         )
 
@@ -283,16 +283,16 @@ class TestCheckSameShape:
         match = "All arrays must have the same shape."
         # all as args
         with pytest.raises(ValueError, match=match):
-            utils.check_same_shape(*arrays)
+            validation.check_same_shape(*arrays)
 
         # all as kwargs
         n = len(arrays)
         names = [chr(97 + i) for i in range(n)]
         with pytest.raises(ValueError, match=match):
-            utils.check_same_shape(**dict(zip(names, arrays)))
+            validation.check_same_shape(**dict(zip(names, arrays)))
 
         # half as kwargs
         with pytest.raises(ValueError, match=match):
-            utils.check_same_shape(
+            validation.check_same_shape(
                 *arrays[: n // 2], **dict(zip(names[n // 2 :], arrays[n // 2 :]))
             )

@@ -6,7 +6,7 @@ import marray
 import numpy as np
 
 from healpix_geo import _healpix_geo_python
-from healpix_geo.utils import (
+from healpix_geo.validation import (
     check_depth,
     check_ring,
     check_same_shape,

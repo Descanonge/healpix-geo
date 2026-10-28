@@ -7,7 +7,7 @@ from healpix_geo._healpix_geo_python import RaggedArray
 from healpix_geo.geometry import Bbox
 from healpix_geo.mesh import vertex_to_lonlat
 from healpix_geo.typing import ArrayLikeFloat, EllipsoidLike
-from healpix_geo.utils import check_same_shape
+from healpix_geo.validation import check_same_shape
 
 
 def cartesian_to_lonlat(

@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from healpix_geo import _healpix_geo_python
-from healpix_geo.utils import check_depth
+from healpix_geo.validation import check_depth
 
 if TYPE_CHECKING:
     from numpy.typing import NDArray

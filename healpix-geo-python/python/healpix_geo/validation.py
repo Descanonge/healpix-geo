@@ -1,4 +1,4 @@
-"""Utilities."""
+"""Validation of inputs."""
 
 from collections.abc import Sequence
 from typing import TypeVar, cast
@@ -73,12 +73,17 @@ def check_cell_ids(cell_ids: ArrayLikeInt, depth: ArrayLikeInt | None = None) ->
 
 
 def validate_depth(depth: ArrayLikeInt) -> int | NDArray[np.uint8]:
-    """Check depth value and return it as unsigned integer array.
+    """Check depth value and return it as an int or unsigned integer array.
 
     Raises
     ------
     ValueError
         If `depth` has values outside its valid range [0, 29].
+
+    Returns
+    -------
+    depth : int or numpy.ndarray of numpy.uint8
+        The depth as an int, or an array if the input was array-like.
     """
     depth = np.asarray(depth)
     check_depth(depth)
@@ -88,7 +93,7 @@ def validate_depth(depth: ArrayLikeInt) -> int | NDArray[np.uint8]:
 def validate_cell_ids(
     cell_ids: ArrayLikeInt, depth: int | ArrayLikeInt | None = None
 ) -> NDArray[np.uint64]:
-    """Check cell ids values and return it as unsigned integer array.
+    """Check cell ids values and return as unsigned integer array.
 
     If depth is None, only check that the ids are positive, otherwise also check they
     are below max index and have same shape.
@@ -100,6 +105,11 @@ def validate_cell_ids(
         12 \\times 4^{depth}[` when `depth` is supplied.
     ValueError
         If `depth` is an array with a different shape as `cell_ids`.
+
+    Returns
+    -------
+    cell_ids : numpy.ndarray of numpy.uint64
+        Validated HEALPix cell indices as an array.
     """
     cell_ids = np.asarray(cell_ids)
     check_cell_ids(cell_ids, depth)
@@ -147,6 +157,11 @@ def validate_tuple2(seq: Sequence[float] | Array1D, name: str = "") -> tuple[_T,
     -----
     ValueError
         The sequence is not one-dimensional of length 2.
+
+    Returns
+    -------
+    seq : tuple
+        The input sequence as a tuple of length 2.
     """
     _check_tuple_length(seq, 2, name=name)
     return cast(tuple[_T, _T], tuple(seq))
@@ -161,6 +176,11 @@ def validate_tuple4(
     -----
     ValueError
         The sequence is not one-dimensional of length 4.
+
+    Returns
+    -------
+    seq : tuple
+        The input sequence as a tuple of length 4.
     """
     _check_tuple_length(seq, 4, name=name)
     return cast(tuple[_T, _T, _T, _T], tuple(seq))
