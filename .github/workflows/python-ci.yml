@@ -34,7 +34,7 @@ jobs:
     name: detect ci trigger
     runs-on: ubuntu-slim
     if: |
-      github.repository == 'GRID4EARTH/healpix-geo'
+      github.repository == 'Descanonge/healpix-geo'
       && (github.event_name == 'push' || github.event_name == 'pull_request')
     outputs:
       triggered: ${{ steps.detect-trigger.outputs.trigger-found }}
