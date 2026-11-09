@@ -39,7 +39,7 @@ venv/
 # docs
 /healpix-geo/docs/_build/
 **/generated/
-/healpix-geo/docs/healpix/healpix_levels_table.md
+/healpix-geo-python/docs/user-guide/healpix_levels_table.md
 
 # Installer logs
 pip-log.txt
