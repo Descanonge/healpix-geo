@@ -1,3 +1,6 @@
+
+.. module:: healpix_geo.ring
+
 Module ring
 ===========
 

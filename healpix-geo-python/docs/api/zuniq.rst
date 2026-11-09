@@ -1,3 +1,6 @@
+
+.. module:: healpix_geo.zuniq
+
 Module zuniq
 ============
 

@@ -1,3 +1,6 @@
+
+.. module:: healpix_geo.auto
+
 Module auto
 ===========
 The `healpix_geo.auto` module provides a indexing scheme-agnostic API.
