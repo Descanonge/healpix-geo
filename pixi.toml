@@ -40,7 +40,9 @@ ragged = ">=0.3.0"
 
 [feature.tests.tasks]
 tests = { cmd = "pytest --cov=healpix_geo", cwd = "healpix-geo-python" }
-doctests = { cmd = "pytest --doctest-modules python/healpix_geo --ignore python/healpix_geo/tests", cwd = "healpix-geo-python" }
+[feature.tests.tasks.doctests]
+cmd = "pytest --doctest-modules python/healpix_geo --ignore python/healpix_geo/tests"
+cwd = "healpix-geo-python"
 
 [feature.dev.tasks]
 pyrefly = { cmd = "pyrefly check" }
@@ -54,8 +56,10 @@ python = "3.12.*"
 [feature.py313.dependencies]
 python = "3.13.*"
 
-[feature.py313.tasks]
-lint-rust = { cmd = "cargo clippy --all-targets --all-features -- -D warnings", cwd = ".", default-environment = "rust" }
+[feature.py313.tasks.lint-rust]
+cmd = "cargo clippy --all-targets --all-features -- -D warnings"
+cwd = "."
+default-environment = "rust"
 
 [feature.py314.dependencies]
 python = "3.14.*"
@@ -124,14 +128,25 @@ sphinx-design = ">=0.7.0,<0.8"
 jupyterlite-xeus = ">=4.5.0,<5"
 jupyterlite-sphinx = ">=0.23.0"
 jupyterlite-core = ">=0.7.3,<0.8"
+[feature.docs.tasks.clean-docs]
+cmd = "rm -rf generated/ jupyter_execute/ _build/"
+cwd = "healpix-geo-python/docs"
+[feature.docs.tasks.build-docs]
+cmd = "python -m sphinx -b html -w warnings.log -W -Tn -j auto . _build/html"
+cwd = "healpix-geo-python/docs"
+[feature.docs.tasks.autobuild-docs]
+cmd = """sphinx-autobuild \
+    -b html -w warnings.log -W -Tn -j auto . _build/html \
+    --watch ../python --ignore _build"""
+cwd = "healpix-geo-python/docs"
+[feature.docs.tasks.build-docs-rtd]
+cmd = "python -m sphinx -b html -W -T -j auto . $READTHEDOCS_OUTPUT/html"
+cwd = "healpix-geo-python/docs"
+[feature.docs.tasks.host-docs]
+cmd = "python -m http.server -b 127.0.0.1 -d _build/html 5447"
+cwd = "healpix-geo-python/docs"
 
 [feature.docs.tasks]
-clean-docs = { cmd = "rm -rf generated/ jupyter_execute/ _build/", cwd = "healpix-geo-python/docs" }
-build-docs = { cmd = "python -m sphinx -b html -w warnings.log -W -Tn -j auto . _build/html", cwd = "healpix-geo-python/docs" }
-autobuild-docs = { cmd = "sphinx-autobuild -b html -w warnings.log -W -Tn -j auto . _build/html", cwd = "healpix-geo-python/docs" }
-build-docs-rtd = { cmd = "python -m sphinx -b html -W -T -j auto . $READTHEDOCS_OUTPUT/html", cwd = "healpix-geo-python/docs" }
-host-docs = { cmd = "python -m http.server -b 127.0.0.1 -d _build/html 5447", cwd = "healpix-geo-python/docs" }
-
 build-clean-docs = [{ task = "clean-docs" }, { task = "build-docs" }]
 build-and-host-docs = [{ task = "build-docs" }, { task = "host-docs" }]
 build-clean-and-host-docs = [
