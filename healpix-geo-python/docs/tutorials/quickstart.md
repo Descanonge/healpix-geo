@@ -27,8 +27,11 @@ tags: [remove-cell]
 
 # Quickstart: `healpix-geo` for the impatient
 
-If you are already familiar with HEALPix, this tutorial quickly presents the various operations available in `healpix-geo`.
-For details on HEALPix and `healpix-geo`, see the {doc}`user-guide` or the other tutorials that will go more in depth for each concept.
+If you are already familiar with [HEALPix](/user-guide/fundamentals), this tutorial quickly presents the various operations available in `healpix-geo`.
+
+## Auto module
+
+`healpix-geo` provides a module for each indexing scheme, however it is recommended to use the {py:mod}`.auto` module that will dispatch computations automatically. The refinement level, indexing scheme and ellipsoidal model is specified via the {py:class}`~.auto.Grid` object:
 
 ```{code-cell} ipython3
 ---
@@ -45,9 +48,9 @@ grid
 
 +++ {"editable": true, "deletable": true, "slideshow": {"slide_type": ""}}
 
-## First example : Coordinates conversion
+## Geographic coordinates to HEALPix cell indices
 
-The most common task is to convert geographic coordinates into HEALPix cell identifiers.
+A common task is to convert geographic coordinates into HEALPix cell identifiers.
 
 ```{code-cell} ipython3
 ---
@@ -92,7 +95,7 @@ The `level` parameter (or `depth` when using indexing-specific modules) controls
 - `level=12` : 201 326 592 cells (~1.6 km per cell)
 
 :::{seealso}
-See {ref}`cell-statistics` for a complete table of levels with their resolutions.
+See the {ref}`cell-statistics` for a complete table of levels with their resolutions.
 :::
 
 ```{code-cell} ipython3
@@ -108,13 +111,13 @@ for level in [0, 4, 8, 12]:
 
 +++ {"editable": true, "deletable": true, "slideshow": {"slide_type": ""}}
 
-:::{tip}
-**General rule**: Increasing the `level` by 1 multiplies the number of cells by 4 and divides the cell size by 2.
+:::{seealso}
+For details on coordinates and coordinates conversion, see the dedicated [tutorial](coordinates) and [user-guide](/user-guide/coordinates).
 :::
 
 ## Cell geometry
 
-Recover the coordinates of the **center** of a cell:
+Once we have the cell indices, we can recover the position of the **center** of a cell:
 
 ```{code-cell} ipython3
 ---
@@ -145,7 +148,7 @@ print(f"  Latitude:  {lat_center[0]:.4f}°")
 The center coordinates may be slightly different from the original coordinates, because we have "rounded" to the nearest cell.
 :::
 
-You can also recover the coordinates of the **vertices** of a cell:
+We can also recover the coordinates of the **vertices** of a cell:
 
 ```{code-cell} ipython3
 ---
@@ -175,9 +178,13 @@ ax.add_collection(
 
 +++ {"editable": true, "deletable": true, "slideshow": {"slide_type": ""}}
 
-## Research of neighbour
+:::{seealso}
+For details on cell geometry, see the dedicated [tutorial](coordinates) and [user-guide](/user-guide/coordinates).
+:::
 
-HEALPix makes it easy to find **neighboring** cells:
+## Research of neighbours
+
+HEALPix makes it easy to find **neighbouring** cells:
 
 ```{code-cell} ipython3
 from healpix_geo.auto import Grid, kth_neighbourhood
@@ -192,7 +199,7 @@ print(neighbours)
 ```
 
 :::{seealso}
-For more details on hierarchy and neighbourhood, see {doc}`../user-guide/hierarchical_indexing`.
+For details on research of neighbours, see the dedicated [tutorial](hierarchical_indexing) and [user-guide](/user-guide/hierarchical_indexing).
 :::
 
 ## Hierarchic navigation
@@ -230,46 +237,9 @@ print(f"Cell: {ipix[0]} at depth {depth}")
 print(f"Siblings: {sib}")
 ```
 
-Visualisation :
-
-```{code-cell} ipython3
----
-tags: [hide-input]
-editable: true
-deletable: true
-slideshow:
-  slide_type: ''
----
-import matplotlib.pyplot as plt
-import numpy as np
-from healpix_geo.nested import siblings, healpix_to_lonlat
-
-depth = 3
-ipix = np.array([42], dtype=np.uint64)
-
-# Get siblings
-sib = siblings(ipix, depth)
-
-# Get coordinates
-lon_sib, lat_sib = healpix_to_lonlat(sib, depth, ellipsoid="sphere")
-lon_cell, lat_cell = healpix_to_lonlat(ipix, depth, ellipsoid="sphere")
-
-# Plot
-fig, ax = plt.subplots(figsize=(8, 4))
-
-# Plot siblings
-ax.scatter(lon_sib, lat_sib, s=200, label="Siblings")
-
-# Highlight original cell
-ax.scatter(lon_cell, lat_cell, s=250, marker="*", label="Selected cell")
-
-ax.set_xlim(-180, 180)
-ax.set_ylim(-90, 90)
-ax.set_xlabel("Longitude")
-ax.set_ylabel("Latitude")
-ax.set_title(f"Siblings at depth {depth}")
-ax.legend()
-```
+:::{seealso}
+For details on HEALPix hierarchical indices, see the dedicated [tutorial](hierarchical_indexing) and [user-guide](/user-guide/hierarchical_indexing).
+:::
 
 +++ {"editable": true, "deletable": true, "slideshow": {"slide_type": ""}}
 
@@ -281,7 +251,7 @@ Now you know basics, you can explore :
 :gutter: 2
 
 :::{grid-item-card} HEALPix fundamentals and indexing
-:link: healpix
+:link: fundamentals
 :link-type: doc
 :::
 
@@ -296,7 +266,7 @@ Now you know basics, you can explore :
 :::
 
 :::{grid-item-card} Hierarchical indexing
-:link: hierarchy
+:link: hierarchical_indexing
 :link-type: doc
 :::
 

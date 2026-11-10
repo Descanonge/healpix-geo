@@ -27,7 +27,7 @@ tags: [remove-cell]
 
 # Ellipsoids basics
 
-`healpix-geo` extends standard HEALPix, defined only on the sphere, to any ellipsoidal model. See the dedicated [user-guide](../user-guide/ellipsoids) for details on how it does it.
+`healpix-geo` extends standard HEALPix, defined only on the sphere, to any ellipsoidal model. See the dedicated [user-guide](/user-guide/ellipsoids) for details on how it does it.
 
 ## Specifying the ellipsoid
 

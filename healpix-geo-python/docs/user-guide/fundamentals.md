@@ -10,7 +10,7 @@ HEALPix (Hierarchical Equal-Area isoLatitude Pixelisation) was originally define
 
 ```{figure} healpix_global_indexing.png
 :alt: HEALPix nested indexing scheme
-:width: 100%
+:width: 900px
 :align: center
 
 The `nested` indexing scheme of HEALPix
@@ -39,20 +39,20 @@ To keep compatibility with some other HEALPix libraries, some functions of this 
 
 ## Indexing schemes
 
-At a given refinement level, each cell has a unique identifier, or 'index'. There are multiple _indexing schemes_ that sort cells differently.
-This is an important consideration as cells that have neighbouring indices will also be close in memory (when the data is sorted).
+At a given refinement level, each cell has a unique identifier, or 'index'. There are multiple _indexing schemes_ that sort cells differently:
 
-- `ring`, where indices of cells on the same iso-latitude rings are close to each other.
 - `nested`, where indices of sibling cells are close to each other.
+- `ring`, where indices of cells on the same iso-latitude rings are close to each other.
 
 Based on `nested`, there are two more schemes that also encode the refinement level in the cell id, which is useful for MOC (Multi-Order Coverage):
 
-- `nuniq`, which represents all cells in the hierarchy breadth-first, i.e. cells of a refinement level are close numerically. This is not currently supported by `healpix-geo`.
 - `zuniq`, which represents all cells in the hierarchy depth-first, i.e. descendant cells of a given cell are close numerically.
+- `nuniq`, which represents all cells in the hierarchy breadth-first, i.e. cells of a refinement level are close numerically. This is not currently supported by `healpix-geo`.
 
 ### Z-ordering
 
-`nested` and `zuniq` indexing schemes are following a Z-order (aka Morton order).
+The `nested` indexing scheme is following a Z-order (aka Morton order).
+Note that by bit-shifting by 2 bits to the right, we obtain the parent cell index (at a lower refinement level by one). For instance, sibling cells {4, 5, 6, 7} have a parent cell of index 1.
 
 ```{figure} zorder.png
 :alt: Example of Z-ordering in nested indexing.
@@ -63,11 +63,9 @@ Based on `nested`, there are two more schemes that also encode the refinement le
 Example of Z-ordering in `nested` indexing.
 ```
 
-See that to obtain the parent of a cell, one can just bit-shift by 2 bits to the right.
-For instance, siblings cells {0, 1, 2, 3} have a parent cell of index 0 (corresponding to a lower refinement level by one).
-
 ### Choosing a scheme
 
+Choosing the appropriate indexing scheme can be important as cells that have neighbouring indices will also be close in memory (when the data is sorted).
 For most usages, `nested` is the recommended scheme, though others can be appropriate in some situations:
 
 | Need                    | Recommended Scheme |
@@ -87,7 +85,7 @@ correct module. The indexing scheme, refinement level and ellipsoidal model is p
 ```python
 import healpix_geo.auto
 
-grid = healpix_geo.auto.Grid(level=8, indexing_scheme="nested", ellispoid="WGS84")
+grid = healpix_geo.auto.Grid(level=8, indexing_scheme="nested", ellipsoid="WGS84")
 lon, lat = healpix_geo.auto.healpix_to_lonlat(cell_ids, grid)
 ```
 

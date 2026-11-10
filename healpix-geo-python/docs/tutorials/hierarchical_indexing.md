@@ -31,7 +31,7 @@ tags: [remove-cell]
 
 There are several functions to retrieve the neighbours of a given cell.
 
-There are 8 points on the globe where three cells meet at the same vertex, instead of the usual four. Cells in this area might have less neighbours. Those functions always return arrays of the same size, but may pad their result with `-1`. See the relevant {doc}`user guide <user-guide/hierachical_indexing>` for details.
+There are 8 points on the globe where three cells meet at the same vertex, instead of the usual four. Cells in this area might have less neighbours. The functions presented here always return arrays of the same size, but may pad their result with `-1`. See the dedicated [user guide](/user-guide/hierarchical_indexing) for details.
 
 Some functions take in a `ring` parameter that specifies the target degree of connectivity:
 

@@ -63,6 +63,7 @@ exclude_patterns = [
     ".DS_Store",
     ".ipynb_checkpoints",
     "jupyter_execute",
+    "user-guide/latitude_diff_table.md",
 ]
 
 # -- intersphinx -------------------------------------------------------------

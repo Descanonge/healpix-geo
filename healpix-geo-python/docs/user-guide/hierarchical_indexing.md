@@ -18,8 +18,6 @@ import healpix_geo
 
 # Hierarchical Indexing and Neighbours
 
-This chapter explains the hierarchical structure of HEALPix.
-
 ```{figure} hierarchy_neighbours.svg
 :width: 400px
 :alt: Scheme showing parent, siblings and neighbours.
@@ -30,11 +28,11 @@ Sibling, parent, and neighbours cells.
 ## Neighbours
 
 First, let us recall that on the HEALPix grid there are 8 points on the globe where three cells meet at the same vertex (instead of the usual four).
-This means for each corner there are three cells that only have 7 immediate neighbours (instead of 8).
-The functions presented here will always return arrays of the same size.
+This means that at each of these points there are three cells that only have 7 immediate neighbours (instead of 8).
 
 :::{important}
-If a cell has less neighbours than the maximum, the result will be padded with `-1`.
+The functions presented here will always return arrays of the same size.
+If a cell has less neighbours than the maximum possible, the result will be padded with `-1`.
 
 This means that, even though the functions are returning cell indices, the result will be a {py:attr}`numpy.int64` signed integer array instead of the usual unsigned {py:attr}`numpy.uint64`.
 :::
@@ -76,7 +74,6 @@ This section is only relevant for the `nested` indexing scheme.
 :::
 
 To raise the refinement level by one, each cell is subdivided in 4. The original cell is the **parent** and the 4 children are **siblings** of each other.
-See [](#indexing-schemes) for details on the indices of those cells.
 
 To obtain the siblings of given cells, one can use {py:func}`healpix_geo.nested.siblings`.
 For instance:
@@ -86,14 +83,13 @@ healpix_geo.nested.siblings(0, depth=1)
 ```
 
 The {py:func}`healpix_geo.nested.zoom_to` function allows to move up and down the cell hierarchy. It takes the current level and a target level.
-
-When targeting a higher level (target level > current level), the function will give all descendants of each input cell. For instance:
+When targeting a higher level (target level > current level), the function will return all descendants of each input cell. For instance:
 
 ```{code-cell} python
 healpix_geo.nested.zoom_to(0, depth=0, new_depth=2)
 ```
 
-When targeting a lower level (target level < current level), the function will give the parent of each input cell. For instance:
+When targeting a lower level (target level < current level), the function will return the parent of each input cell. For instance:
 
 ```{code-cell} python
 healpix_geo.nested.zoom_to(12, depth=2, new_depth=0)
@@ -103,4 +99,4 @@ healpix_geo.nested.zoom_to(12, depth=2, new_depth=0)
 
 For more details, see:
 
-- {doc}`../tutorials/quickstart` - Section on Hierarchy
+- {doc}`/tutorials/hierarchical_indexing` - Tutorial on hierarchical indexing and neighbours

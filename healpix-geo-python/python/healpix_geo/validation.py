@@ -123,7 +123,7 @@ def check_same_shape(*arrays: np.ndarray, **arrays_kw: np.ndarray) -> None:
 
     Raises
     ------
-    ValueError:
+    ValueError
         All arrays do not have the same shape.
     """
     shapes = {a.shape for a in arrays} | {a.shape for a in arrays_kw.values()}

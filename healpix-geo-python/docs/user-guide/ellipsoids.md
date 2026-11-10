@@ -99,7 +99,7 @@ Note that $\beta$ and $\xi$ are latitudes for auxiliary spheres.
 
 ## See Also
 
-- {doc}`../tutorials/ellipsoid_basics` - Tutorial on Ellipsoids
+- {doc}`/tutorials/ellipsoid_basics` - Tutorial on ellipsoids
 
 ## References
 
