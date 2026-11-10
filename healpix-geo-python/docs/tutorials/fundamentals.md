@@ -32,12 +32,14 @@ tags: [remove-cell]
 The HEALPix grid can be defined with different **refinement levels** (or depth). A higher level has smaller cells. The lowest level, 0, has 12 "base" cells. To obtain a level one higher, each cell is divided in 4 children cells. This means that for a given level, they can be $12\cdot 4^{\mathrm{level}}$ cells.
 The highest level is 29, with $\sim 3\cdot 10^{18}$ cells of size $\sim 1cm$.
 
-For a given refinement level, each cell is identified by a unique index. `healpix-geo` supports multiple indexing schemes, *ie* ways of ordering the cells:
+For a given refinement level, each cell is identified by a unique index. `healpix-geo` supports multiple indexing schemes, _ie_ ways of ordering the cells:
+
 - `ring`, where indices of cells on the same iso-latitude rings are close to each other.
-- `nested`, where indices of sibling cells are close to each other. 
+- `nested`, where indices of sibling cells are close to each other.
 - `zuniq`, based on nested, which encode the refinement level in the index itself.
 
 For most usages, `nested` is the recommended scheme, though others can be appropriate in some situations:
+
 | Need                    | Recommended Scheme |
 | ----------------------- | ------------------ |
 | General Application     | **nested**         |
@@ -46,10 +48,9 @@ For most usages, `nested` is the recommended scheme, though others can be approp
 | Order by latitude       | **ring**           |
 | MOC                     | **zuniq**          |
 
-
 ### Auto module
 
-For each indexing scheme, `healpix-geo` provide a separate module with 
+For each indexing scheme, `healpix-geo` provide a separate module with
 `healpix-geo` provides a separate module for each indexing scheme: {py:mod}`~healpix_geo.nested`, {py:mod}`~healpix_geo.ring`, {py:mod}`~healpix_geo.zuniq`. They contain the same functions (with some exceptions). The {py:mod}`~healpix_geo.auto` module dispatch computations to the correct indexing scheme according to the `grid` parameter. This is the recommend interface as it avoids hard-coding the indexing scheme in your scripts.
 
 The `grid` parameter is a {py:class}`~.auto.Grid` object containing the indexing scheme, the refinement level (except for `zuniq`) and the {doc}`ellipsoidal model <./ellipsoid>`.
@@ -57,6 +58,7 @@ The `grid` parameter is a {py:class}`~.auto.Grid` object containing the indexing
 ### Input types
 
 All functions are vectorized and accept array-like inputs. For instance for the cell indices, all functions will accept:
+
 - numpy arrays
 - scalar integer (automatically converted to a 1D array)
 - nested sequences of integers or numpy array
@@ -94,6 +96,7 @@ for scheme in ["nested", "ring", "zuniq"]:
 ## Vectorization
 
 All functions are vectorize and will return outputs with the same shape as the input except:
+
 - scalars are automatically converted to a 1D array
 - some functions may add an axis to the input, but the rest of the shape is conserved. Check the functions docstrings for details.
 

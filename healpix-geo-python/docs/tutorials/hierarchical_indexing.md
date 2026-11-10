@@ -34,13 +34,14 @@ There are several functions to retrieve the neighbours of a given cell.
 There are 8 points on the globe where three cells meet at the same vertex, instead of the usual four. Cells in this area might have less neighbours. Those functions always return arrays of the same size, but may pad their result with `-1`. See the relevant {doc}`user guide <user-guide/hierachical_indexing>` for details.
 
 Some functions take in a `ring` parameter that specifies the target degree of connectivity:
+
 - `ring=1` for the 8 immediate neighbours
 - `ring=2` for the 16 neighbours of the immediate neighbours
 - ...
 
 ### Neighbours ring
 
-{py:func}`~healpix_geo.auto.kth_neighbours` returns the cells in the specified ring, *ie* the border of the neighbourhood.
+{py:func}`~healpix_geo.auto.kth_neighbours` returns the cells in the specified ring, _ie_ the border of the neighbourhood.
 
 ```{code-cell} ipython3
 ---
@@ -277,6 +278,7 @@ ax.set_aspect("equal")
 ### Direction-preserving neighbours
 
 {py:func}`~healpix_geo.nested.neighbours` provides a finer control on what immediate neighbours to return. It can return (in fixed order):
+
 - the 4 cells that share an edge (SW, NW, NE, SE),
 - the 4 cells that share a vertex, but not an edge (S, W, N, E)
 - the 8 immediate neighbours (clockwise starting from S).
