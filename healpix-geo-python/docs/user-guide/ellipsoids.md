@@ -23,25 +23,28 @@ Ellipsoidal to Authalic Mapping
 
 ## Specifying the ellipsoid
 
-In healpix-geo, the ellipsoidal model to use can be specified via the ``ellipsoid`` keyword argument to the {py:class}`.Grid` object if you are using the {py:mod}`.auto` module, or directly in the function otherwise.
+In healpix-geo, the ellipsoidal model to use can be specified via the `ellipsoid` keyword argument to the {py:class}`.Grid` object if you are using the {py:mod}`.auto` module, or directly in the function otherwise.
 
 The ellipsoidal model can be specified either by name or by parameters. Available names are those built-in in the [geodesy rust crate](https://github.com/busstoptaktik/geodesy/blob/f9090b8c91f401892a93979f100fa4d987eb0836/src/ellipsoid/constants.rs#L6-L54)
 Some of the available names are:
 :::{table}
+
 | name   |                                        |
 | ------ | -------------------------------------- |
-| sphere | Normal sphere (r=6370997), **default** | 
+| sphere | Normal sphere (r=6370997), **default** |
 | WGS84  | WGS 84 (current standard)              |
 | WGS72  | WGS 72 (old standard)                  |
 | GRS80  | GRS 80                                 |
 | intl   | International 1909 (Hayford)           |
+
 :::
 
 The ellipsoidal model can also be specified by a dictionary of parameters:
+
 - `"radius"` (in meters) for a spherical model,
 - `"semimajor_axis"` (in meters) and `"inverse_flattening"` for an ellipsoidal model.
 
-For retro-compatibility reasons, the default is ``"sphere"`` in which case the result is identical to standard healpix [cdshealpix](https://cds-astro.github.io/cds-healpix-python).
+For retro-compatibility reasons, the default is `"sphere"` in which case the result is identical to standard healpix [cdshealpix](https://cds-astro.github.io/cds-healpix-python).
 
 :::{tip}
 For most real-world geospatial applications, use **WGS84**, as it is the current global geodetic standard.
@@ -91,6 +94,7 @@ Note that $\beta$ and $\xi$ are latitudes for auxiliary spheres.
 ```
 
 ````
+
 [Karney (2023)](#karney_2024) describes conversion formulas that reduce the numerical round-off errors.
 
 ## See Also
@@ -100,6 +104,7 @@ Note that $\beta$ and $\xi$ are latitudes for auxiliary spheres.
 ## References
 
 (snyder_1987)=
-- Snyder, J. (1987), *"Map projections: A working manual"*, U.S. Geological Survey Professional Paper 1395, Report: ix, 385 p., <doi:10.3133/pp1395>
-(karney_2024)=
-- Karney, C. F. F. (2024), *"On auxiliary latitudes"*, Survey Review, 56(395), 165–180. <doi:10.1080/00396265.2023.2217604>
+
+- Snyder, J. (1987), _"Map projections: A working manual"_, U.S. Geological Survey Professional Paper 1395, Report: ix, 385 p., <doi:10.3133/pp1395>
+  (karney_2024)=
+- Karney, C. F. F. (2024), _"On auxiliary latitudes"_, Survey Review, 56(395), 165–180. <doi:10.1080/00396265.2023.2217604>

@@ -5,15 +5,9 @@ import sys
 
 site.addsitedir(str(pathlib.Path(__file__).parent))
 
-import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 import numpy as np
-from cartopy.mpl.ticker import LatitudeFormatter, LongitudeFormatter
-from matplotlib.collections import PolyCollection
-from matplotlib.colors import to_rgba
 from script_utils import differing_contents
-
-import healpix_geo
 
 sincos = 1.0 / np.sqrt(2)
 

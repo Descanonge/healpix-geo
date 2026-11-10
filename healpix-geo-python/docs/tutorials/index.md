@@ -15,7 +15,7 @@ Learn bases of `healpix-geo` in 15 minutes : conversions of coordinates, underst
 :::
 
 :::{grid-item-card} HEALPix fundamentals and indexing
-:link: healpix
+:link: fundamentals
 :link-type: doc
 
 Learn about the fundamentals of HEALPix: refinement level, the different types of indexing.
@@ -41,13 +41,11 @@ Understand why and how to use ellipsoid of reference such as WGS84 for precise g
 :::
 
 :::{grid-item-card} Hierarchical indexing
-:link: hierarchy
+:link: hierarchical_indexing
 :link-type: doc
 
 Learn how to navigate the hierarchical indexing (siblings, zoom) and how to find the neighbours of a cell.
 :::
-
-
 
 :::{grid-item-card} Cover requests
 :link: coverage_queries
@@ -84,10 +82,10 @@ Techniques for optimizing performance: vectorization, multi-threading, and best 
 hidden: true
 ---
 quickstart
-healpix
+fundamentals
 coordinates
 ellipsoid_basics
-hierarchy
+hierarchical_indexing
 coverage_queries
 working_with_moc
 performance_optimization

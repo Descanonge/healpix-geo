@@ -5,8 +5,8 @@ This guide explains the fundamental concepts of healpix-geo and how to use them 
 ::::{grid} 1 1 2 2
 :gutter: 3
 
-:::{grid-item-card} HEALPix and indexing schemes
-:link: concepts
+:::{grid-item-card} HEALPix fundamentals and indexing schemes
+:link: fundamentals
 :link-type: doc
 
 Understanding what HEALPix is, why to use it, and the different indexing schemes it supports.
@@ -14,10 +14,10 @@ Understanding what HEALPix is, why to use it, and the different indexing schemes
 :::
 
 :::{grid-item-card} Coordinates and cell geometry
-:link: coordinates_systems
+:link: coordinates
 :link-type: doc
 
-Conversions between geographical coordinates and HEALPix indices. 
+Conversions between geographical coordinates and HEALPix indices.
 
 :::
 
@@ -55,12 +55,11 @@ Optimize your calculations: vectorization, multi-threading, and best practices f
 
 ::::
 
-
 ```{toctree}
 ---
 hidden: true
 ---
-healpix
+fundamentals
 ellipsoids
 coordinates
 hierarchical_indexing

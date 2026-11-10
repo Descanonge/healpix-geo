@@ -1,5 +1,3 @@
-
-
 # Coverage Queries
 
 This chapter details the spatial query algorithms available in healpix-geo.
@@ -8,6 +6,7 @@ This chapter details the spatial query algorithms available in healpix-geo.
 
 `healpix-geo` provides a number of functions to obtain the indices of cells that fall within various geographic regions.
 All these functions return three arrays of:
+
 - the indices of cells that fall at least partially in the target region,
 - the refinement level of each cell,
 - whether each cell is fully covered by the target region.
@@ -52,7 +51,7 @@ Keep in mind that regions are defined on the sphere (or ellipsoid).
 :align: right
 ```
 
-{py:func}`~healpix_geo.auto.cone_coverage` return cells that fall within a cone, *ie* within a given radius from a center position.
+{py:func}`~healpix_geo.auto.cone_coverage` return cells that fall within a cone, _ie_ within a given radius from a center position.
 This function relies on approximations: it may return cells that are near the cone but are not covered by it, and some cells might be tagged as partially covered but may be fully covered. However it guarantees that cells marked as fully covered are really fully covered.
 
 To refine the approximation, computations may be done at a higher refinement level. Computations will be done at level `depth + delta_depth`. By default, `delta_depth` is zero.
@@ -87,6 +86,7 @@ Similarly to the cone, this functions relies on approximations.
 ```{raw} html
 <div class="clearer"></div>
 ```
+
 ## See Also
 
 For more details, see:

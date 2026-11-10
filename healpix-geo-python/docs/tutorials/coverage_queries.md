@@ -29,23 +29,25 @@ tags: [remove-cell]
 
 `healpix-geo` provides a number of functions to obtain the indices of cells that fall within various geographic regions.
 All these functions return three arrays of:
+
 - the indices of cells that fall at least partially in the target region,
 - the refinement level of each cell,
 - whether each cell is fully covered by the target region.
 
-| Function                   | Usage                   | Key parameters                                  |
-| -------------------------- | ----------------------- | ----------------------------------------------- |
-| `zone_coverage`            | Zone request            | bbox                                            |
-| `cone_coverage`            | Circular request        | center, radius                                  |
-| `box_coverage`             | Rectangular request     | center, size, angle                             |
-| `elliptical_cone_coverage` | Elliptical cone request | center, ellipse_geometry, position_angle        |
-| `polygon_coverage`         | Polygonal request       | vertices                                        |
+| Function                   | Usage                   | Key parameters                           |
+| -------------------------- | ----------------------- | ---------------------------------------- |
+| `zone_coverage`            | Zone request            | bbox                                     |
+| `cone_coverage`            | Circular request        | center, radius                           |
+| `box_coverage`             | Rectangular request     | center, size, angle                      |
+| `elliptical_cone_coverage` | Elliptical cone request | center, ellipse_geometry, position_angle |
+| `polygon_coverage`         | Polygonal request       | vertices                                 |
 
 :::{note}
 All regions are defined on the sphere (or ellipsoid), so there can be small discreptancies in the following plots.
 :::
 
 ## Requests types
+
 ### Zone (bounding box)
 
 {py:func}`~healpix_geo.auto.zone_coverage` return cells that fall in a rectangular area defined by its minimum and maximum longitude and latitude.
@@ -95,7 +97,6 @@ ax.set_aspect("equal")
 +++ {"editable": true, "deletable": true, "slideshow": {"slide_type": ""}}
 
 ### Rectangle
-
 
 {py:func}`~healpix_geo.auto.box_coverage` return cells that fall in a rotated rectangular area defined by its center point, size, and rotation angle.
 
@@ -158,7 +159,7 @@ ax.set_aspect("equal")
 
 ### Cone
 
-{py:func}`~healpix_geo.auto.cone_coverage` return cells that fall within a cone, *ie* within a given radius from a center position.
+{py:func}`~healpix_geo.auto.cone_coverage` return cells that fall within a cone, _ie_ within a given radius from a center position.
 This function relies on approximations: it may return cells that are near the cone but are not covered by it, and some cells might be tagged as partially covered but may be fully covered. However it guarantees that cells marked as fully covered are really fully covered.
 
 ```{code-cell} ipython3

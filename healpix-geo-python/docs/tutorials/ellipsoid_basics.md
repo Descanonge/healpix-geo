@@ -31,18 +31,18 @@ tags: [remove-cell]
 
 ## Specifying the ellipsoid
 
-In healpix-geo, the ellipsoidal model to use can be specified via the ``ellipsoid`` keyword argument to the {py:class}`.Grid` object if you are using the {py:mod}`.auto` module, or directly in the function otherwise.
+In healpix-geo, the ellipsoidal model to use can be specified via the `ellipsoid` keyword argument to the {py:class}`.Grid` object if you are using the {py:mod}`.auto` module, or directly in the function otherwise.
 
 The ellipsoidal model can be specified either by name or by parameters. Available names are those built-in in the [geodesy rust crate](https://github.com/busstoptaktik/geodesy/blob/f9090b8c91f401892a93979f100fa4d987eb0836/src/ellipsoid/constants.rs#L6-L54).
 Here are some of the available names:
+
 | name   |                                        |
 | ------ | -------------------------------------- |
-| sphere | Normal sphere (r=6370997), **default** | 
+| sphere | Normal sphere (r=6370997), **default** |
 | WGS84  | WGS 84 (current standard)              |
 | WGS72  | WGS 72 (old standard)                  |
 | GRS80  | GRS 80                                 |
 | intl   | International 1909 (Hayford)           |
-
 
 :::{tip}
 For most real-world geospatial applications, use **WGS84**, as it is the current global geodetic standard.
@@ -77,6 +77,7 @@ for ellipsoid, description in ellipsoids.items():
 +++ {"editable": true, "deletable": true, "slideshow": {"slide_type": ""}}
 
 The ellipsoidal model can also be specified by a dictionary of parameters:
+
 - `"radius"` (in meters) for a spherical model,
 - `"semimajor_axis"` (in meters) and `"inverse_flattening"` for an ellipsoidal model.
 

@@ -165,7 +165,9 @@ def generate_figure_cone():
         va="top",
     )
 
-    line = np.array([[0, 0], [r * np.cos(np.deg2rad(angle)), r * np.sin(np.deg2rad(angle))]])
+    line = np.array(
+        [[0, 0], [r * np.cos(np.deg2rad(angle)), r * np.sin(np.deg2rad(angle))]]
+    )
     ax.plot(*line.T, color="k", lw=0.7)
     ax.annotate(
         "$r$",
@@ -213,7 +215,9 @@ def generate_figure_elliptical_cone():
     )
 
     line_a = np.array([[0, 0], [a * np.cos(a_rad), a * np.sin(a_rad)]])
-    line_b = np.array([[0, 0], [b * np.cos(a_rad + np.pi / 2), b * np.sin(a_rad + np.pi / 2)]])
+    line_b = np.array(
+        [[0, 0], [b * np.cos(a_rad + np.pi / 2), b * np.sin(a_rad + np.pi / 2)]]
+    )
 
     ax.plot(*line_a.T, color="k", lw=0.7)
     ax.plot(*line_b.T, color="k", lw=0.7)
