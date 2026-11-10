@@ -25,6 +25,8 @@ Coordinate Conversions
    healpix_to_cartesian
    cartesian_to_healpix
 
+.. seealso::
+   :doc:`tutorial </tutorials/coordinates>` and :doc:`user-guide </user-guide/coordinates>`
 
 Cell geometry
 ~~~~~~~~~~~~~
@@ -59,6 +61,9 @@ Hierarchy and neighbourhood
    kth_neighbours
    kth_neighbourhood
 
+.. seealso::
+   :doc:`tutorial </tutorials/hierarchical_indexing>` and :doc:`user-guide </user-guide/hierarchical_indexing>`
+
 Coverage requests
 -----------------
 
@@ -70,3 +75,6 @@ Coverage requests
    polygon_coverage
    cone_coverage
    elliptical_cone_coverage
+
+.. seealso::
+   :doc:`tutorial </tutorials/coverage_queries>` and :doc:`user-guide </user-guide/coverage_queries>`

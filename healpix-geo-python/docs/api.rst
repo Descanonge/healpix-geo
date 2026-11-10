@@ -14,21 +14,21 @@ Overview
    :maxdepth: 2
    :caption: API reference
 
+   api/auto
    api/nested
    api/ring
    api/zuniq
-   api/auto
    api/validation
 
 `healpix-geo` is organised in several modules following the **HEALPix indexing scheme** used :
 
+- :doc:`api/auto`: indexing scheme-agnostic API
 - :doc:`api/nested` : nested scheme
 - :doc:`api/ring` : ring scheme
 - :doc:`api/zuniq` : Zuniq scheme for Multi-Order Coverage (MOC)
-- :doc:`api/auto`: indexing scheme-agnostic API
 
 .. tip::
-   **For most of the applications**, use module ``healpix_geo.auto`` with the ``nested`` indexing scheme. It offers the best support for hierarchical operations.
+   **For most of the applications**, use module ``healpix_geo.auto`` with the ``nested`` indexing scheme.
 
 Base cell topology
 ~~~~~~~~~~~~~~~~~~
@@ -91,7 +91,7 @@ HEALPix indices
   :attr:`~numpy.uint64`) : Indices of HEALPix cells. Signed integers are allowed
   as input (*i.e.* array-like of either builtin :class:`int` or
   :class:`numpy.integer`). All inputs will be checked for negative values in
-  *zuniq* indexing and for values outside the range :math:`[0, 12\times
+  *zuniq* indexing and for values outside the range :math:`[0, 12\cdot
   4^{depth}[` otherwise.
 
 - **depth/level** (input: *int or array-like of int*, output:
@@ -100,13 +100,14 @@ HEALPix indices
 
   - 0 = coarser (12 cells)
   - 29 = finer (~1.2 cm)
-  - See :doc:`healpix/levels` for the complete table
+  - See the :ref:`cell-statistics` for the complete table
 
 Geographical coordinates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **lon** (input: *array-like of float*, output: :class:`~numpy.ndarray` of
-  :attr:`~numpy.float64`) : Longitude(s) in decimal degrees [-180, 180].
+  :attr:`~numpy.float64`) : Longitude(s) in decimal degrees. Returns longitudes
+  in [0, 360] but also accepts inputs in [-180, 180].
   Positive towards East. 0° is Greenwich meridian.
 - **lat** (input: *array-like of float*, output: :class:`~numpy.ndarray` of
   :attr:`~numpy.float64`) : Latitude(s) in decimal degrees [-90, 90]. Positive
@@ -130,7 +131,7 @@ result as their equivalent from :external+cdshealpix:doc:`cdshealpix<index>`.
 
 .. tip::
    **Always use** ``ellipsoid="WGS84"`` for real geospatial applications.
-   See :doc:`tutorials/ellipsoid_basics` for more details.
+   See :doc:`user-guide/ellipsoids` for more details.
 
 .. currentmodule:: healpix_geo
 

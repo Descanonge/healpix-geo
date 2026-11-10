@@ -25,7 +25,7 @@ tags: [remove-cell]
 
 +++ {"editable": true, "deletable": true, "slideshow": {"slide_type": ""}}
 
-# Cover requests
+# Coverage queries
 
 `healpix-geo` provides a number of functions to obtain the indices of cells that fall within various geographic regions.
 All these functions return three arrays of:

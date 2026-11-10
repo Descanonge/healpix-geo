@@ -22,6 +22,9 @@ Coordinate Conversions
    healpix_to_cartesian
    cartesian_to_healpix
 
+.. seealso::
+   :doc:`tutorial </tutorials/coordinates>` and :doc:`user-guide </user-guide/coordinates>`
+
 Cell geometry
 ~~~~~~~~~~~~~
 .. autosummary::
@@ -29,6 +32,9 @@ Cell geometry
 
    vertices
    vertex_indices
+
+.. seealso::
+   :doc:`tutorial </tutorials/coordinates>` and :doc:`user-guide </user-guide/coordinates>`
 
 Indexing Scheme Conversions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -49,14 +55,17 @@ Interpolation from HEALPix to geographic coordinates.
 
    bilinear_interpolation
 
-Hierarchy
-~~~~~~~~~~
+Hierarchy and neighbourhood
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. autosummary::
    :toctree: ../generated/
 
    kth_neighbours
    kth_neighbourhood
+
+.. seealso::
+   :doc:`tutorial </tutorials/hierarchical_indexing>` and :doc:`user-guide </user-guide/hierarchical_indexing>`
 
 Coverage
 ~~~~~~~~
@@ -73,7 +82,7 @@ Find all cells which intersect a region.
    elliptical_cone_coverage
 
 .. seealso::
-   Complete tutorial : :doc:`../tutorials/coverage_queries`
+   :doc:`tutorial </tutorials/coverage_queries>` and :doc:`user-guide </user-guide/coverage_queries>`
 
 Distance Calculations
 ~~~~~~~~~~~~~~~~~~~~~~

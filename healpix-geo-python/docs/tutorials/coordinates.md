@@ -28,15 +28,15 @@ tags: [remove-cell]
 
 This tutorial explores how to retrieve HEALPix cells geometry and how to convert between cell indices and geographical coordinates.
 
-This tutorial assumes you are familiar with the basic features of HEALPix presented in {doc}`user-guide/healpix.md`.
-
 ## Coordinates systems
 
 `healpix-geo` supports two types of geographical coordinates: longitude/latitude and cartesian.
 
 - For longitude/latitude, corresponding functions will take in or return:
-  - `lon`: Longitude in decimal degrees, in [-180, 180], positive towards the East, 0° at Greenwich median.
+  - `lon`: Longitude in decimal degrees, positive towards the East, 0° at Greenwich median.
+      Functions will output the longitude in [0, 360], but will also accept inputs in [-180, 180].
   - `lat`: Latitude in decimal degrees, in [-90, 90], positive towards the North, 0° at the Equator.
+
 
 - For cartesian coordinates, corresponding functions will take in or return `x`, `y`, and `z` in meters. The x-axis points from the Earth center to the point (lon=0, lat=0), the y-axis points to (lon=90, lat=0) and the z-axis points to the North pole.
 

@@ -27,7 +27,7 @@ tags: [remove-cell]
 
 # Ellipsoids basics
 
-`healpix-geo` extends standard HEALPix, defined only on the sphere, to any ellipsoidal model. See {doc}`user-guide/ellipsoids` for details on how it does it.
+`healpix-geo` extends standard HEALPix, defined only on the sphere, to any ellipsoidal model. See the dedicated [user-guide](../user-guide/ellipsoids) for details on how it does it.
 
 ## Specifying the ellipsoid
 
@@ -68,7 +68,7 @@ ellipsoids = {
     "WGS72": "World Geodetic System 1972",
 }
 
-print(f"Center of cell #{ipix} (level {level}:\n")
+print(f"Center of cell #{ipix} (level {level}):\n")
 for ellipsoid, description in ellipsoids.items():
     lon, lat = healpix_to_lonlat(ipix, grid=Grid(level=level, indexing_scheme="nested", ellipsoid=ellipsoid))
     print(f"{ellipsoid:}:\t{lon[0]:.8f}° ; {lat[0]:.8f}°  # {description}")

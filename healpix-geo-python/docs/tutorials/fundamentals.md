@@ -29,8 +29,8 @@ tags: [remove-cell]
 
 ## Preamble
 
-The HEALPix grid can be defined with different **refinement levels** (or depth). A higher level has smaller cells. The lowest level, 0, has 12 "base" cells. To obtain a level one higher, each cell is divided in 4 children cells. This means that for a given level, they can be $12\cdot 4^{\mathrm{level}}$ cells.
-The highest level is 29, with $\sim 3\cdot 10^{18}$ cells of size $\sim 1cm$.
+The HEALPix grid can be defined with different **refinement levels** (or depth). A higher level has smaller cells. The lowest level, 0, has 12 base cells. To obtain a level one higher, each cell is divided in 4 children cells. This means that for a given level, there are $12\cdot 4^{\mathrm{level}}$ cells.
+The highest level is 29, with $\sim 3\cdot 10^{18}$ cells of size 1cm.
 
 For a given refinement level, each cell is identified by a unique index. `healpix-geo` supports multiple indexing schemes, _ie_ ways of ordering the cells:
 
@@ -50,10 +50,9 @@ For most usages, `nested` is the recommended scheme, though others can be approp
 
 ### Auto module
 
-For each indexing scheme, `healpix-geo` provide a separate module with
-`healpix-geo` provides a separate module for each indexing scheme: {py:mod}`~healpix_geo.nested`, {py:mod}`~healpix_geo.ring`, {py:mod}`~healpix_geo.zuniq`. They contain the same functions (with some exceptions). The {py:mod}`~healpix_geo.auto` module dispatch computations to the correct indexing scheme according to the `grid` parameter. This is the recommend interface as it avoids hard-coding the indexing scheme in your scripts.
+`healpix-geo` provides a separate module for each indexing scheme: {py:mod}`~healpix_geo.nested`, {py:mod}`~healpix_geo.ring`, and {py:mod}`~healpix_geo.zuniq`. They contain the same functions (with some exceptions). The {py:mod}`~healpix_geo.auto` module dispatch computations to the correct indexing scheme according to the `grid` parameter. This is the recommend interface as it avoids hard-coding the indexing scheme in your scripts.
 
-The `grid` parameter is a {py:class}`~.auto.Grid` object containing the indexing scheme, the refinement level (except for `zuniq`) and the {doc}`ellipsoidal model <./ellipsoid>`.
+The `grid` parameter is a {py:class}`~.auto.Grid` object containing the indexing scheme, the refinement level (except for `zuniq`) and the ellipsoidal model.
 
 ### Input types
 
@@ -63,9 +62,7 @@ All functions are vectorized and accept array-like inputs. For instance for the 
 - scalar integer (automatically converted to a 1D array)
 - nested sequences of integers or numpy array
 
-For details, see the {doc}`api`.
-
-+++
+For details, see the [](/api).
 
 ## Coordinate to cell index
 
@@ -78,7 +75,7 @@ lon, lat = 2.3522, 48.8566  # Paris
 
 for level in [0, 4, 8, 12]:
     ipix = lonlat_to_healpix(lon, lat, Grid(level=level, indexing_scheme="nested", ellipsoid="WGS84"))
-    print(f"Depth {level:2d}: cell {ipix[0]:10d}")
+    print(f"Level {level:2d}: cell {ipix[0]:10d}")
 ```
 
 Similarly, we can get the cell index in different schemes for the same location.
@@ -95,10 +92,10 @@ for scheme in ["nested", "ring", "zuniq"]:
 
 ## Vectorization
 
-All functions are vectorize and will return outputs with the same shape as the input except:
+All functions are vectorized and will return outputs with the same shape as the input except:
 
 - scalars are automatically converted to a 1D array
-- some functions may add an axis to the input, but the rest of the shape is conserved. Check the functions docstrings for details.
+- some functions may add an axis to the input, but the rest of the shape is conserved. Check the functions documentation for details.
 
 ```{code-cell} ipython3
 ---
@@ -154,4 +151,14 @@ from healpix_geo.auto import Grid, convert
 grid = Grid(level=4, indexing_scheme="nested")
 cell_ids_ring, _ = convert(cell_ids_nested, grid, to="ring")
 cell_ids_ring
+```
+
+At this point the indices have been converted but the data is still in the same order. Remember to sort by indices, for instance in numpy:
+
+```{code-cell} ipython3
+data = np.random.rand(cell_ids_nested.size)
+
+sorting_ind = np.argsort(cell_ids_ring)
+cell_ids_ring = cell_ids_ring[sorting_ind]
+data = data[sorting_ind]
 ```
