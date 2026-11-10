@@ -749,9 +749,7 @@ def kth_neighbourhood(
     """Get the kth ring neighbouring cells of some HEALPix cells at a given depth.
 
     This method returns an array containing the :math:`(2\\cdot\\mathrm{ring}+1)^2`
-    neighbours of each input cell. The "center" neighbour at index
-    :math:`2\\cdot\\mathrm{ring}\\cdot(\\mathrm{ring}+1)` corresponds to the input cell
-    (the 5th cell for ``ring=1`` for instance).
+    neighbours of each input cell. The input cell is included (and is listed first).
 
     This method is wrapped around the `kth_neighbourhood
     <https://docs.rs/cdshealpix/0.1.5/cdshealpix/nested/struct.Layer.html#method.neighbours_in_kth_ring>`__
@@ -943,7 +941,7 @@ def box_coverage(
         float.
     size : tuple of float or numpy.ndarray of float
         The size of the box, in degrees, either as a 2-sized array of as a 2-tuple of
-        float.
+        float, in order ``(height, width)``. The width must be greater than the height.
     angle : float
         The angle by which the box is rotated, in degrees.
     depth : int
@@ -1054,6 +1052,8 @@ def cone_coverage(
         The radius of the cone, in degrees.
     depth : int
         The maximum depth of the cells to be returned.
+    delta_depth : int, default: 0
+        The computations will be done at depth `depth + delta_depth`.
     ellipsoid : ellipsoid-like, default: "sphere"
         The reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as
@@ -1103,6 +1103,11 @@ def elliptical_cone_coverage(
     Elliptical cone in this case refers to an ellipse on the surface of the reference
     ellipsoid.
 
+    This function relies on approximations: it may return cells that are near the cone
+    but are not covered by it, and some cells might be tagged as partially covered but
+    may really be fully covered. However it guarantees that cells marked as fully
+    covered are really fully covered.
+
     Parameters
     ----------
     center : tuple of float or numpy.ndarray of float
@@ -1115,6 +1120,8 @@ def elliptical_cone_coverage(
         The orientation of the ellipse.
     depth : int
         The maximum depth of the cells to be returned.
+    delta_depth : int, default: 0
+        The computations will be done at depth ``depth + delta_depth``.
     ellipsoid : ellipsoid-like, default: "sphere"
         The reference ellipsoid to evaluate healpix on. If the reference ellipsoid
         is spherical, this will return the same result as

@@ -368,13 +368,3 @@ ax.add_artist(plt.Circle(center, radius, ec="royalblue", fc="none", lw=2))
 
 ax.set_aspect("equal")
 ```
-
-```{code-cell} ipython3
----
-editable: true
-deletable: true
-slideshow:
-  slide_type: ''
----
-
-```
